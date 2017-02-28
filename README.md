@@ -1,0 +1,2 @@
+# EdidTool
+EDID parser
