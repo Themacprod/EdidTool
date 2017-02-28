@@ -1,4 +1,4 @@
 "use strict";
 
-require("./server").listen(5000);
+require("./server").listen(process.env.PORT);
 console.log("Server listening...");
