@@ -1,0 +1,29 @@
+$cellwidth: 35px;
+
+.edid-raw {
+    float: left;
+    height: 100%;
+    width: 30%;
+
+    .input-grid-line {
+        margin-left: $cellwidth;
+        margin-right: $cellwidth;
+    }
+
+    .input-grid {
+        width: $cellwidth;
+        color: black;
+        text-align: center;
+
+        &:hover {
+            background-color: $color-gray-hover;
+        }
+    }
+
+    .input-grid-selected {
+        width: $cellwidth;
+        color: white;
+        text-align: center;
+        background-color: #2a2a2a;
+    }
+}
