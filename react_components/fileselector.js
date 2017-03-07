@@ -37,6 +37,7 @@ module.exports = React.createClass({
         return React.DOM.div(null,
             React.DOM.input({
                 type: "file",
+                accept: ".dat",
                 id: "files",
                 name: "file",
                 onChange: this.handleChange
