@@ -16,7 +16,11 @@ module.exports = React.createClass({
             edidcontent: _.fill(Array(128), 0)
         };
     },
+    getFileExtension: function(filename) {
+        return (/[.]/.exec(filename)) ? (/[^.]+$/).exec(filename) : undefined;
+    },
     handleChange: function() {
+        console.log("Extension = " + this.getFileExtension(document.getElementById("files").value));
         this.extractEdid(document.getElementById("files").files[0]);
     },
     extractEdid: function(file) {
