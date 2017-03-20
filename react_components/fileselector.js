@@ -21,10 +21,11 @@ module.exports = React.createClass({
         return (/[.]/.exec(filename)) ? (/[^.]+$/).exec(filename) : undefined;
     },
     handleChange: function() {
-        console.log("Extension = " + this.getFileExtension(document.getElementById("files").value));
-        this.extractEdid(document.getElementById("files").files[0]);
+        this.extractEdid(
+            document.getElementById("files").files[0],
+            document.getElementById("files").value);
     },
-    extractEdid: function(file) {
+    extractEdid: function(file, filename) {
         fileReader.onloadend = function(evt) {
             // If we use onloadend, we need to check the readyState.
             if (evt.target.readyState === 2) {
@@ -34,13 +35,21 @@ module.exports = React.createClass({
             }
         }.bind(this);
 
-        fileReader.readAsText(file);
+        var fileExtension = String(this.getFileExtension(filename));
+
+        if (fileExtension === "dat") {
+            fileReader.readAsText(file);
+        } else if (fileExtension === "bin") {
+            fileReader.readAsBinaryString(file);
+        } else {
+            console.log("Unknown extension : ", fileExtension);
+        }
     },
     render: function() {
         return React.DOM.div(null,
             React.DOM.input({
                 type: "file",
-                accept: ".dat",
+                accept: ".dat,.bin",
                 id: "files",
                 name: "file",
                 onChange: this.handleChange
