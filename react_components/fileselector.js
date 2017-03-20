@@ -6,7 +6,8 @@ var React = require("react"),
     _ = require("lodash"),
     edidExtractor = require("./edidextractor"),
     edidDisplay = require("./edidraw"),
-    edidContent = require("./edidcontent");
+    edidContent = require("./edidcontent"),
+    fileReader = new FileReader();
 
 // https://www.html5rocks.com/en/tutorials/file/dndfiles/
 
@@ -24,9 +25,7 @@ module.exports = React.createClass({
         this.extractEdid(document.getElementById("files").files[0]);
     },
     extractEdid: function(file) {
-        var reader = new FileReader();
-
-        reader.onloadend = function(evt) {
+        fileReader.onloadend = function(evt) {
             // If we use onloadend, we need to check the readyState.
             if (evt.target.readyState === 2) {
                 this.setState({
@@ -35,7 +34,7 @@ module.exports = React.createClass({
             }
         }.bind(this);
 
-        reader.readAsText(file);
+        fileReader.readAsText(file);
     },
     render: function() {
         return React.DOM.div(null,
