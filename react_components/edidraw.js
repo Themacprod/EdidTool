@@ -27,6 +27,13 @@ module.exports = React.createClass({
                         key: idx,
                         className: "input-grid-line"
                     },
+                    React.DOM.input({
+                        key: 0,
+                        className: "input-grid-selected",
+                        type: "text",
+                        value: byteindex,
+                        readOnly: "readOnly"
+                    }),
                     _.map(line, _.bind(function(byte, key) {
                         var hexValue = byte.toString(16).toUpperCase();
                         if (hexValue.length < 2) {
