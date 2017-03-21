@@ -18,10 +18,33 @@ module.exports = React.createClass({
     },
     render: function() {
         var byteindex = 0;
+        var gridheader = [];
+
+        gridheader.push(React.DOM.input({
+            key: 0,
+            className: "input-grid-selected",
+            type: "text",
+            value: "",
+            readOnly: "readOnly"
+        }));
+
+        for (var i = 0; i < (this.props.chunk || 10); i += 1) {
+            gridheader.push(React.DOM.input({
+                key: i + 1,
+                className: "input-grid-selected",
+                type: "text",
+                value: i,
+                readOnly: "readOnly"
+            }));
+        }
 
         return React.DOM.div({
                 className: "edid-raw"
             },
+            React.DOM.div({
+                key: 0,
+                className: "input-grid-line"
+            }, gridheader),
             _.map(_.chunk(this.props.edid, this.props.chunk || 10), _.bind(function(line, idx) {
                 return React.DOM.div({
                         key: idx,
