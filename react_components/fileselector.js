@@ -37,9 +37,9 @@ module.exports = React.createClass({
 
         var fileExtension = String(this.getFileExtension(filename));
 
-        if (fileExtension === "dat") {
+        if (fileExtension.toLowerCase() === "dat") {
             fileReader.readAsText(file);
-        } else if (fileExtension === "bin") {
+        } else if (fileExtension.toLowerCase() === "bin") {
             fileReader.readAsBinaryString(file);
         } else {
             console.log("Unknown extension : ", fileExtension);
