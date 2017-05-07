@@ -5,7 +5,7 @@
 var React = require("react"),
     _ = require("lodash"),
     edidExtractor = require("./edidextractor"),
-    edidDisplay = require("./edidraw"),
+    edidDisplayRaw = require("./ediddisplayraw"),
     edidContent = require("./edidcontent"),
     fileReader = new FileReader();
 
@@ -55,7 +55,7 @@ module.exports = React.createClass({
                 onChange: this.handleChange
             }), React.DOM.div({
                     className: "edid-container"
-                }, React.createElement(edidDisplay, {
+                }, React.createElement(edidDisplayRaw, {
                     edid: this.state.edidcontent
                 }),
                 React.createElement(edidContent, {
