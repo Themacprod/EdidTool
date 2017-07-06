@@ -2,4 +2,19 @@
     float: right;
     height: 100%;
     width: 70%;
+
+    .edid-content-data {
+        text-align: center;
+    }
+}
+
+.edid-content tbody {
+    border: 1px solid $color-gray-middle;
+}
+
+.edid-content th {
+    padding: 8px;
+    border: 1px solid $color-gray-middle;
+    color: white;
+    background-color: $color-gray-middle;
 }

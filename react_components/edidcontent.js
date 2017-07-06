@@ -16,17 +16,44 @@ module.exports = React.createClass({
         return React.DOM.div({
                 className: "edid-content"
             },
-            React.DOM.div(
-                null, "Product Code: " + this.edidParser.getProductCode()),
-            React.DOM.div(
-                null, "Serial Number: " + this.edidParser.getSerialNumber()),
-            React.DOM.div(
-                null, "Week Manufacture: " + this.edidParser.getManufactureWeek()),
-            React.DOM.div(
-                null, "Year Manufacture: " + this.edidParser.getManufactureYear()),
-            React.DOM.div(
-                null, "EDID Version Number: " + this.edidParser.getEdidVersion()),
-            React.DOM.div(
-                null, "EDID Revision Number: " + this.edidParser.getEdidRevision()));
+            React.DOM.table(null,
+                React.DOM.tbody(null,
+                    React.DOM.tr(null,
+                        React.DOM.th(null, "Manufacturer & Product ID"),
+                        React.DOM.th(null, "")
+                    ),
+                    React.DOM.tr(null,
+                        React.DOM.td(null, "Manufacturer ID (PnPID):"),
+                        React.DOM.td({
+                            className: "edid-content-data"
+                        }, this.edidParser.getProductCode())
+                    ),
+                    React.DOM.tr(null,
+                        React.DOM.td(null, "Product ID:"),
+                        React.DOM.td({
+                            className: "edid-content-data"
+                        }, this.edidParser.getProductCode())
+                    ),
+                    React.DOM.tr(null,
+                        React.DOM.td(null, "Serial Number:"),
+                        React.DOM.td({
+                            className: "edid-content-data"
+                        }, this.edidParser.getSerialNumber())
+                    ),
+                    React.DOM.tr(null,
+                        React.DOM.td(null, "Week:"),
+                        React.DOM.td({
+                            className: "edid-content-data"
+                        }, this.edidParser.getManufactureWeek())
+                    ),
+                    React.DOM.tr(null,
+                        React.DOM.td(null, "Year:"),
+                        React.DOM.td({
+                            className: "edid-content-data"
+                        }, this.edidParser.getManufactureYear())
+                    )
+                )
+            )
+        );
     }
 });
