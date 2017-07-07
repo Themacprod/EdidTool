@@ -1005,8 +1005,14 @@ edidparser.prototype.getProductCode = function() {
     var PRODUCT_CODE1 = 10;
     var PRODUCT_CODE2 = 11;
 
-    return this.edidData[PRODUCT_CODE2] * 8 ||
-        this.edidData[PRODUCT_CODE1];
+    var hexValue = ((this.edidData[PRODUCT_CODE2] << 8) +
+        this.edidData[PRODUCT_CODE1]).toString(16).toUpperCase();
+
+    if (hexValue.length < 4) {
+        hexValue = "0" + hexValue;
+    }
+
+    return hexValue;
 };
 
 edidparser.prototype.getManufacturerId = function() {
