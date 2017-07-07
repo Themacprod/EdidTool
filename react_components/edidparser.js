@@ -1,5 +1,8 @@
 "use strict";
 
+var _ = require("lodash"),
+    manufacturerNames = require("./manufacturernames");
+
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
     this.WhiteAndSyncLevels = ["+0.7/-0.3 V", "+0.714/-0.286 V",
@@ -896,7 +899,9 @@ edidparser.prototype.parse = function() {
 
     this.productCode = this.getProductCode();
 
-    this.ManufacturerId = this.getManufacturerId();
+    this.manufacturerId = this.getManufacturerId();
+
+    this.manufacturerName = this.getManufacturerName();
 
     this.serialNumber = this.getSerialNumber();
 
@@ -1022,6 +1027,18 @@ edidparser.prototype.getManufacturerId = function() {
     string3 = String.fromCharCode(string3 + "A".charCodeAt(0));
 
     return string1 + string2 + string3;
+};
+
+edidparser.prototype.getManufacturerName = function() {
+    var found = _.find(manufacturerNames, _.bind(function(value) {
+        return value[0] === this.manufacturerId;
+    }, this));
+
+    if (found === undefined) {
+        return "-";
+    }
+
+    return found[1];
 };
 
 edidparser.prototype.getSerialNumber = function() {

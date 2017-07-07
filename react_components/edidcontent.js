@@ -29,6 +29,12 @@ module.exports = React.createClass({
                         }, this.edidParser.getManufacturerId())
                     ),
                     React.DOM.tr(null,
+                        React.DOM.td(null, "Manufacturer name:"),
+                        React.DOM.td({
+                            className: "edid-content-data"
+                        }, this.edidParser.getManufacturerName())
+                    ),
+                    React.DOM.tr(null,
                         React.DOM.td(null, "Product ID:"),
                         React.DOM.td({
                             className: "edid-content-data"
