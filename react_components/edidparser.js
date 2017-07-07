@@ -896,6 +896,8 @@ edidparser.prototype.parse = function() {
 
     this.productCode = this.getProductCode();
 
+    this.ManufacturerId = this.getManufacturerId();
+
     this.serialNumber = this.getSerialNumber();
 
     this.manufactureDate = this.getManufactureWeek() + "/" +
@@ -1002,6 +1004,25 @@ edidparser.prototype.getProductCode = function() {
         this.edidData[PRODUCT_CODE1];
 };
 
+edidparser.prototype.getManufacturerId = function() {
+    var MANUFACTURER_ID_1 = 9;
+    var MANUFACTURER_ID_2 = 8;
+
+    if ((this.edidData[MANUFACTURER_ID_2] === 0) || (this.edidData[MANUFACTURER_ID_1] === 0)) {
+        return "-";
+    }
+
+    var manufacturerid = (this.edidData[MANUFACTURER_ID_2] << 8) + this.edidData[MANUFACTURER_ID_1];
+    var string1 = ((manufacturerid >> 10) & 0x1f) - 1;
+    var string2 = ((manufacturerid >> 5) & 0x1f) - 1;
+    var string3 = (manufacturerid & 0x1f) - 1;
+
+    string1 = String.fromCharCode(string1 + "A".charCodeAt(0));
+    string2 = String.fromCharCode(string2 + "A".charCodeAt(0));
+    string3 = String.fromCharCode(string3 + "A".charCodeAt(0));
+
+    return string1 + string2 + string3;
+};
 
 edidparser.prototype.getSerialNumber = function() {
     var SERIAL_NUMBER1 = 12;
