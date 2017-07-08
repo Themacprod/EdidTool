@@ -1,256 +1,87 @@
-[[
-        "MTX", "Matrox Electronic Systems Ltd."
-    ],
-    [
-        "AOC", "AOC International (U.S.A.), Ltd."
-    ],
-    [
-        "API", "Acer"
-    ],
-    [
-        "APP", "Apple Computer, Inc."
-    ],
-    [
-        "ACI", "ASUSTek Computer Inc."
-    ],
-    [
-        "AST", "AST"
-    ],
-    [
-        "MAX", "Maxdata Computer Gmbh"
-    ],
-    [
-        "BNQ", "BenQ Corporation"
-    ],
-    [
-        "BRG", "Bridge Information Co., Ltd"
-    ],
-    [
-        "CPQ", "Compaq"
-    ],
-    [
-        "CTX", "CTX - Chuntex Electronic"
-    ],
-    [
-        "CPC", "Daewoo"
-    ],
-    [
-        "DWE", "Daewoo"
-    ],
-    [
-        "DEC", "DEC"
-    ],
-    [
-        "DEL", "Dell Computer Corp."
-    ],
-    [
-        "DPC", "Delta Electronics, Inc."
-    ],
-    [
-        "ECS", "ELITEGROUP Computer Systems"
-    ],
-    [
-        "EIZ", "EIZO NANAO"
-    ],
-    [
-        "ENC", "EIZO NANAO"
-    ],
-    [
-        "NAN", "EIZO NANAO"
-    ],
-    [
-        "ELS", "Elsa AG"
-    ],
-    [
-        "CCP", "EPSON"
-    ],
-    [
-        "EHJ", "EPSON"
-    ],
-    [
-        "SEC", "EPSON"
-    ],
-    [
-        "FPA", "FUJITSU"
-    ],
-    [
-        "FUJ", "FUJITSU"
-    ],
-    [
-        "FCM", "Funai Electric Company of Taiwan"
-    ],
-    [
-        "GWY", "Gateway"
-    ],
-    [
-        "HSL", "Hansol Electronics"
-    ],
-    [
-        "HIT", "Hitachi"
-    ],
-    [
-        "HTC", "Hitachi"
-    ],
-    [
-        "HWP", "Hewlett Packard"
-    ],
-    [
-        "HEI", "Hyundai Electronics Industries Co., Ltd"
-    ],
-    [
-        "IBM", "IBM"
-    ],
-    [
-        "ICL", "Fujitsu ICL"
-    ],
-    [
-        "IVM", "Iiyama"
-    ],
-    [
-        "IOD", "I-O DATA DEVICE, INC."
-    ],
-    [
-        "KDS", "Korea Data Systems"
-    ],
-    [
-        "GSM", "LG"
-    ],
-    [
-        "MAG", "MAG"
-    ],
-    [
-        "MIR", "Miro Computer Products AG"
-    ],
-    [
-        "MTC", "MITAC"
-    ],
-    [
-        "MEL", "NEC-MITSUBISHI ELECTRIC VISUAL SYSTEMS"
-    ],
-    [
-        "MDD", "MODIS"
-    ],
-    [
-        "NEC", "NEC"
-    ],
-    [
-        "ADI", "ADI"
-    ],
-    [
-        "NOK", "NOKIA"
-    ],
-    [
-        "OKI", "OKI"
-    ],
-    [
-        "PBN", "Packard Bell"
-    ],
-    [
-        "MEI", "Panasonic"
-    ],
-    [
-        "PHL", "Philips Consumer Electronics Co."
-    ],
-    [
-        "PLB", "PLB Monitor, Inc."
-    ],
-    [
-        "PGS", "Princeton Graphic Systems"
-    ],
-    [
-        "PTS", "Proview Technology Corp."
-    ],
-    [
-        "REL", "Relisys"
-    ],
-    [
-        "SAM", "Samsung"
-    ],
-    [
-        "SDI", "Samsung"
-    ],
-    [
-        "STN", "SAMTRON"
-    ],
-    [
-        "SIB", "SANYO"
-    ],
-    [
-        "SGX", "Silicon Graphics"
-    ],
-    [
-        "SML", "Smile International Corp."
-    ],
-    [
-        "SNY", "SONY Corporation"
-    ],
-    [
-        "SPT", "Sceptre Corporation"
-    ],
-    [
-        "STC", "Sampo"
-    ],
-    [
-        "TAT", "Tatung"
-    ],
-    [
-        "TAX", "Taxan"
-    ],
-    [
-        "TEA", "TEAC"
-    ],
-    [
-        "TOS", "Toshiba"
-    ],
-    [
-        "TTK", "TOTOKU"
-    ],
-    [
-        "TRL", "Royal Information Company"
-    ],
-    [
-        "TVM", "TVM"
-    ],
-    [
-        "UNM", "Unisys"
-    ],
-    [
-        "OQI", "ViewSonic"
-    ],
-    [
-        "VSC", "ViewSonic"
-    ],
-    [
-        "SHP", "Sharp"
-    ],
-    [
-        "FIM", "FIMI"
-    ],
-    [
-        "NDI", "National Display"
-    ],
-    [
-        "WKC", "Wide/Image System"
-    ],
-    [
-        "DYS", "Dooyang"
-    ],
-    [
-        "CTL", "Chilin"
-    ],
-    [
-        "BDS", "Barco"
-    ],
-    [
-        "PHL", "Philips Consumer Electronics Co."
-    ],
-    [
-        "PPM", "Clinton"
-    ],
-    [
-        "NEC", "NEC-MITSUBISHI ELECTRIC VISUAL SYSTEMS"
-    ],
-    [
-        "HYC", "Iheeyong"
-    ]
+[
+    ["ACI", "ASUSTek Computer Inc."],
+    ["ADI", "ADI"],
+    ["AOC", "AOC International (U.S.A.), Ltd."],
+    ["API", "Acer"],
+    ["APP", "Apple Computer, Inc."],
+    ["AST", "AST"],
+    ["BDS", "Barco"],
+    ["BNQ", "BenQ Corporation"],
+    ["BRG", "Bridge Information Co., Ltd"],
+    ["CCP", "EPSON"],
+    ["CPQ", "Compaq"],
+    ["CTL", "Chilin"],
+    ["CPC", "Daewoo"],
+    ["CTX", "CTX - Chuntex Electronic"],
+    ["DEC", "DEC"],
+    ["DEL", "Dell Computer Corp."],
+    ["DPC", "Delta Electronics, Inc."],
+    ["DWE", "Daewoo"],
+    ["DYS", "Dooyang"],
+    ["ECS", "ELITEGROUP Computer Systems"],
+    ["EHJ", "EPSON"],
+    ["EIZ", "EIZO NANAO"],
+    ["ELS", "Elsa AG"],
+    ["ENC", "EIZO NANAO"],
+    ["FCM", "Funai Electric Company of Taiwan"],
+    ["FIM", "FIMI"],
+    ["FPA", "FUJITSU"],
+    ["FUJ", "FUJITSU"],
+    ["GSM", "LG"],
+    ["GWY", "Gateway"],
+    ["HEI", "Hyundai Electronics Industries Co., Ltd"],
+    ["HIT", "Hitachi"],
+    ["HSL", "Hansol Electronics"],
+    ["HTC", "Hitachi"],
+    ["HWP", "Hewlett Packard"],
+    ["HYC", "Iheeyong"],
+    ["ICL", "Fujitsu ICL"],
+    ["IBM", "IBM"],
+    ["IOD", "I-O DATA DEVICE, INC."],
+    ["IVM", "Iiyama"],
+    ["KDS", "Korea Data Systems"],
+    ["MAG", "MAG"],
+    ["MAX", "Maxdata Computer Gmbh"],
+    ["MDD", "MODIS"],
+    ["MEI", "Panasonic"],
+    ["MEL", "NEC-MITSUBISHI ELECTRIC VISUAL SYSTEMS"],
+    ["MIR", "Miro Computer Products AG"],
+    ["MTC", "MITAC"],
+    ["MTX", "Matrox Electronic Systems Ltd."],
+    ["NAN", "EIZO NANAO"],
+    ["NDI", "National Display"],
+    ["NEC", "NEC"],
+    ["NEC", "NEC-MITSUBISHI ELECTRIC VISUAL SYSTEMS"],
+    ["NOK", "NOKIA"],
+    ["OKI", "OKI"],
+    ["OQI", "ViewSonic"],
+    ["PBN", "Packard Bell"],
+    ["PHL", "Philips Consumer Electronics Co."],
+    ["PGS", "Princeton Graphic Systems"],
+    ["PHL", "Philips Consumer Electronics Co."],
+    ["PLB", "PLB Monitor, Inc."],
+    ["PPM", "Clinton"],
+    ["PTS", "Proview Technology Corp."],
+    ["REL", "Relisys"],
+    ["SAM", "Samsung"],
+    ["SEC", "EPSON"],
+    ["SDI", "Samsung"],
+    ["SGX", "Silicon Graphics"],
+    ["SHP", "Sharp"],
+    ["SIB", "SANYO"],
+    ["SML", "Smile International Corp."],
+    ["SNY", "SONY Corporation"],
+    ["SPT", "Sceptre Corporation"],
+    ["STC", "Sampo"],
+    ["STN", "SAMTRON"],
+    ["TAT", "Tatung"],
+    ["TAX", "Taxan"],
+    ["TEA", "TEAC"],
+    ["TOS", "Toshiba"],
+    ["TRL", "Royal Information Company"],
+    ["TTK", "TOTOKU"],
+    ["TVM", "TVM"],
+    ["UNM", "Unisys"],
+    ["VSC", "ViewSonic"],
+    ["WKC", "Wide/Image System"]
 ]
