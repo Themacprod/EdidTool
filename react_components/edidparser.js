@@ -1053,9 +1053,9 @@ edidparser.prototype.getSerialNumber = function() {
     var SERIAL_NUMBER3 = 14;
     var SERIAL_NUMBER4 = 15;
 
-    return this.edidData[SERIAL_NUMBER4] * 24 ||
-        this.edidData[SERIAL_NUMBER3] * 16 ||
-        this.edidData[SERIAL_NUMBER2] * 8 ||
+    return (this.edidData[SERIAL_NUMBER4] << 24) +
+        (this.edidData[SERIAL_NUMBER3] << 16) +
+        (this.edidData[SERIAL_NUMBER2] << 8) +
         this.edidData[SERIAL_NUMBER1];
 };
 
