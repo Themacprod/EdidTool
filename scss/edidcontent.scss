@@ -1,3 +1,9 @@
+$border-size: 1;
+$border-size-with: $border-size * 2;
+$title-padding-size: 8px;
+$subgroup-detail: 210;
+$subgroup-data: 200;
+
 .edid-content {
     float: right;
     height: 100%;
@@ -6,15 +12,26 @@
     .edid-content-data {
         text-align: center;
     }
-}
 
-.edid-content tbody {
-    border: 1px solid $color-gray-middle;
-}
+    .edid-content-group {
+        width: calc(#{$subgroup-data}px + #{$subgroup-detail}px + #{$border-size-with}px);
+        border: #{$border-size}px solid $color-gray-middle;
+    }
 
-.edid-content th {
-    padding: 8px;
-    border: 1px solid $color-gray-middle;
-    color: white;
-    background-color: $color-gray-middle;
+    .edid-content-title {
+        padding: $title-padding-size;
+        text-align: center;
+        color: white;
+        background-color: $color-gray-middle;
+    }
+
+    .subgroup-detail {
+        width: #{$subgroup-detail}px;
+        display: inline-block;
+    }
+
+    .subgroup-data {
+        width: #{$subgroup-data}px;
+        display: inline-block;
+    }
 }
