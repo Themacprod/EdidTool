@@ -35,6 +35,41 @@ module.exports = React.createClass({
             this.contentSubGroup("Year:", this.edidParser.getManufactureYear())
         );
     },
+    videoInputDefinition: function() {
+        var dbp = this.edidParser.getBasicDisplayParams();
+
+        return React.DOM.div({
+                className: "edid-content-group"
+            },
+            React.DOM.div({
+                className: "edid-content-title"
+            }, "Video Input Definition"),
+            React.DOM.div({
+                    className: "edid-content-subgroup"
+                }, React.DOM.div({
+                    className: "subgroup-radio"
+                }, React.DOM.input({
+                    type: "radio",
+                    readOnly: "readOnly",
+                    checked: dbp.digitalInput === false
+                })),
+                React.DOM.div({
+                    className: "subgroup-data"
+                }, " Analog")),
+            React.DOM.div({
+                    className: "edid-content-subgroup"
+                }, React.DOM.div({
+                    className: "subgroup-radio"
+                }, React.DOM.input({
+                    type: "radio",
+                    readOnly: "readOnly",
+                    checked: dbp.digitalInput === true
+                })),
+                React.DOM.div({
+                    className: "subgroup-data"
+                }, " Digital"))
+        );
+    },
     render: function() {
         this.edidParser.setEdidData(this.props.edid);
         this.edidParser.parse();
@@ -42,7 +77,8 @@ module.exports = React.createClass({
         return React.DOM.div({
                 className: "edid-content"
             },
-            React.DOM.div(null, this.manufacturerInfo())
+            React.DOM.div(null, this.manufacturerInfo()),
+            React.DOM.div(null, this.videoInputDefinition())
         );
     }
 });

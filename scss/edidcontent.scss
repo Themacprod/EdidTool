@@ -3,6 +3,7 @@ $border-size-with: $border-size * 2;
 $title-padding-size: 8px;
 $subgroup-detail: 210;
 $subgroup-data: 200;
+$subgroup-radio: 20;
 
 .edid-content {
     float: right;
@@ -32,6 +33,12 @@ $subgroup-data: 200;
 
     .subgroup-data {
         width: #{$subgroup-data}px;
+        display: inline-block;
+    }
+
+    .subgroup-radio {
+        width: #{$subgroup-radio}px;
+        text-align: center;
         display: inline-block;
     }
 }
