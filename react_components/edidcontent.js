@@ -20,6 +20,20 @@ module.exports = React.createClass({
             }, data)
         );
     },
+    contentSubGroupRadio: function(detail, checked) {
+        return React.DOM.div({
+                className: "edid-content-subgroup"
+            }, React.DOM.div({
+                className: "subgroup-radio"
+            }, React.DOM.input({
+                type: "radio",
+                readOnly: "readOnly",
+                checked: checked
+            })),
+            React.DOM.div({
+                className: "subgroup-data"
+            }, detail));
+    },
     manufacturerInfo: function() {
         return React.DOM.div({
                 className: "edid-content-group"
@@ -44,30 +58,8 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, "Video Input Definition"),
-            React.DOM.div({
-                    className: "edid-content-subgroup"
-                }, React.DOM.div({
-                    className: "subgroup-radio"
-                }, React.DOM.input({
-                    type: "radio",
-                    readOnly: "readOnly",
-                    checked: dbp.digitalInput === false
-                })),
-                React.DOM.div({
-                    className: "subgroup-data"
-                }, " Analog")),
-            React.DOM.div({
-                    className: "edid-content-subgroup"
-                }, React.DOM.div({
-                    className: "subgroup-radio"
-                }, React.DOM.input({
-                    type: "radio",
-                    readOnly: "readOnly",
-                    checked: dbp.digitalInput === true
-                })),
-                React.DOM.div({
-                    className: "subgroup-data"
-                }, " Digital"))
+            this.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
+            this.contentSubGroupRadio(" Digital", dbp.digitalInput === true)
         );
     },
     render: function() {
