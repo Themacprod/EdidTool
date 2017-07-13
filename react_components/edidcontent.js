@@ -34,6 +34,20 @@ module.exports = React.createClass({
                 className: "subgroup-data"
             }, detail));
     },
+    contentSubGroupCheckbox: function(detail, checked) {
+        return React.DOM.div({
+                className: "edid-content-subgroup"
+            }, React.DOM.div({
+                className: "subgroup-checkbox"
+            }, React.DOM.input({
+                type: "checkbox",
+                readOnly: "readOnly",
+                checked: checked
+            })),
+            React.DOM.div({
+                className: "subgroup-data"
+            }, detail));
+    },
     manufacturerInfo: function() {
         return React.DOM.div({
                 className: "edid-content-group"
@@ -59,7 +73,12 @@ module.exports = React.createClass({
                 className: "edid-content-title"
             }, "Video Input Definition"),
             this.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
-            this.contentSubGroupRadio(" Digital", dbp.digitalInput === true)
+            this.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
+            this.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
+            this.contentSubGroupCheckbox(" Composite Sync", (dbp.digitalInput === false) ? (dbp.compositeSyncSupported === true) : false),
+            this.contentSubGroupCheckbox(" Sync On Green", (dbp.digitalInput === false) ? (dbp.synOnGreen === true) : false),
+            this.contentSubGroupCheckbox(" Serration", (dbp.digitalInput === false) ? (dbp.vsyncSerrated === true) : false),
+            this.contentSubGroupRadio(" Digital", dbp.digitalInput)
         );
     },
     render: function() {

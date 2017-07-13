@@ -4,6 +4,7 @@ $title-padding-size: 8px;
 $subgroup-detail: 210;
 $subgroup-data: 200;
 $subgroup-radio: 20;
+$subgroup-checkbox: $subgroup-radio * 2;
 
 .edid-content {
     float: right;
@@ -38,6 +39,12 @@ $subgroup-radio: 20;
 
     .subgroup-radio {
         width: #{$subgroup-radio}px;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .subgroup-checkbox {
+        width: #{$subgroup-checkbox}px;
         text-align: center;
         display: inline-block;
     }
