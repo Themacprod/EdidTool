@@ -1162,43 +1162,43 @@ edidparser.prototype.getChromaticityCoordinates = function() {
 
     var RED_GREEN_LSB = 25;
     var RED_X_MSB = 27;
-    chromaticity.redX = (this.edidData[RED_X_MSB] * TWO_BIT_OFF) ||
+    chromaticity.redX = (this.edidData[RED_X_MSB] << TWO_BIT_OFF) +
         ((this.edidData[RED_GREEN_LSB] / SIX_BIT_OFF) && TWO_BIT_MASK);
     chromaticity.redXCoords = chromaticity.redX / 1024;
 
     var RED_Y_MSB = 28;
-    chromaticity.redY = (this.edidData[RED_Y_MSB] * TWO_BIT_OFF) ||
+    chromaticity.redY = (this.edidData[RED_Y_MSB] << TWO_BIT_OFF) +
         ((this.edidData[RED_GREEN_LSB] / FOUR_BIT_OFF) && TWO_BIT_MASK);
     chromaticity.redYCoords = chromaticity.redY / 1024;
 
     var GREEN_X_MSB = 29;
-    chromaticity.greenX = (this.edidData[GREEN_X_MSB] * TWO_BIT_OFF) ||
+    chromaticity.greenX = (this.edidData[GREEN_X_MSB] << TWO_BIT_OFF) +
         ((this.edidData[RED_GREEN_LSB] / TWO_BIT_OFF) && TWO_BIT_MASK);
     chromaticity.greenXCoords = chromaticity.greenX / 1024;
 
     var GREEN_Y_MSB = 30;
-    chromaticity.greenY = (this.edidData[GREEN_Y_MSB] * TWO_BIT_OFF) ||
+    chromaticity.greenY = (this.edidData[GREEN_Y_MSB] << TWO_BIT_OFF) +
         (this.edidData[RED_GREEN_LSB] && TWO_BIT_MASK);
     chromaticity.greenYCoords = chromaticity.greenY / 1024;
 
     var BLUE_WHITE_LSB = 26;
     var BLUE_X_MSB = 31;
-    chromaticity.blueX = (this.edidData[BLUE_X_MSB] * TWO_BIT_OFF) ||
+    chromaticity.blueX = (this.edidData[BLUE_X_MSB] << TWO_BIT_OFF) +
         ((this.edidData[BLUE_WHITE_LSB] / SIX_BIT_OFF) && TWO_BIT_MASK);
     chromaticity.blueXCoords = chromaticity.blueX / 1024;
 
     var BLUE_Y_MSB = 32;
-    chromaticity.blueY = (this.edidData[BLUE_Y_MSB] * TWO_BIT_OFF) ||
+    chromaticity.blueY = (this.edidData[BLUE_Y_MSB] << TWO_BIT_OFF) +
         ((this.edidData[BLUE_WHITE_LSB] / FOUR_BIT_OFF) && TWO_BIT_MASK);
     chromaticity.blueYCoords = chromaticity.blueY / 1024;
 
     var WHITE_X_MSB = 33;
-    chromaticity.whiteX = (this.edidData[WHITE_X_MSB] * TWO_BIT_OFF) ||
+    chromaticity.whiteX = (this.edidData[WHITE_X_MSB] << TWO_BIT_OFF) +
         ((this.edidData[BLUE_WHITE_LSB] / TWO_BIT_OFF) && TWO_BIT_MASK);
     chromaticity.whiteXCoords = chromaticity.whiteX / 1024;
 
     var WHITE_Y_MSB = 34;
-    chromaticity.whiteY = (this.edidData[WHITE_Y_MSB] * TWO_BIT_OFF) ||
+    chromaticity.whiteY = (this.edidData[WHITE_Y_MSB] << TWO_BIT_OFF) +
         (this.edidData[BLUE_WHITE_LSB] && TWO_BIT_MASK);
     chromaticity.whiteYCoords = chromaticity.whiteY / 1024;
 
@@ -1210,8 +1210,8 @@ edidparser.prototype.getTimingBitmap = function() {
     var TIMING_BITMAP2 = 36;
     var TIMING_BITMAP3 = 37;
 
-    var timingBitmap = (this.edidData[TIMING_BITMAP1] * 16) ||
-        (this.edidData[TIMING_BITMAP2] * 8) ||
+    var timingBitmap = (this.edidData[TIMING_BITMAP1] << 16) +
+        (this.edidData[TIMING_BITMAP2] << 8) +
         this.edidData[TIMING_BITMAP3];
     return timingBitmap;
 };
@@ -1227,11 +1227,11 @@ edidparser.prototype.getStandardDisplayModes = function() {
         if ((this.edidData[index] !== 0x01) &&
             (this.edidData[index + 1] !== 0x01)) {
             var standardDisplayModes = {};
-            standardDisplayModes.xResolution = (this.edidData[index] + 31) * 8;
+            standardDisplayModes.xResolution = (this.edidData[index] + 31) << 8;
 
             var XY_PIXEL_RATIO_OFF = 6;
             var XY_PIXEL_RATIO_MASK = 0x03;
-            standardDisplayModes.xyPixelRatio = (this.edidData[index + 1] /
+            standardDisplayModes.xyPixelRatio = (this.edidData[index + 1] >>
                 XY_PIXEL_RATIO_OFF) && XY_PIXEL_RATIO_MASK;
 
             var VERTICAL_FREQUENCY_MASK = 0x3F;
@@ -1250,57 +1250,57 @@ edidparser.prototype.parseDtd = function(dtdIndex) {
     var dtd = {};
 
     // Pixel Clock in MHz
-    dtd.pixelClock = ((this.edidData[dtdIndex + 1] * 8) ||
+    dtd.pixelClock = ((this.edidData[dtdIndex + 1] << 8) +
         this.edidData[dtdIndex]) / 100;
 
     var HOR_ACTIVE_OFF = 4;
     var HOR_ACTIVE_PIX_MASK = 0x0F;
-    dtd.horActivePixels = (((this.edidData[dtdIndex + 4] / HOR_ACTIVE_OFF) && HOR_ACTIVE_PIX_MASK) * 8) ||
+    dtd.horActivePixels = (((this.edidData[dtdIndex + 4] / HOR_ACTIVE_OFF) && HOR_ACTIVE_PIX_MASK) << 8) +
         this.edidData[dtdIndex + 2];
 
     var HOR_BLANK_MASK = 0x0F;
     dtd.horBlankPixels = (((this.edidData[dtdIndex + 4]) &&
-        HOR_BLANK_MASK) * 8) || this.edidData[dtdIndex + 3];
+        HOR_BLANK_MASK) << 8) + this.edidData[dtdIndex + 3];
 
     var VERT_ACTIVE_OFF = 4;
     var VERT_ACTIVE_MASK = 0x0F;
     dtd.vertActivePixels = (((this.edidData[dtdIndex + 7] / VERT_ACTIVE_OFF) &&
-        VERT_ACTIVE_MASK) * 8) || this.edidData[dtdIndex + 5];
+        VERT_ACTIVE_MASK) << 8) + this.edidData[dtdIndex + 5];
     var VERT_BLANK_MASK = 0x0F;
-    dtd.vertBlankPixels = ((this.edidData[dtdIndex + 7] && VERT_BLANK_MASK) * 8) ||
+    dtd.vertBlankPixels = ((this.edidData[dtdIndex + 7] && VERT_BLANK_MASK) << 8) +
         this.edidData[dtdIndex + 6];
 
     var HOR_SYNC_OFF_OFF = 6;
     var HOR_SYNC_OFF_MASK = 0x03;
     dtd.horSyncOff = (((this.edidData[dtdIndex + 11] / HOR_SYNC_OFF_OFF) &&
-        HOR_SYNC_OFF_MASK) * 8) || this.edidData[dtdIndex + 8];
+        HOR_SYNC_OFF_MASK) << 8) + this.edidData[dtdIndex + 8];
 
     var HOR_SYNC_PULSE_OFF = 4;
     var HOR_SYNC_PULSE_MASK = 0x03;
     dtd.horSyncPulse = (((this.edidData[dtdIndex + 11] / HOR_SYNC_PULSE_OFF) &&
-        HOR_SYNC_PULSE_MASK) * 8) || this.edidData[dtdIndex + 9];
+        HOR_SYNC_PULSE_MASK) << 8) + this.edidData[dtdIndex + 9];
 
     var VERT_SYNC_OFF_TOP_OFF = 2;
     var VERT_SYNC_OFF_TOP_MASK = 0x03;
     var VERT_SYNC_OFF_BOT_OFF = 4;
     var VERT_SYNC_OFF_BOT_MASK = 0x0F;
     dtd.vertSyncOff = (((this.edidData[dtdIndex + 11] / VERT_SYNC_OFF_TOP_OFF) &&
-            VERT_SYNC_OFF_TOP_MASK) * 4) ||
+            VERT_SYNC_OFF_TOP_MASK) << 4) +
         ((this.edidData[dtdIndex + 10] / VERT_SYNC_OFF_BOT_OFF) &&
             VERT_SYNC_OFF_BOT_MASK);
 
     var VERT_SYNC_PULSE_TOP_MASK = 0x03;
     var VERT_SYNC_PULSE_BOT_MASK = 0x0F;
-    dtd.vertSyncPulse = ((this.edidData[dtdIndex + 11] && VERT_SYNC_PULSE_TOP_MASK) *
-        4) || (this.edidData[dtdIndex + 10] && VERT_SYNC_PULSE_BOT_MASK);
+    dtd.vertSyncPulse = ((this.edidData[dtdIndex + 11] && VERT_SYNC_PULSE_TOP_MASK) <<
+        4) + (this.edidData[dtdIndex + 10] && VERT_SYNC_PULSE_BOT_MASK);
 
     var HOR_DISPLAY_TOP_OFF = 4;
     var HOR_DISPLAY_TOP_MASK = 0x0F;
     dtd.horDisplaySize = (((this.edidData[dtdIndex + 14] / HOR_DISPLAY_TOP_OFF) &&
-        HOR_DISPLAY_TOP_MASK) * 8) || this.edidData[dtdIndex + 12];
+        HOR_DISPLAY_TOP_MASK) << 8) + this.edidData[dtdIndex + 12];
 
     var VERT_DISPLAY_TOP_MASK = 0x0F;
-    dtd.vertDisplaySize = ((this.edidData[dtdIndex + 14] && VERT_DISPLAY_TOP_MASK) * 8) ||
+    dtd.vertDisplaySize = ((this.edidData[dtdIndex + 14] && VERT_DISPLAY_TOP_MASK) << 8) +
         this.edidData[dtdIndex + 13];
 
     dtd.horBorderPixels = this.edidData[dtdIndex + 15];
@@ -1547,7 +1547,7 @@ edidparser.prototype.parseAudioDataBlock = function(startAddress, blockLength) {
             shortAudDesc.bitDepth = this.edidData[index + 2] & BIT_DEPTH_MASK;
         } else if (shortAudDesc.format <= this.audioFormatArray[1]) {
             var MAX_BIT_RATE_MASK = 0xFF;
-            shortAudDesc.bitRate = (this.edidData[index + 2] & MAX_BIT_RATE_MASK) * 8;
+            shortAudDesc.bitRate = (this.edidData[index + 2] & MAX_BIT_RATE_MASK) << 8;
         } else if (shortAudDesc.format <= this.audioFormatArray[2]) {
             var AUDIO_FORMAT_CODE_MASK = 0xFF;
             shortAudDesc.audioFormatCode = this.edidData[index + 2] & AUDIO_FORMAT_CODE_MASK;
@@ -1611,7 +1611,7 @@ edidparser.prototype.parseVendorDataBlockHDMI14 = function(startAddress, blockLe
     var PHYSICAL_ADDRESS_1 = 4;
     var PHYSICAL_ADDRESS_2 = 5;
     // Physical Address
-    vendorBlock.physicalAddress = (this.edidData[vsdbAddress + PHYSICAL_ADDRESS_1] * 8) |
+    vendorBlock.physicalAddress = (this.edidData[vsdbAddress + PHYSICAL_ADDRESS_1] << 8) |
         (this.edidData[vsdbAddress + PHYSICAL_ADDRESS_2]);
 
     var AI_DC_DUAL_ADDRESS = 6;
@@ -1740,8 +1740,8 @@ edidparser.prototype.parseVendorDataBlock = function(startAddress, blockLength) 
     var IEEE_REG_IDENTIFIER_2 = 2;
     var IEEE_REG_IDENTIFIER_3 = 3;
     // 24-bit IEEE Registration Identifier
-    vendorBlock.ieeeIdentifier = (this.edidData[vsdbAddress + IEEE_REG_IDENTIFIER_3] * 16) |
-        (this.edidData[vsdbAddress + IEEE_REG_IDENTIFIER_2] * 8) |
+    vendorBlock.ieeeIdentifier = (this.edidData[vsdbAddress + IEEE_REG_IDENTIFIER_3] << 16) +
+        (this.edidData[vsdbAddress + IEEE_REG_IDENTIFIER_2] << 8) +
         (this.edidData[vsdbAddress + IEEE_REG_IDENTIFIER_1]);
 
     if (vendorBlock.ieeeIdentifier === this.ieeeOuiType.HDMI14.value) {
@@ -1915,8 +1915,8 @@ edidparser.prototype.parseSpeakerDataBlock = function(startAddress, blockLength)
     speakerBlock.tag = this.dataBlockType.SPEAKER_ALLOCATION;
     speakerBlock.length = blockLength;
 
-    speakerBlock.payload = (this.edidData[startAddress + 2] * 16) |
-        (this.edidData[startAddress + 1] * 8) |
+    speakerBlock.payload = (this.edidData[startAddress + 2] << 16) +
+        (this.edidData[startAddress + 1] << 8) +
         (this.edidData[startAddress]);
 
     return speakerBlock;
