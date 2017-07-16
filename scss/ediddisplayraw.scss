@@ -1,17 +1,18 @@
-$cellwidth: 35px;
+$cellwidth: 35;
+$nbofcell: 10;
+$edid-raw-size: $cellwidth * $nbofcell + (4 * $nbofcell) + ($cellwidth * 2);
 
 .edid-raw {
-    float: left;
-    height: 100%;
-    width: 30%;
+    width: #{$edid-raw-size}px;
+    display: inline-block;
 
     .input-grid-line {
-        margin-left: $cellwidth;
-        margin-right: $cellwidth;
+        margin-left: #{$cellwidth}px;
+        margin-right: #{$cellwidth}px;
     }
 
     .input-grid {
-        width: $cellwidth;
+        width: #{$cellwidth}px;
         color: black;
         text-align: center;
 
@@ -21,7 +22,7 @@ $cellwidth: 35px;
     }
 
     .input-grid-selected {
-        width: $cellwidth;
+        width: #{$cellwidth}px;
         color: white;
         text-align: center;
         background-color: #2a2a2a;
