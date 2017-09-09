@@ -3,50 +3,12 @@
 "use strict";
 
 var React = require("react"),
-    EdidParser = require("./edidparser");
+    EdidParser = require("./edidparser"),
+    Func = require("./edidcontent-func");
 
 module.exports = React.createClass({
     componentWillMount: function() {
         this.edidParser = new EdidParser();
-    },
-    contentSubGroup: function(detail, data) {
-        return React.DOM.div({
-                className: "edid-content-subgroup"
-            }, React.DOM.div({
-                className: "subgroup-detail"
-            }, detail),
-            React.DOM.div({
-                className: "subgroup-data"
-            }, data)
-        );
-    },
-    contentSubGroupRadio: function(detail, checked) {
-        return React.DOM.div({
-                className: "edid-content-subgroup"
-            }, React.DOM.div({
-                className: "subgroup-radio"
-            }, React.DOM.input({
-                type: "radio",
-                readOnly: "readOnly",
-                checked: checked
-            })),
-            React.DOM.div({
-                className: "subgroup-data"
-            }, detail));
-    },
-    contentSubGroupCheckbox: function(detail, checked) {
-        return React.DOM.div({
-                className: "edid-content-subgroup"
-            }, React.DOM.div({
-                className: "subgroup-checkbox"
-            }, React.DOM.input({
-                type: "checkbox",
-                readOnly: "readOnly",
-                checked: checked
-            })),
-            React.DOM.div({
-                className: "subgroup-data"
-            }, detail));
     },
     manufacturerInfo: function() {
         return React.DOM.div({
@@ -55,12 +17,12 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, "Manufacturer & Product ID"),
-            this.contentSubGroup("Manufacturer ID (PnPID):", this.edidParser.getManufacturerId()),
-            this.contentSubGroup("Manufacturer name:", this.edidParser.getManufacturerName()),
-            this.contentSubGroup("Product ID:", this.edidParser.getProductCode()),
-            this.contentSubGroup("Serial Number:", this.edidParser.getSerialNumber()),
-            this.contentSubGroup("Week:", this.edidParser.getManufactureWeek()),
-            this.contentSubGroup("Year:", this.edidParser.getManufactureYear())
+            Func.contentSubGroup("Manufacturer ID (PnPID):", this.edidParser.getManufacturerId()),
+            Func.contentSubGroup("Manufacturer name:", this.edidParser.getManufacturerName()),
+            Func.contentSubGroup("Product ID:", this.edidParser.getProductCode()),
+            Func.contentSubGroup("Serial Number:", this.edidParser.getSerialNumber()),
+            Func.contentSubGroup("Week:", this.edidParser.getManufactureWeek()),
+            Func.contentSubGroup("Year:", this.edidParser.getManufactureYear())
         );
     },
     videoInputDefinition: function() {
@@ -72,13 +34,13 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, "Video Input Definition"),
-            this.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
-            this.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
-            this.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
-            this.contentSubGroupCheckbox(" Composite Sync", (dbp.digitalInput === false) ? (dbp.compositeSyncSupported === true) : false),
-            this.contentSubGroupCheckbox(" Sync On Green", (dbp.digitalInput === false) ? (dbp.synOnGreen === true) : false),
-            this.contentSubGroupCheckbox(" Serration", (dbp.digitalInput === false) ? (dbp.vsyncSerrated === true) : false),
-            this.contentSubGroupRadio(" Digital", dbp.digitalInput)
+            Func.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
+            Func.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
+            Func.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
+            Func.contentSubGroupCheckbox(" Composite Sync", (dbp.digitalInput === false) ? (dbp.compositeSyncSupported === true) : false),
+            Func.contentSubGroupCheckbox(" Sync On Green", (dbp.digitalInput === false) ? (dbp.synOnGreen === true) : false),
+            Func.contentSubGroupCheckbox(" Serration", (dbp.digitalInput === false) ? (dbp.vsyncSerrated === true) : false),
+            Func.contentSubGroupRadio(" Digital", dbp.digitalInput)
         );
     },
     render: function() {
