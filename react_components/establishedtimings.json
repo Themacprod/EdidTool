@@ -1,0 +1,122 @@
+[
+    {
+        "hactive": 720,
+        "vactive": 400,
+        "refresh": 70,
+        "description": "IBM, VGA",
+        "byte": 0,
+        "bit": 7
+    }, {
+        "hactive": 720,
+        "vactive": 400,
+        "refresh": 88,
+        "description": "IBM, XGA2",
+        "byte": 0,
+        "bit": 6
+    }, {
+        "hactive": 640,
+        "vactive": 480,
+        "refresh": 60,
+        "description": "IBM, VGA",
+        "byte": 0,
+        "bit": 5
+    }, {
+        "hactive": 640,
+        "vactive": 480,
+        "refresh": 67,
+        "description": "Apple, Mac II",
+        "byte": 0,
+        "bit": 4
+    }, {
+        "hactive": 640,
+        "vactive": 480,
+        "refresh": 72,
+        "description": "VESA",
+        "byte": 0,
+        "bit": 3
+    }, {
+        "hactive": 640,
+        "vactive": 480,
+        "refresh": 75,
+        "description": "VESA",
+        "byte": 0,
+        "bit": 2
+    }, {
+        "hactive": 800,
+        "vactive": 600,
+        "refresh": 56,
+        "description": "VESA",
+        "byte": 0,
+        "bit": 1
+    }, {
+        "hactive": 800,
+        "vactive": 600,
+        "refresh": 60,
+        "description": "VESA",
+        "byte": 0,
+        "bit": 0
+    }, {
+        "hactive": 800,
+        "vactive": 600,
+        "refresh": 72,
+        "description": "VESA",
+        "byte": 1,
+        "bit": 7
+    }, {
+        "hactive": 800,
+        "vactive": 600,
+        "refresh": 75,
+        "description": "VESA",
+        "byte": 1,
+        "bit": 6
+    }, {
+        "hactive": 832,
+        "vactive": 624,
+        "refresh": 75,
+        "description": "Apple, Mac II",
+        "byte": 1,
+        "bit": 5
+    }, {
+        "hactive": 1024,
+        "vactive": 768,
+        "refresh": 87,
+        "description": "IBM - Interl.",
+        "byte": 1,
+        "bit": 4
+    }, {
+        "hactive": 1024,
+        "vactive": 768,
+        "refresh": 60,
+        "description": "VESA",
+        "byte": 1,
+        "bit": 3
+    }, {
+        "hactive": 1024,
+        "vactive": 768,
+        "refresh": 70,
+        "description": "VESA",
+        "byte": 1,
+        "bit": 2
+    }, {
+        "hactive": 1024,
+        "vactive": 768,
+        "refresh": 75,
+        "description": "VESA",
+        "byte": 1,
+        "bit": 1
+    }, {
+        "hactive": 1280,
+        "vactive": 1024,
+        "refresh": 75,
+        "description": "VESA",
+        "byte": 1,
+        "bit": 0
+    }, {
+        "hactive": 1152,
+        "vactive": 870,
+        "refresh": 75,
+        "description": "Apple, Mac II",
+        "byte": 2,
+        "bit": 7
+    }
+]
