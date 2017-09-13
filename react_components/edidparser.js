@@ -2,8 +2,7 @@
 
 var _ = require("lodash"),
     manufacturerNames = require("./manufacturernames"),
-    establishedtimings = require("./establishedtimings"),
-    ceatimings = require("./ceatimings");
+    establishedtimings = require("./establishedtimings");
 
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
