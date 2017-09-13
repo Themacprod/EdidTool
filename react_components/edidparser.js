@@ -449,8 +449,12 @@ edidparser.prototype.getEstablishedModes = function() {
 
     _.forEach(establishedtimings, function(establishedtiming) {
         if (timingBitmap & (1 << establishedtiming.bit)) {
-            establishedModes.push(establishedtiming);
+            establishedtiming.checked = true;
+        } else {
+            establishedtiming.checked = false;
         }
+
+        establishedModes.push(establishedtiming);
     });
 
     return establishedModes;

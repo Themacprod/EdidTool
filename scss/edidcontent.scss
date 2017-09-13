@@ -5,10 +5,11 @@ $subgroup-detail: 210;
 $subgroup-data: 200;
 $subgroup-radio: 20;
 $subgroup-checkbox: $subgroup-radio * 2;
+$subgroup-radio-detail: $subgroup-data + $subgroup-detail - $border-size-with - $subgroup-radio * 2;
 
 .edid-content {
     display: inline-block;
-    vertical-align:top;
+    vertical-align: top;
 
     .edid-content-data {
         text-align: center;
@@ -39,6 +40,11 @@ $subgroup-checkbox: $subgroup-radio * 2;
     .subgroup-radio {
         width: #{$subgroup-radio}px;
         text-align: center;
+        display: inline-block;
+    }
+
+    .subgroup-detail-radio {
+        width: #{$subgroup-radio-detail}px;
         display: inline-block;
     }
 

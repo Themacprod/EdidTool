@@ -11,23 +11,10 @@ module.exports = React.createClass({
     componentWillMount: function() {
         this.edidParser = new EdidParser();
     },
-    generateEstablished: function(data, index) {
-        return React.DOM.div({
-                className: "edid-content-subgroup"
-            }, React.DOM.div({
-                className: "subgroup-detail"
-            }, "Mode #" + index),
-            React.DOM.div({
-                    className: "subgroup-data"
-                }, data.hactive +
-                "x" +
-                data.vactive +
-                " @ " +
-                data.refresh +
-                " Hz [" +
-                data.description +
-                "]")
-        );
+    generateEstablished: function(data) {
+        return Func.contentSubGroupCheckbox(
+            data.hactive + "x" + data.vactive + " @ " + data.refresh + " Hz [" + data.description + "]",
+            data.checked);
     },
     manufacturerInfo: function() {
         return React.DOM.div({

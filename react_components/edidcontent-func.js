@@ -42,7 +42,7 @@ var contentSubGroupCheckbox = function(detail, checked) {
             checked: checked
         })),
         React.DOM.div({
-            className: "subgroup-data"
+            className: "subgroup-detail-radio"
         }, detail));
 };
 
