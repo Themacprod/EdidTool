@@ -13,22 +13,22 @@ module.exports = React.createClass({
     },
     generateEstablished: function(data, index) {
         return React.DOM.div({
-            className: "edid-content-subgroup"
-          }, React.DOM.div({
-            className: "subgroup-detail"
-        }, "Mode #" + index),
-          React.DOM.div({
-            className: "subgroup-data"
-        },  data.hactive +
-            "x" +
-            data.vactive +
-            " @ " +
-            data.refresh +
-            " Hz [" +
-            data.description +
-            "]")
+                className: "edid-content-subgroup"
+            }, React.DOM.div({
+                className: "subgroup-detail"
+            }, "Mode #" + index),
+            React.DOM.div({
+                    className: "subgroup-data"
+                }, data.hactive +
+                "x" +
+                data.vactive +
+                " @ " +
+                data.refresh +
+                " Hz [" +
+                data.description +
+                "]")
         );
-	},
+    },
     manufacturerInfo: function() {
         return React.DOM.div({
                 className: "edid-content-group"
@@ -63,20 +63,20 @@ module.exports = React.createClass({
         );
     },
     establishedTimings: function() {
-      var establishedModes = this.edidParser.getEstablishedModes();
+        var establishedModes = this.edidParser.getEstablishedModes();
 
-      return React.DOM.div({
-              className: "edid-content-group"
-          },
-          React.DOM.div({
-              className: "edid-content-title"
-          }, "Established timings"),
-          React.DOM.div({
-			className: "edid-content-established"
-		      },
-			_.map(establishedModes, this.generateEstablished)
-		)
-      );
+        return React.DOM.div({
+                className: "edid-content-group"
+            },
+            React.DOM.div({
+                className: "edid-content-title"
+            }, "Established timings"),
+            React.DOM.div({
+                    className: "edid-content-established"
+                },
+                _.map(establishedModes, this.generateEstablished)
+            )
+        );
     },
     render: function() {
         this.edidParser.setEdidData(this.props.edid);
