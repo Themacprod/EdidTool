@@ -4,12 +4,31 @@
 
 var React = require("react"),
     EdidParser = require("./edidparser"),
-    Func = require("./edidcontent-func");
+    Func = require("./edidcontent-func"),
+    _ = require("lodash");
 
 module.exports = React.createClass({
     componentWillMount: function() {
         this.edidParser = new EdidParser();
     },
+    generateEstablished: function(data, index) {
+        return React.DOM.div({
+            className: "edid-content-subgroup"
+          }, React.DOM.div({
+            className: "subgroup-detail"
+        }, "Mode #" + index),
+          React.DOM.div({
+            className: "subgroup-data"
+        },  data.hactive +
+            "x" +
+            data.vactive +
+            " @ " +
+            data.refresh +
+            " Hz [" +
+            data.description +
+            "]")
+        );
+	},
     manufacturerInfo: function() {
         return React.DOM.div({
                 className: "edid-content-group"
@@ -43,6 +62,22 @@ module.exports = React.createClass({
             Func.contentSubGroupRadio(" Digital", dbp.digitalInput)
         );
     },
+    establishedTimings: function() {
+      var establishedModes = this.edidParser.getEstablishedModes();
+
+      return React.DOM.div({
+              className: "edid-content-group"
+          },
+          React.DOM.div({
+              className: "edid-content-title"
+          }, "Established timings"),
+          React.DOM.div({
+			className: "edid-content-established"
+		      },
+			_.map(establishedModes, this.generateEstablished)
+		)
+      );
+    },
     render: function() {
         this.edidParser.setEdidData(this.props.edid);
         this.edidParser.parse();
@@ -51,7 +86,8 @@ module.exports = React.createClass({
                 className: "edid-content"
             },
             React.DOM.div(null, this.manufacturerInfo()),
-            React.DOM.div(null, this.videoInputDefinition())
+            React.DOM.div(null, this.videoInputDefinition()),
+            React.DOM.div(null, this.establishedTimings())
         );
     }
 });
