@@ -445,13 +445,13 @@ edidparser.prototype.getEstablishedModes = function() {
         (this.edidData[TIMING_BITMAP2] << 8) +
         this.edidData[TIMING_BITMAP1];
 
-    var establishedModes = []
+    var establishedModes = [];
 
     _.forEach(establishedtimings, function(establishedtiming) {
         if (timingBitmap & (1 << establishedtiming.bit)) {
             establishedModes.push(establishedtiming);
         }
-	});
+    });
 
     return establishedModes;
 };
