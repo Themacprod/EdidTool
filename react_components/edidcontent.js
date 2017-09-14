@@ -11,10 +11,11 @@ module.exports = React.createClass({
     componentWillMount: function() {
         this.edidParser = new EdidParser();
     },
-    generateEstablished: function(data) {
-        return Func.contentSubGroupCheckbox(
+    generateEstablished: function(data, key) {
+        return Func.contentSubGroupCheckboxKey(
             data.hactive + "x" + data.vactive + " @ " + data.refresh + " Hz [" + data.description + "]",
-            data.checked);
+            data.checked,
+            key);
     },
     manufacturerInfo: function() {
         return React.DOM.div({
@@ -50,18 +51,35 @@ module.exports = React.createClass({
         );
     },
     establishedTimings: function() {
-        var establishedModes = this.edidParser.getEstablishedModes();
-
         return React.DOM.div({
                 className: "edid-content-group"
             },
             React.DOM.div({
                 className: "edid-content-title"
             }, "Established timings"),
+            React.DOM.div(null, "Established Timings I"),
             React.DOM.div({
                     className: "edid-content-established"
                 },
-                _.map(establishedModes, this.generateEstablished)
+                _.map(this.edidParser.getEstablishedModes1(), _.bind(function(establishedMode, key) {
+                    return this.generateEstablished(establishedMode, key);
+                }, this))
+            ),
+            React.DOM.div(null, "Established Timings II"),
+            React.DOM.div({
+                    className: "edid-content-established"
+                },
+                _.map(this.edidParser.getEstablishedModes2(), _.bind(function(establishedMode, key) {
+                    return this.generateEstablished(establishedMode, key);
+                }, this))
+            ),
+            React.DOM.div(null, "Manufacturer's Timings"),
+            React.DOM.div({
+                    className: "edid-content-established"
+                },
+                _.map(this.edidParser.getEstablishedModes3(), _.bind(function(establishedMode, key) {
+                    return this.generateEstablished(establishedMode, key);
+                }, this))
             )
         );
     },

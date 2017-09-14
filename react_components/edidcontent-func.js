@@ -46,8 +46,25 @@ var contentSubGroupCheckbox = function(detail, checked) {
         }, detail));
 };
 
+var contentSubGroupCheckboxKey = function(detail, checked, key) {
+    return React.DOM.div({
+            className: "edid-content-subgroup",
+            key: key
+        }, React.DOM.div({
+            className: "subgroup-checkbox"
+        }, React.DOM.input({
+            type: "checkbox",
+            readOnly: "readOnly",
+            checked: checked
+        })),
+        React.DOM.div({
+            className: "subgroup-detail-radio"
+        }, detail));
+};
+
 module.exports = {
     contentSubGroup: contentSubGroup,
     contentSubGroupRadio: contentSubGroupRadio,
-    contentSubGroupCheckbox: contentSubGroupCheckbox
+    contentSubGroupCheckbox: contentSubGroupCheckbox,
+    contentSubGroupCheckboxKey: contentSubGroupCheckboxKey
 };

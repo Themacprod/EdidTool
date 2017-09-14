@@ -4,6 +4,22 @@ var _ = require("lodash"),
     manufacturerNames = require("./manufacturernames"),
     establishedtimings = require("./establishedtimings");
 
+var extractEstablished = function(edidData, offsetEstablished, establishedtimingsarray) {
+    var establishedModes = [];
+
+    _.forEach(establishedtimingsarray, function(establishedtiming) {
+        if (edidData[offsetEstablished] & (1 << establishedtiming.bit)) {
+            establishedtiming.checked = true;
+        } else {
+            establishedtiming.checked = false;
+        }
+
+        establishedModes.push(establishedtiming);
+    });
+
+    return establishedModes;
+};
+
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
     this.WhiteAndSyncLevels = ["+0.7/-0.3 V", "+0.714/-0.286 V",
@@ -146,7 +162,11 @@ edidparser.prototype.parse = function() {
 
     this.chromaticity = this.getChromaticityCoordinates();
 
-    this.establishedModes = this.getEstablishedModes();
+    this.establishedModes1 = this.getEstablishedModes1();
+
+    this.establishedModes2 = this.getEstablishedModes2();
+
+    this.establishedModes3 = this.getEstablishedModes3();
 
     this.standardDisplayModes = this.getStandardDisplayModes();
 
@@ -436,28 +456,19 @@ edidparser.prototype.getChromaticityCoordinates = function() {
     return chromaticity;
 };
 
-edidparser.prototype.getEstablishedModes = function() {
-    var TIMING_BITMAP1 = 35;
-    var TIMING_BITMAP2 = 36;
-    var TIMING_BITMAP3 = 37;
+edidparser.prototype.getEstablishedModes1 = function() {
+    var OFFSET_ESTABLISHED1 = 35;
+    return extractEstablished(this.edidData, OFFSET_ESTABLISHED1, establishedtimings[0]);
+};
 
-    var timingBitmap = (this.edidData[TIMING_BITMAP3] << 16) +
-        (this.edidData[TIMING_BITMAP2] << 8) +
-        this.edidData[TIMING_BITMAP1];
+edidparser.prototype.getEstablishedModes2 = function() {
+    var OFFSET_ESTABLISHED2 = 36;
+    return extractEstablished(this.edidData, OFFSET_ESTABLISHED2, establishedtimings[1]);
+};
 
-    var establishedModes = [];
-
-    _.forEach(establishedtimings, function(establishedtiming) {
-        if (timingBitmap & (1 << establishedtiming.bit)) {
-            establishedtiming.checked = true;
-        } else {
-            establishedtiming.checked = false;
-        }
-
-        establishedModes.push(establishedtiming);
-    });
-
-    return establishedModes;
+edidparser.prototype.getEstablishedModes3 = function() {
+    var OFFSET_ESTABLISHED3 = 37;
+    return extractEstablished(this.edidData, OFFSET_ESTABLISHED3, establishedtimings[2]);
 };
 
 edidparser.prototype.getStandardDisplayModes = function() {
