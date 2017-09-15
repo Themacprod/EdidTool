@@ -23,7 +23,7 @@ module.exports = React.createClass({
             },
             React.DOM.div({
                 className: "edid-content-title"
-            }, "Manufacturer & Product ID"),
+            }, React.DOM.strong(null, "Manufacturer & Product ID")),
             Func.contentSubGroup("Manufacturer ID (PnPID):", this.edidParser.getManufacturerId()),
             Func.contentSubGroup("Manufacturer name:", this.edidParser.getManufacturerName()),
             Func.contentSubGroup("Product ID:", this.edidParser.getProductCode()),
@@ -40,7 +40,7 @@ module.exports = React.createClass({
             },
             React.DOM.div({
                 className: "edid-content-title"
-            }, "Video Input Definition"),
+            }, React.DOM.strong(null, "Video Input Definition")),
             Func.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
             Func.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
             Func.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
@@ -56,8 +56,9 @@ module.exports = React.createClass({
             },
             React.DOM.div({
                 className: "edid-content-title"
-            }, "Established timings"),
-            React.DOM.div(null, "Established Timings I"),
+            }, React.DOM.strong(null, "Established timings")),
+            React.DOM.div(null,
+                React.DOM.strong(null, "Established Timings I")),
             React.DOM.div({
                     className: "edid-content-established"
                 },
@@ -65,7 +66,8 @@ module.exports = React.createClass({
                     return this.generateEstablished(establishedMode, key);
                 }, this))
             ),
-            React.DOM.div(null, "Established Timings II"),
+            React.DOM.div(null,
+                React.DOM.strong(null, "Established Timings II")),
             React.DOM.div({
                     className: "edid-content-established"
                 },
@@ -73,7 +75,8 @@ module.exports = React.createClass({
                     return this.generateEstablished(establishedMode, key);
                 }, this))
             ),
-            React.DOM.div(null, "Manufacturer's Timings"),
+            React.DOM.div(null,
+                React.DOM.strong(null, "Manufacturer's Timings")),
             React.DOM.div({
                     className: "edid-content-established"
                 },
