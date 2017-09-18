@@ -4,11 +4,11 @@ var _ = require("lodash"),
     manufacturerNames = require("./manufacturernames"),
     establishedtimings = require("./establishedtimings");
 
-var extractEstablished = function(edidData, offsetEstablished, establishedtimingsarray) {
+var extractEstablished = function(edidData, establishedtimingsdata) {
     var establishedModes = [];
 
-    _.forEach(establishedtimingsarray.data, function(establishedtiming) {
-        if (edidData[offsetEstablished] & (1 << establishedtiming.bit)) {
+    _.forEach(establishedtimingsdata.timings, function(establishedtiming) {
+        if (edidData[establishedtimingsdata.offset] & (1 << establishedtiming.bit)) {
             establishedtiming.checked = true;
         } else {
             establishedtiming.checked = false;
@@ -17,7 +17,7 @@ var extractEstablished = function(edidData, offsetEstablished, establishedtiming
         establishedModes.push(establishedtiming);
     });
 
-    establishedModes.description = establishedtimingsarray.description;
+    establishedModes.description = establishedtimingsdata.description;
 
     return establishedModes;
 };
@@ -510,18 +510,15 @@ edidparser.prototype.getChromaticityCoordinates = function() {
 };
 
 edidparser.prototype.getEstablishedModes1 = function() {
-    var OFFSET_ESTABLISHED1 = 35;
-    return extractEstablished(this.edidData, OFFSET_ESTABLISHED1, establishedtimings[0]);
+    return extractEstablished(this.edidData, establishedtimings[0]);
 };
 
 edidparser.prototype.getEstablishedModes2 = function() {
-    var OFFSET_ESTABLISHED2 = 36;
-    return extractEstablished(this.edidData, OFFSET_ESTABLISHED2, establishedtimings[1]);
+    return extractEstablished(this.edidData, establishedtimings[1]);
 };
 
 edidparser.prototype.getEstablishedModes3 = function() {
-    var OFFSET_ESTABLISHED3 = 37;
-    return extractEstablished(this.edidData, OFFSET_ESTABLISHED3, establishedtimings[2]);
+    return extractEstablished(this.edidData, establishedtimings[2]);
 };
 
 edidparser.prototype.getStandardDisplayModes = function() {

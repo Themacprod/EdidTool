@@ -1,6 +1,7 @@
 [{
+    "offset": 35,
     "description": "Established Timings I",
-    "data": [{
+    "timings": [{
         "hactive": 720,
         "vactive": 400,
         "refresh": 70,
@@ -50,8 +51,9 @@
         "bit": 0
     }]
 }, {
+    "offset": 36,
     "description": "Established Timings II",
-    "data": [{
+    "timings": [{
         "hactive": 800,
         "vactive": 600,
         "refresh": 72,
@@ -101,8 +103,9 @@
         "bit": 0
     }]
 }, {
+    "offset": 37,
     "description": "Manufacturer's Timings",
-    "data": [{
+    "timings": [{
         "hactive": 1152,
         "vactive": 870,
         "refresh": 75,
