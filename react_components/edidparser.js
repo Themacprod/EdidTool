@@ -22,20 +22,29 @@ var extractEstablished = function(edidData, offsetEstablished, establishedtiming
 
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
-    this.WhiteAndSyncLevels = ["+0.7/-0.3 V", "+0.714/-0.286 V",
-        "+1.0/-0.4 V", "+0.7/0 V"
+    this.WhiteAndSyncLevels = [
+        "+0.7/-0.3 V",
+        "+0.714/-0.286 V",
+        "+1.0/-0.4 V",
+        "+0.7/0 V"
     ];
-    this.digitalColorSpace = ["RGB 4:4:4", "RGB 4:4:4 + YCrCb 4:4:4",
+    this.digitalColorSpace = [
+        "RGB 4:4:4",
+        "RGB 4:4:4 + YCrCb 4:4:4",
         "RGB 4:4:4 + YCrCb 4:2:2",
         "RGB 4:4:4 + YCrCb 4:4:4 + YCrCb 4:2:2"
     ];
-    this.analogColorSpace = ["Monochrome or Grayscale",
-        "RGB color", "Non-RGB color", "Undefined"
+    this.analogColorSpace = [
+        "Monochrome or Grayscale",
+        "RGB color",
+        "Non-RGB color",
+        "Undefined"
     ];
 
     this.DTD_LENGTH = 18;
 
-    this.xyPixelRatioEnum = [{
+    this.xyPixelRatioEnum = [
+        {
             string: "16:10"
         },
         {
@@ -113,21 +122,63 @@ var edidparser = function() {
         }
     };
 
-    this.overscanBehavior = ["No data", "Always overscanned", "Always underscanned", "Supports both overscan and underscan"];
-
-    this.audioFormatArray = [1, 8, 13, 14, 15];
-    this.shortAudioDescriptors = ["RESERVED", "LPCM", "AC-3", "MPEG-1", "MP3", "MPEG2", "AAC LC",
-        "DTS", "ATRAC", "DSD", "E-AC-3", "DTS-HD", "MLP", "DST", "WMA Pro"
+    this.overscanBehavior = [
+        "No data",
+        "Always overscanned",
+        "Always underscanned",
+        "Supports both overscan and underscan"
     ];
-    this.sadSampleRates = ["32 kHz", "44.1 kHz", "48 kHz", "88.2 kHz", "96 kHz", "176.4 kHz", "192 kHz"];
-    this.sadBitDepths = ["16 bit", "20 bit", "24 bit"];
-    this.speakerAllocation = ["Front Left/Front Right (FL/FR)", "Low Frequency Effort (LFE)",
-        "Front Center (FC)", "Rear Left/Rear Right (RL/RR)",
-        "Rear Center (RC)", "Front Left Center/Front Right Center (FLC/FRC)",
+
+    this.audioFormatArray = [
+        1,
+        8,
+        13,
+        14,
+        15
+    ];
+    this.shortAudioDescriptors = [
+        "RESERVED",
+        "LPCM",
+        "AC-3",
+        "MPEG-1",
+        "MP3",
+        "MPEG2",
+        "AAC LC",
+        "DTS",
+        "ATRAC",
+        "DSD",
+        "E-AC-3",
+        "DTS-HD",
+        "MLP",
+        "DST",
+        "WMA Pro"
+    ];
+    this.sadSampleRates = [
+        "32 kHz",
+        "44.1 kHz",
+        "48 kHz",
+        "88.2 kHz",
+        "96 kHz",
+        "176.4 kHz",
+        "192 kHz"
+    ];
+    this.sadBitDepths = [
+        "16 bit",
+        "20 bit",
+        "24 bit"
+    ];
+    this.speakerAllocation = [
+        "Front Left/Front Right (FL/FR)",
+        "Low Frequency Effort (LFE)",
+        "Front Center (FC)",
+        "Rear Left/Rear Right (RL/RR)",
+        "Rear Center (RC)",
+        "Front Left Center/Front Right Center (FLC/FRC)",
         "Rear Left Center/Rear Right Center (RLC/RRC)",
         "Front Left Wide/Front Right Wide (FLW/FRW)",
         "Front Left High/Frong Right High (FLH/FRH)",
-        "Top Center (TC)", "Front Center High (FCH)"
+        "Top Center (TC)",
+        "Front Center High (FCH)"
     ];
 };
 

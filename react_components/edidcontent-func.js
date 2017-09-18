@@ -5,7 +5,8 @@
 var React = require("react");
 
 var contentSubGroup = function(detail, data) {
-    return React.DOM.div({
+    return React.DOM.div(
+        {
             className: "edid-content-subgroup"
         }, React.DOM.div({
             className: "subgroup-detail"
@@ -17,7 +18,8 @@ var contentSubGroup = function(detail, data) {
 };
 
 var contentSubGroupRadio = function(detail, checked) {
-    return React.DOM.div({
+    return React.DOM.div(
+        {
             className: "edid-content-subgroup"
         }, React.DOM.div({
             className: "subgroup-radio"
@@ -28,11 +30,13 @@ var contentSubGroupRadio = function(detail, checked) {
         })),
         React.DOM.div({
             className: "subgroup-data"
-        }, detail));
+        }, detail)
+    );
 };
 
 var contentSubGroupCheckbox = function(detail, checked) {
-    return React.DOM.div({
+    return React.DOM.div(
+        {
             className: "edid-content-subgroup"
         }, React.DOM.div({
             className: "subgroup-checkbox"
@@ -43,11 +47,13 @@ var contentSubGroupCheckbox = function(detail, checked) {
         })),
         React.DOM.div({
             className: "subgroup-detail-radio"
-        }, detail));
+        }, detail)
+    );
 };
 
 var contentSubGroupCheckboxKey = function(detail, checked, key) {
-    return React.DOM.div({
+    return React.DOM.div(
+        {
             className: "edid-content-subgroup",
             key: key
         }, React.DOM.div({
@@ -59,7 +65,8 @@ var contentSubGroupCheckboxKey = function(detail, checked, key) {
         })),
         React.DOM.div({
             className: "subgroup-detail-radio"
-        }, detail));
+        }, detail)
+    );
 };
 
 module.exports = {

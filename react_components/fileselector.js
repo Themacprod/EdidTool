@@ -23,7 +23,8 @@ module.exports = React.createClass({
     handleChange: function() {
         this.extractEdid(
             document.getElementById("files").files[0],
-            document.getElementById("files").value);
+            document.getElementById("files").value
+        );
     },
     extractEdid: function(file, filename) {
         fileReader.onloadend = function(evt) {
@@ -46,21 +47,24 @@ module.exports = React.createClass({
         }
     },
     render: function() {
-        return React.DOM.div(null,
+        return React.DOM.div(
+            null,
             React.DOM.input({
                 type: "file",
                 accept: ".dat,.bin",
                 id: "files",
                 name: "file",
                 onChange: this.handleChange
-            }), React.DOM.div({
+            }), React.DOM.div(
+                {
                     className: "edid-container"
                 }, React.createElement(edidDisplayRaw, {
                     edid: this.state.edidcontent
                 }),
                 React.createElement(edidContent, {
                     edid: this.state.edidcontent
-                }))
+                })
+            )
         );
     }
 });

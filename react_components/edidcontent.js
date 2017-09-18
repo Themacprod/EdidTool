@@ -15,10 +15,12 @@ module.exports = React.createClass({
         return Func.contentSubGroupCheckboxKey(
             data.hactive + "x" + data.vactive + " @ " + data.refresh + " Hz [" + data.description + "]",
             data.checked,
-            key);
+            key
+        );
     },
     manufacturerInfo: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content-group"
             },
             React.DOM.div({
@@ -35,7 +37,8 @@ module.exports = React.createClass({
     videoInputDefinition: function() {
         var dbp = this.edidParser.getBasicDisplayParams();
 
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content-group"
             },
             React.DOM.div({
@@ -51,33 +54,52 @@ module.exports = React.createClass({
         );
     },
     establishedTimings: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content-group"
             },
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Established timings")),
-            React.DOM.div(null,
-                React.DOM.strong(null, "Established Timings I")),
-            React.DOM.div({
+            React.DOM.div(
+                null,
+                React.DOM.strong(
+                    null,
+                    "Established Timings I"
+                )
+            ),
+            React.DOM.div(
+                {
                     className: "edid-content-established"
                 },
                 _.map(this.edidParser.getEstablishedModes1(), _.bind(function(establishedMode, key) {
                     return this.generateEstablished(establishedMode, key);
                 }, this))
             ),
-            React.DOM.div(null,
-                React.DOM.strong(null, "Established Timings II")),
-            React.DOM.div({
+            React.DOM.div(
+                null,
+                React.DOM.strong(
+                    null,
+                    "Established Timings II"
+                )
+            ),
+            React.DOM.div(
+                {
                     className: "edid-content-established"
                 },
                 _.map(this.edidParser.getEstablishedModes2(), _.bind(function(establishedMode, key) {
                     return this.generateEstablished(establishedMode, key);
                 }, this))
             ),
-            React.DOM.div(null,
-                React.DOM.strong(null, "Manufacturer's Timings")),
-            React.DOM.div({
+            React.DOM.div(
+                null,
+                React.DOM.strong(
+                    null,
+                    "Manufacturer's Timings"
+                )
+            ),
+            React.DOM.div(
+                {
                     className: "edid-content-established"
                 },
                 _.map(this.edidParser.getEstablishedModes3(), _.bind(function(establishedMode, key) {
@@ -90,7 +112,8 @@ module.exports = React.createClass({
         this.edidParser.setEdidData(this.props.edid);
         this.edidParser.parse();
 
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content"
             },
             React.DOM.div(null, this.manufacturerInfo()),
