@@ -54,6 +54,10 @@ module.exports = React.createClass({
         );
     },
     establishedTimings: function() {
+        var establishedModes1 = this.edidParser.getEstablishedModes1(),
+            establishedModes2 = this.edidParser.getEstablishedModes2(),
+            establishedModes3 = this.edidParser.getEstablishedModes3();
+
         return React.DOM.div(
             {
                 className: "edid-content-group"
@@ -65,14 +69,14 @@ module.exports = React.createClass({
                 null,
                 React.DOM.strong(
                     null,
-                    "Established Timings I"
+                    establishedModes1.description
                 )
             ),
             React.DOM.div(
                 {
                     className: "edid-content-established"
                 },
-                _.map(this.edidParser.getEstablishedModes1(), _.bind(function(establishedMode, key) {
+                _.map(establishedModes1, _.bind(function(establishedMode, key) {
                     return this.generateEstablished(establishedMode, key);
                 }, this))
             ),
@@ -80,14 +84,14 @@ module.exports = React.createClass({
                 null,
                 React.DOM.strong(
                     null,
-                    "Established Timings II"
+                    establishedModes2.description
                 )
             ),
             React.DOM.div(
                 {
                     className: "edid-content-established"
                 },
-                _.map(this.edidParser.getEstablishedModes2(), _.bind(function(establishedMode, key) {
+                _.map(establishedModes2, _.bind(function(establishedMode, key) {
                     return this.generateEstablished(establishedMode, key);
                 }, this))
             ),
@@ -95,14 +99,14 @@ module.exports = React.createClass({
                 null,
                 React.DOM.strong(
                     null,
-                    "Manufacturer's Timings"
+                    establishedModes3.description
                 )
             ),
             React.DOM.div(
                 {
                     className: "edid-content-established"
                 },
-                _.map(this.edidParser.getEstablishedModes3(), _.bind(function(establishedMode, key) {
+                _.map(establishedModes3, _.bind(function(establishedMode, key) {
                     return this.generateEstablished(establishedMode, key);
                 }, this))
             )

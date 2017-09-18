@@ -7,7 +7,7 @@ var _ = require("lodash"),
 var extractEstablished = function(edidData, offsetEstablished, establishedtimingsarray) {
     var establishedModes = [];
 
-    _.forEach(establishedtimingsarray, function(establishedtiming) {
+    _.forEach(establishedtimingsarray.data, function(establishedtiming) {
         if (edidData[offsetEstablished] & (1 << establishedtiming.bit)) {
             establishedtiming.checked = true;
         } else {
@@ -16,6 +16,8 @@ var extractEstablished = function(edidData, offsetEstablished, establishedtiming
 
         establishedModes.push(establishedtiming);
     });
+
+    establishedModes.description = establishedtimingsarray.description;
 
     return establishedModes;
 };
