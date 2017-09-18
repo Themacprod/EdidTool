@@ -54,9 +54,9 @@ module.exports = React.createClass({
         );
     },
     establishedTimings: function() {
-        var establishedModes1 = this.edidParser.getEstablishedModes1(),
-            establishedModes2 = this.edidParser.getEstablishedModes2(),
-            establishedModes3 = this.edidParser.getEstablishedModes3();
+        var establishedTimingsGroups = this.edidParser.getEstablishedModes();
+
+        console.log(establishedTimingsGroups);
 
         return React.DOM.div(
             {
@@ -65,51 +65,26 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Established timings")),
-            React.DOM.div(
-                null,
-                React.DOM.strong(
+            _.map(establishedTimingsGroups, _.bind(function(establishedTimingsGroup) {
+                return React.DOM.div(
                     null,
-                    establishedModes1.description
-                )
-            ),
-            React.DOM.div(
-                {
-                    className: "edid-content-established"
-                },
-                _.map(establishedModes1, _.bind(function(establishedMode, key) {
-                    return this.generateEstablished(establishedMode, key);
-                }, this))
-            ),
-            React.DOM.div(
-                null,
-                React.DOM.strong(
-                    null,
-                    establishedModes2.description
-                )
-            ),
-            React.DOM.div(
-                {
-                    className: "edid-content-established"
-                },
-                _.map(establishedModes2, _.bind(function(establishedMode, key) {
-                    return this.generateEstablished(establishedMode, key);
-                }, this))
-            ),
-            React.DOM.div(
-                null,
-                React.DOM.strong(
-                    null,
-                    establishedModes3.description
-                )
-            ),
-            React.DOM.div(
-                {
-                    className: "edid-content-established"
-                },
-                _.map(establishedModes3, _.bind(function(establishedMode, key) {
-                    return this.generateEstablished(establishedMode, key);
-                }, this))
-            )
+                    React.DOM.div(
+                        null,
+                        React.DOM.strong(
+                            null,
+                            establishedTimingsGroup.description
+                        )
+                    ),
+                    React.DOM.div(
+                        {
+                            className: "edid-content-established"
+                        },
+                        _.map(establishedTimingsGroup, _.bind(function(establishedTimings, key) {
+                            return this.generateEstablished(establishedTimings, key);
+                        }, this))
+                    )
+                );
+            }, this))
         );
     },
     render: function() {

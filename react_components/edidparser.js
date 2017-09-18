@@ -4,24 +4,6 @@ var _ = require("lodash"),
     manufacturerNames = require("./manufacturernames"),
     establishedtimings = require("./establishedtimings");
 
-var extractEstablished = function(edidData, establishedtimingsdata) {
-    var establishedModes = [];
-
-    _.forEach(establishedtimingsdata.timings, function(establishedtiming) {
-        if (edidData[establishedtimingsdata.offset] & (1 << establishedtiming.bit)) {
-            establishedtiming.checked = true;
-        } else {
-            establishedtiming.checked = false;
-        }
-
-        establishedModes.push(establishedtiming);
-    });
-
-    establishedModes.description = establishedtimingsdata.description;
-
-    return establishedModes;
-};
-
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
     this.WhiteAndSyncLevels = [
@@ -215,11 +197,7 @@ edidparser.prototype.parse = function() {
 
     this.chromaticity = this.getChromaticityCoordinates();
 
-    this.establishedModes1 = this.getEstablishedModes1();
-
-    this.establishedModes2 = this.getEstablishedModes2();
-
-    this.establishedModes3 = this.getEstablishedModes3();
+    this.establishedModes = this.getEstablishedModes();
 
     this.standardDisplayModes = this.getStandardDisplayModes();
 
@@ -509,16 +487,24 @@ edidparser.prototype.getChromaticityCoordinates = function() {
     return chromaticity;
 };
 
-edidparser.prototype.getEstablishedModes1 = function() {
-    return extractEstablished(this.edidData, establishedtimings[0]);
-};
+edidparser.prototype.getEstablishedModes = function() {
+    return _.map(establishedtimings, _.bind(function(establishedtimingsdata) {
+        var establishedModes = [];
 
-edidparser.prototype.getEstablishedModes2 = function() {
-    return extractEstablished(this.edidData, establishedtimings[1]);
-};
+        _.forEach(establishedtimingsdata.timings, _.bind(function(establishedtiming) {
+            if (this.edidData[establishedtimingsdata.offset] & (1 << establishedtiming.bit)) {
+                establishedtiming.checked = true;
+            } else {
+                establishedtiming.checked = false;
+            }
 
-edidparser.prototype.getEstablishedModes3 = function() {
-    return extractEstablished(this.edidData, establishedtimings[2]);
+            establishedModes.push(establishedtiming);
+        }, this));
+
+        establishedModes.description = establishedtimingsdata.description;
+
+        return establishedModes;
+    }, this));
 };
 
 edidparser.prototype.getStandardDisplayModes = function() {
