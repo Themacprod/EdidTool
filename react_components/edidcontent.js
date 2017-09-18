@@ -11,13 +11,6 @@ module.exports = React.createClass({
     componentWillMount: function() {
         this.edidParser = new EdidParser();
     },
-    generateEstablished: function(data, key) {
-        return Func.contentSubGroupCheckboxKey(
-            data.hactive + "x" + data.vactive + " @ " + data.refresh + " Hz [" + data.description + "]",
-            data.checked,
-            key
-        );
-    },
     manufacturerInfo: function() {
         return React.DOM.div(
             {
@@ -56,8 +49,6 @@ module.exports = React.createClass({
     establishedTimings: function() {
         var establishedTimingsGroups = this.edidParser.getEstablishedModes();
 
-        console.log(establishedTimingsGroups);
-
         return React.DOM.div(
             {
                 className: "edid-content-group"
@@ -65,9 +56,12 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Established timings")),
-            _.map(establishedTimingsGroups, _.bind(function(establishedTimingsGroup) {
+            _.map(establishedTimingsGroups, _.bind(function(establishedTimingsGroup, key) {
                 return React.DOM.div(
-                    null,
+                    {
+                        className: "edid-content-established",
+                        key: key
+                    },
                     React.DOM.div(
                         null,
                         React.DOM.strong(
@@ -79,8 +73,12 @@ module.exports = React.createClass({
                         {
                             className: "edid-content-established"
                         },
-                        _.map(establishedTimingsGroup, _.bind(function(establishedTimings, key) {
-                            return this.generateEstablished(establishedTimings, key);
+                        _.map(establishedTimingsGroup, _.bind(function(establishedTimings, keygroup) {
+                            return Func.contentSubGroupCheckboxKey(
+                                establishedTimings.hactive + "x" + establishedTimings.vactive + " @ " + establishedTimings.refresh + " Hz [" + establishedTimings.description + "]",
+                                establishedTimings.checked,
+                                keygroup
+                            );
                         }, this))
                     )
                 );
