@@ -6,12 +6,6 @@ var _ = require("lodash"),
 
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
-    this.WhiteAndSyncLevels = [
-        "+0.7/-0.3 V",
-        "+0.714/-0.286 V",
-        "+1.0/-0.4 V",
-        "+0.7/0 V"
-    ];
     this.digitalColorSpace = [
         "RGB 4:4:4",
         "RGB 4:4:4 + YCrCb 4:4:4",
