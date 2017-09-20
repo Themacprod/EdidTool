@@ -59,6 +59,24 @@ module.exports = React.createClass({
             Func.contentSubGroup("Gamma:", dbp.displayGamma.toFixed(2))
         );
     },
+    screenSize: function() {
+        var screenSize = this.edidParser.getScreenSize();
+
+        return React.DOM.div(
+            {
+                className: "edid-content-group"
+            },
+            React.DOM.div({
+                className: "edid-content-title"
+            }, React.DOM.strong(null, "Screen size")),
+            Func.contentSubGroupRadio(" Dimensions", screenSize.imageSizePresent === true),
+            Func.contentSubGroup("Horizontal size (cm):", screenSize.horizontalSize),
+            Func.contentSubGroup("Vertical size (cm):", screenSize.verticalSize),
+            Func.contentSubGroupRadio(" Aspect Ratio (1.4)", screenSize.imageSizePresent === false),
+            Func.contentSubGroupRadio(" Portrait", screenSize.portrait === true),
+            Func.contentSubGroupRadio(" Landscape", screenSize.portrait === false)
+        );
+    },
     establishedTimings: function() {
         var establishedTimingsGroups = this.edidParser.getEstablishedModes();
 
@@ -109,6 +127,7 @@ module.exports = React.createClass({
             React.DOM.div(null, this.manufacturerInfo()),
             React.DOM.div(null, this.videoInputDefinition()),
             React.DOM.div(null, this.displayTransfertCharacteristics()),
+            React.DOM.div(null, this.screenSize()),
             React.DOM.div(null, this.establishedTimings())
         );
     }
