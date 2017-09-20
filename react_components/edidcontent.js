@@ -46,6 +46,19 @@ module.exports = React.createClass({
             Func.contentSubGroupRadio(" Digital", dbp.digitalInput)
         );
     },
+    displayTransfertCharacteristics: function() {
+        var dbp = this.edidParser.getBasicDisplayParams();
+
+        return React.DOM.div(
+            {
+                className: "edid-content-group"
+            },
+            React.DOM.div({
+                className: "edid-content-title"
+            }, React.DOM.strong(null, "Display Transfert Characteristics")),
+            Func.contentSubGroup("Gamma:", dbp.displayGamma.toFixed(2))
+        );
+    },
     establishedTimings: function() {
         var establishedTimingsGroups = this.edidParser.getEstablishedModes();
 
@@ -95,6 +108,7 @@ module.exports = React.createClass({
             },
             React.DOM.div(null, this.manufacturerInfo()),
             React.DOM.div(null, this.videoInputDefinition()),
+            React.DOM.div(null, this.displayTransfertCharacteristics()),
             React.DOM.div(null, this.establishedTimings())
         );
     }
