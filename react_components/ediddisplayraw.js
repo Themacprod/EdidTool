@@ -38,7 +38,8 @@ module.exports = React.createClass({
             }));
         }
 
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-raw"
             },
             React.DOM.div({
@@ -46,7 +47,8 @@ module.exports = React.createClass({
                 className: "input-grid-line"
             }, gridheader),
             _.map(_.chunk(this.props.edid, this.props.chunk || 10), _.bind(function(line, idx) {
-                return React.DOM.div({
+                return React.DOM.div(
+                    {
                         key: idx,
                         className: "input-grid-line"
                     },
