@@ -5,6 +5,7 @@ $edid-raw-size: $cellwidth * $nbofcell + (4 * $nbofcell) + ($cellwidth * 2);
 .edid-raw {
     width: #{$edid-raw-size}px;
     display: inline-block;
+    vertical-align: top;
 
     .input-grid-line {
         margin-left: #{$cellwidth}px;
