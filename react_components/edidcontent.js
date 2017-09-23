@@ -134,7 +134,11 @@ module.exports = React.createClass({
             React.DOM.div({
                     className: "edid-content-column"
                 },
-                React.DOM.div(null, this.screenSize()),
+                React.DOM.div(null, this.screenSize())
+            ),
+            React.DOM.div({
+                    className: "edid-content-column"
+                },
                 React.DOM.div(null, this.establishedTimings())
             )
         );
