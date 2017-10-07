@@ -26,10 +26,8 @@
     "bootstrap": "github:twbs/bootstrap#v4-dev",
     "browserify": "^14.4.0",
     "clean-css": "^3.4.19",
-    "co": "^4.6.0",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
-    "express-session": "^1.13.0",
     "font-awesome": "^4.6.3",
     "jquery": "^2.2.2",
     "node-sass": "^3.4.2",
@@ -38,7 +36,6 @@
     "react-dom": "^0.14.8",
     "react-router": "^2.0.1",
     "serve-favicon": "^2.3.0",
-    "superagent": "^1.8.3",
     "uglify-js": "^2.7.3"
   },
   "devDependencies": {
