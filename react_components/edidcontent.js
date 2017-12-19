@@ -124,19 +124,22 @@ module.exports = React.createClass({
             {
                 className: "edid-content"
             },
-            React.DOM.div({
+            React.DOM.div(
+                {
                     className: "edid-content-column"
                 },
                 React.DOM.div(null, this.manufacturerInfo()),
                 React.DOM.div(null, this.videoInputDefinition()),
                 React.DOM.div(null, this.displayTransfertCharacteristics())
             ),
-            React.DOM.div({
+            React.DOM.div(
+                {
                     className: "edid-content-column"
                 },
                 React.DOM.div(null, this.screenSize())
             ),
-            React.DOM.div({
+            React.DOM.div(
+                {
                     className: "edid-content-column"
                 },
                 React.DOM.div(null, this.establishedTimings())

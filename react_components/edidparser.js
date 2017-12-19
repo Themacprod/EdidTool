@@ -669,8 +669,10 @@ edidparser.prototype.getDtds = function() {
 
     var dtdIndex = DTD_START;
 
-    // While the pixel clock is not equal to zero and
-    // The DTD index is less than the last byte of the DTD
+    /*
+     * While the pixel clock is not equal to zero and the DTD index is less
+     * than the last byte of the DTD
+     */
     while (((this.edidData[dtdIndex] !== 0) || (this.edidData[dtdIndex + 1] !== 0)) &&
         (dtdIndex < DTD_END)) {
         var dtd = this.parseDtd(dtdIndex);
@@ -949,12 +951,14 @@ edidparser.prototype.parseVendorDataBlockHDMI14 = function(startAddress, blockLe
         vendorBlock.dualDvi = this.edidData[vsdbAddress + AI_DC_DUAL_ADDRESS] & DUAL_DVI_MASK;
     }
 
-    var MAX_TMDS_CLOCK_ADDRESS = 7;
-    if (blockLength >= MAX_TMDS_CLOCK_ADDRESS) {
-        // Parse Max TMDS rate, the edid has TMDS clock. Multiply TMDS clock x 5Mhz
-        // And you'll get max TMDS rate
-        vendorBlock.maxTmdsRate = this.edidData[vsdbAddress + MAX_TMDS_CLOCK_ADDRESS] * 5;
-    }
+    /*
+     * Parse Max TMDS rate, the edid has TMDS clock. Multiply TMDS clock x 5Mhz
+     * And you'll get max TMDS rate
+     */
+     var MAX_TMDS_CLOCK_ADDRESS = 7;
+     if (blockLength >= MAX_TMDS_CLOCK_ADDRESS) {
+         vendorBlock.maxTmdsRate = this.edidData[vsdbAddress + MAX_TMDS_CLOCK_ADDRESS] * 5;
+     }
 
     var LATENCY_PRESENT_ADDRESS = 8;
     if (blockLength >= LATENCY_PRESENT_ADDRESS) {
@@ -1176,8 +1180,10 @@ edidparser.prototype.parseYCbCr420VideoDataBlock = function(startAddress, blockL
     var LOW_VIC_MASK = 0x3F;
     var HIGH_VIC_MASK = 0xFF;
 
-    // SVDs listed in this block support only YCbCr 4:2:0 color format.
-    // These SVDs are not listed in the standard Video data block.
+    /*
+     * SVDs listed in this block support only YCbCr 4:2:0 color format.
+     * These SVDs are not listed in the standard Video data block.
+     */
     extendedTagBlock.YCbCr420OnlyShortVideoDescriptors = [];
 
     for (svdIndex = 0; svdIndex < (blockLength - 1); svdIndex += 1) {
@@ -1206,11 +1212,13 @@ edidparser.prototype.parseYCbCr420CapabilityMapDataBlock = function(startAddress
     var YCbCr420Capable = false;
     var YCbCr420svdIndex = 0;
 
-    // YCbCr420 Capability Map block contains a bit map of SVDs from the Video block
-    // If a bit is set to "1", the corresponding SVD supports YCbCr 4:2:0 color format
-    // This data block is only used for SVDs which support 4:2:0 and some other colour
-    // Format (e.g. 4:2:2).
-    // For SVDs which support only 4:2:0, YCbCr 4:2:0 Video data block is used.
+    /*
+     * YCbCr420 Capability Map block contains a bit map of SVDs from the Video block
+     * If a bit is set to "1", the corresponding SVD supports YCbCr 4:2:0 color format
+     * This data block is only used for SVDs which support 4:2:0 and some other colour
+     * Format (e.g. 4:2:2).
+     * For SVDs which support only 4:2:0, YCbCr 4:2:0 Video data block is used.
+     */
     extendedTagBlock.YCbCr420CapableShortVideoDescriptors = [];
 
     for (FIELD_ADDRESS = 1; FIELD_ADDRESS < blockLength; FIELD_ADDRESS += 1) {

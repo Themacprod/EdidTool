@@ -11,7 +11,8 @@ module.exports = React.createClass({
         require("../node_modules/react-bootstrap/lib");
     },
     render: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "app"
             },
             React.createElement(fileSelector)
