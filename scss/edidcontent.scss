@@ -10,12 +10,11 @@ $subgroup-radio-detail: $subgroup-data + $subgroup-detail - $border-size-with - 
 .edid-content {
     display: inline-block;
     font-size: 90%;
+    width: 60%;
 
     .edid-content-column {
         display: inline-block;
         vertical-align: top;
-        margin-left: 10px;
-        margin-right: 10px;
     }
 
     .edid-content-data {

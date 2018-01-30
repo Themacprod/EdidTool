@@ -77,6 +77,18 @@ module.exports = React.createClass({
             Func.contentSubGroupRadio(" Landscape", screenSize.portrait === false)
         );
     },
+    featureSupport: function() {
+        var dbp = this.edidParser.getBasicDisplayParams();
+
+        return React.DOM.div(
+            {
+                className: "edid-content-group"
+            },
+            React.DOM.div({
+                className: "edid-content-title"
+            }, React.DOM.strong(null, "Feature Support"))
+        );
+    },
     establishedTimings: function() {
         var establishedTimingsGroups = this.edidParser.getEstablishedModes();
 
@@ -136,7 +148,8 @@ module.exports = React.createClass({
                 {
                     className: "edid-content-column"
                 },
-                React.DOM.div(null, this.screenSize())
+                React.DOM.div(null, this.screenSize()),
+                React.DOM.div(null, this.featureSupport())
             ),
             React.DOM.div(
                 {

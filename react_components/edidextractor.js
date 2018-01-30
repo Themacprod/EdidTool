@@ -18,8 +18,6 @@ module.exports.extractEdid = function(rawEdidData) {
     // Parse each line
     var edidContent = _.map(rawLinesFilter, function(line) {
         // Remove line prefix.
-        // Careful with trimRight function
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/TrimRight
         var lineSlice = line.slice(line.indexOf("|") + 3, line.length);
         return lineSlice.trimRight().split("  ");
     });
