@@ -19,12 +19,22 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Manufacturer & Product ID")),
-            Func.contentSubGroup("Manufacturer ID (PnPID):", this.edidParser.getManufacturerId()),
-            Func.contentSubGroup("Manufacturer name:", this.edidParser.getManufacturerName()),
-            Func.contentSubGroup("Product ID:", this.edidParser.getProductCode()),
-            Func.contentSubGroup("Serial Number:", this.edidParser.getSerialNumber()),
-            Func.contentSubGroup("Week:", this.edidParser.getManufactureWeek()),
-            Func.contentSubGroup("Year:", this.edidParser.getManufactureYear())
+            React.DOM.div(
+                {
+                    className: "edid-content-column width-50"
+                },
+                Func.contentSubGroup("Manufacturer ID (PnPID):", this.edidParser.getManufacturerId()),
+                Func.contentSubGroup("Manufacturer name:", this.edidParser.getManufacturerName()),
+                Func.contentSubGroup("Product ID:", this.edidParser.getProductCode())
+            ),
+            React.DOM.div(
+                {
+                    className: "edid-content-column width-50"
+                },
+                Func.contentSubGroup("Serial Number:", this.edidParser.getSerialNumber()),
+                Func.contentSubGroup("Week:", this.edidParser.getManufactureWeek()),
+                Func.contentSubGroup("Year:", this.edidParser.getManufactureYear())
+            )
         );
     },
     videoInputDefinition: function() {
@@ -37,13 +47,23 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Video Input Definition")),
-            Func.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
-            Func.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
-            Func.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
-            Func.contentSubGroupCheckbox(" Composite Sync", (dbp.digitalInput === false) ? (dbp.compositeSyncSupported === true) : false),
-            Func.contentSubGroupCheckbox(" Sync On Green", (dbp.digitalInput === false) ? (dbp.synOnGreen === true) : false),
-            Func.contentSubGroupCheckbox(" Serration", (dbp.digitalInput === false) ? (dbp.vsyncSerrated === true) : false),
-            Func.contentSubGroupRadio(" Digital", dbp.digitalInput)
+            React.DOM.div(
+                {
+                    className: "edid-content-column width-50"
+                },
+                Func.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
+                Func.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
+                Func.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
+                Func.contentSubGroupCheckbox(" Composite Sync", (dbp.digitalInput === false) ? (dbp.compositeSyncSupported === true) : false),
+                Func.contentSubGroupCheckbox(" Sync On Green", (dbp.digitalInput === false) ? (dbp.synOnGreen === true) : false),
+                Func.contentSubGroupCheckbox(" Serration", (dbp.digitalInput === false) ? (dbp.vsyncSerrated === true) : false)
+            ),
+            React.DOM.div(
+                {
+                    className: "edid-content-column width-50"
+                },
+                Func.contentSubGroupRadio(" Digital", dbp.digitalInput)
+            )
         );
     },
     displayTransfertCharacteristics: function() {
@@ -69,12 +89,22 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Screen size")),
-            Func.contentSubGroupRadio(" Dimensions", screenSize.imageSizePresent === true),
-            Func.contentSubGroup("Horizontal size (cm):", screenSize.horizontalSize),
-            Func.contentSubGroup("Vertical size (cm):", screenSize.verticalSize),
-            Func.contentSubGroupRadio(" Aspect Ratio (1.4)", screenSize.imageSizePresent === false),
-            Func.contentSubGroupRadio(" Portrait", screenSize.portrait === true),
-            Func.contentSubGroupRadio(" Landscape", screenSize.portrait === false)
+            React.DOM.div(
+                {
+                    className: "edid-content-column width-50"
+                },
+                Func.contentSubGroupRadio(" Dimensions", screenSize.imageSizePresent === true),
+                Func.contentSubGroup("Horizontal size (cm):", screenSize.horizontalSize),
+                Func.contentSubGroup("Vertical size (cm):", screenSize.verticalSize)
+            ),
+            React.DOM.div(
+                {
+                    className: "edid-content-column width-50"
+                },
+                Func.contentSubGroupRadio(" Aspect Ratio (1.4)", screenSize.imageSizePresent === false),
+                Func.contentSubGroupRadio(" Portrait", screenSize.portrait === true),
+                Func.contentSubGroupRadio(" Landscape", screenSize.portrait === false)
+            )
         );
     },
     featureSupport: function() {
@@ -102,27 +132,32 @@ module.exports = React.createClass({
             _.map(establishedTimingsGroups, _.bind(function(establishedTimingsGroup, key) {
                 return React.DOM.div(
                     {
-                        className: "edid-content-established",
-                        key: key
+                        className: "edid-content-column width-33"
                     },
                     React.DOM.div(
-                        null,
-                        React.DOM.strong(
-                            null,
-                            establishedTimingsGroup.description
-                        )
-                    ),
-                    React.DOM.div(
                         {
-                            className: "edid-content-established"
+                            className: "edid-content-established",
+                            key: key
                         },
-                        _.map(establishedTimingsGroup, _.bind(function(establishedTimings, keygroup) {
-                            return Func.contentSubGroupCheckboxKey(
-                                establishedTimings.hactive + "x" + establishedTimings.vactive + " @ " + establishedTimings.refresh + " Hz [" + establishedTimings.description + "]",
-                                establishedTimings.checked,
-                                keygroup
-                            );
-                        }, this))
+                        React.DOM.div(
+                            null,
+                            React.DOM.strong(
+                                null,
+                                establishedTimingsGroup.description
+                            )
+                        ),
+                        React.DOM.div(
+                            {
+                                className: "edid-content-established"
+                            },
+                            _.map(establishedTimingsGroup, _.bind(function(establishedTimings, keygroup) {
+                                return Func.contentSubGroupCheckboxKey(
+                                    establishedTimings.hactive + "x" + establishedTimings.vactive + " @ " + establishedTimings.refresh + " Hz [" + establishedTimings.description + "]",
+                                    establishedTimings.checked,
+                                    keygroup
+                                );
+                            }, this))
+                        )
                     )
                 );
             }, this))
@@ -136,27 +171,12 @@ module.exports = React.createClass({
             {
                 className: "edid-content"
             },
-            React.DOM.div(
-                {
-                    className: "edid-content-column"
-                },
-                React.DOM.div(null, this.manufacturerInfo()),
-                React.DOM.div(null, this.videoInputDefinition()),
-                React.DOM.div(null, this.displayTransfertCharacteristics())
-            ),
-            React.DOM.div(
-                {
-                    className: "edid-content-column"
-                },
-                React.DOM.div(null, this.screenSize()),
-                React.DOM.div(null, this.featureSupport())
-            ),
-            React.DOM.div(
-                {
-                    className: "edid-content-column"
-                },
-                React.DOM.div(null, this.establishedTimings())
-            )
+            React.DOM.div(null, this.manufacturerInfo()),
+            React.DOM.div(null, this.videoInputDefinition()),
+            React.DOM.div(null, this.displayTransfertCharacteristics()),
+            React.DOM.div(null, this.screenSize()),
+            React.DOM.div(null, this.featureSupport()),
+            React.DOM.div(null, this.establishedTimings())
         );
     }
 });

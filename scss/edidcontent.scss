@@ -22,7 +22,7 @@ $subgroup-radio-detail: $subgroup-data + $subgroup-detail - $border-size-with - 
     }
 
     .edid-content-group {
-        width: calc(#{$subgroup-data}px + #{$subgroup-detail}px + #{$border-size-with}px);
+        width: 90%;
         border: #{$border-size}px solid $color-gray-middle;
         margin-bottom: 10px;
     }
@@ -51,7 +51,6 @@ $subgroup-radio-detail: $subgroup-data + $subgroup-detail - $border-size-with - 
     }
 
     .subgroup-detail-radio {
-        width: #{$subgroup-radio-detail}px;
         display: inline-block;
     }
 
