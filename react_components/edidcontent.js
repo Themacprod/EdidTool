@@ -12,23 +12,20 @@ module.exports = React.createClass({
         this.edidParser = new EdidParser();
     },
     manufacturerInfo: function() {
-        return React.DOM.div(
-            {
+        return React.DOM.div({
                 className: "edid-content-group"
             },
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Manufacturer & Product ID")),
-            React.DOM.div(
-                {
+            React.DOM.div({
                     className: "edid-content-column width-50"
                 },
                 Func.contentSubGroup("Manufacturer ID (PnPID):", this.edidParser.getManufacturerId()),
                 Func.contentSubGroup("Manufacturer name:", this.edidParser.getManufacturerName()),
                 Func.contentSubGroup("Product ID:", this.edidParser.getProductCode())
             ),
-            React.DOM.div(
-                {
+            React.DOM.div({
                     className: "edid-content-column width-50"
                 },
                 Func.contentSubGroup("Serial Number:", this.edidParser.getSerialNumber()),
@@ -40,22 +37,20 @@ module.exports = React.createClass({
     videoInputDefinition: function() {
         var dbp = this.edidParser.getBasicDisplayParams();
 
-        return React.DOM.div(
-            {
+        return React.DOM.div({
                 className: "edid-content-group"
             },
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Video Input Definition")),
-            React.DOM.div(
-                {
+            React.DOM.div({
                     className: "edid-content-column width-50"
                 },
                 Func.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
                 React.DOM.div({
-                    className: (dbp.digitalInput === false) ? "collapse show" : "collapse",
-                    id: "collapseExample"
-                },
+                        className: (dbp.digitalInput === false) ? "collapse show" : "collapse",
+                        id: "collapseExample"
+                    },
                     Func.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
                     Func.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
                     Func.contentSubGroupCheckbox(" Composite Sync", (dbp.digitalInput === false) ? (dbp.compositeSyncSupported === true) : false),
@@ -63,8 +58,7 @@ module.exports = React.createClass({
                     Func.contentSubGroupCheckbox(" Serration", (dbp.digitalInput === false) ? (dbp.vsyncSerrated === true) : false)
                 )
             ),
-            React.DOM.div(
-                {
+            React.DOM.div({
                     className: "edid-content-column width-50"
                 },
                 Func.contentSubGroupRadio(" Digital", dbp.digitalInput)
@@ -74,8 +68,7 @@ module.exports = React.createClass({
     displayTransfertCharacteristics: function() {
         var dbp = this.edidParser.getBasicDisplayParams();
 
-        return React.DOM.div(
-            {
+        return React.DOM.div({
                 className: "edid-content-group"
             },
             React.DOM.div({
@@ -87,23 +80,20 @@ module.exports = React.createClass({
     screenSize: function() {
         var screenSize = this.edidParser.getScreenSize();
 
-        return React.DOM.div(
-            {
+        return React.DOM.div({
                 className: "edid-content-group"
             },
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Screen size")),
-            React.DOM.div(
-                {
+            React.DOM.div({
                     className: "edid-content-column width-50"
                 },
                 Func.contentSubGroupRadio(" Dimensions", screenSize.imageSizePresent === true),
                 Func.contentSubGroup("Horizontal size (cm):", screenSize.horizontalSize),
                 Func.contentSubGroup("Vertical size (cm):", screenSize.verticalSize)
             ),
-            React.DOM.div(
-                {
+            React.DOM.div({
                     className: "edid-content-column width-50"
                 },
                 Func.contentSubGroupRadio(" Aspect Ratio (1.4)", screenSize.imageSizePresent === false),
@@ -115,8 +105,7 @@ module.exports = React.createClass({
     featureSupport: function() {
         var dbp = this.edidParser.getBasicDisplayParams();
 
-        return React.DOM.div(
-            {
+        return React.DOM.div({
                 className: "edid-content-group"
             },
             React.DOM.div({
@@ -127,20 +116,18 @@ module.exports = React.createClass({
     establishedTimings: function() {
         var establishedTimingsGroups = this.edidParser.getEstablishedModes();
 
-        return React.DOM.div(
-            {
+        return React.DOM.div({
                 className: "edid-content-group"
             },
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Established timings")),
             _.map(establishedTimingsGroups, _.bind(function(establishedTimingsGroup, key) {
-                return React.DOM.div(
-                    {
-                        className: "edid-content-column width-33"
+                return React.DOM.div({
+                        className: "edid-content-column width-33",
+                        key: key
                     },
-                    React.DOM.div(
-                        {
+                    React.DOM.div({
                             className: "edid-content-established",
                             key: key
                         },
@@ -151,8 +138,7 @@ module.exports = React.createClass({
                                 establishedTimingsGroup.description
                             )
                         ),
-                        React.DOM.div(
-                            {
+                        React.DOM.div({
                                 className: "edid-content-established"
                             },
                             _.map(establishedTimingsGroup, _.bind(function(establishedTimings, keygroup) {
@@ -168,14 +154,34 @@ module.exports = React.createClass({
             }, this))
         );
     },
+    generateTab: function() {
+        return React.DOM.ul({
+                className: "nav nav-tabs"
+            },
+            React.DOM.li({
+                    className: "nav-item"
+                },
+                React.DOM.a({
+                    className: "nav-link active"
+                }, "Base")
+            ),
+            React.DOM.li({
+                    className: "nav-item"
+                },
+                React.DOM.a({
+                    className: "nav-link disabled"
+                }, "CEA #1")
+            )
+        );
+    },
     render: function() {
         this.edidParser.setEdidData(this.props.edid);
         this.edidParser.parse();
 
-        return React.DOM.div(
-            {
+        return React.DOM.div({
                 className: "edid-content"
             },
+            this.generateTab(),
             React.DOM.div(null, this.manufacturerInfo()),
             React.DOM.div(null, this.videoInputDefinition()),
             React.DOM.div(null, this.displayTransfertCharacteristics()),
