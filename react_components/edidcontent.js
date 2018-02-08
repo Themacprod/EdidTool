@@ -5,7 +5,8 @@
 var React = require("react"),
     EdidParser = require("./edidparser"),
     Func = require("./edidcontent-func"),
-    _ = require("lodash");
+    _ = require("lodash"),
+    SectionTabs = require("./tabs");
 
 module.exports = React.createClass({
     componentWillMount: function() {
@@ -154,34 +155,32 @@ module.exports = React.createClass({
             }, this))
         );
     },
-    generateTab: function() {
-        return React.DOM.ul({
-                className: "nav nav-tabs"
-            },
-            React.DOM.li({
-                    className: "nav-item"
-                },
-                React.DOM.a({
-                    className: "nav-link active"
-                }, "Base")
-            ),
-            React.DOM.li({
-                    className: "nav-item"
-                },
-                React.DOM.a({
-                    className: "nav-link disabled"
-                }, "CEA #1")
-            )
-        );
-    },
     render: function() {
         this.edidParser.setEdidData(this.props.edid);
         this.edidParser.parse();
 
+        var ext = [];
+
+        ext.push({
+            name: "Base",
+            href: "#base"
+        });
+
+        for (var i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
+            let extcount = i + 1;
+            ext.push({
+                name: "CEA #" + extcount,
+                href: "#CEA" + extcount
+            });
+        }
+
+
         return React.DOM.div({
                 className: "edid-content"
             },
-            this.generateTab(),
+            React.createElement(SectionTabs, {
+                tabs: ext
+            }),
             React.DOM.div(null, this.manufacturerInfo()),
             React.DOM.div(null, this.videoInputDefinition()),
             React.DOM.div(null, this.displayTransfertCharacteristics()),
