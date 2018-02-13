@@ -5,7 +5,6 @@
 var React = require("react"),
     EdidParser = require("./edidparser"),
     _ = require("lodash"),
-    SectionTabs = require("./tabs"),
     EdidBase = require("./edidcontentbase"),
     EdidCea = require("./edidcontentcea");
 
