@@ -21,21 +21,6 @@ var edidparser = function() {
 
     this.DTD_LENGTH = 18;
 
-    this.xyPixelRatioEnum = [
-        {
-            string: "16:10"
-        },
-        {
-            string: "4:3"
-        },
-        {
-            string: "5:4"
-        },
-        {
-            string: "16:9"
-        }
-    ];
-
     this.syncTypeEnum = {
         ANALOG_COMPOSITE: 0x00,
         BIPOLAR_ANALOG_COMPOSITE: 0x01,
@@ -534,33 +519,57 @@ edidparser.prototype.getEstablishedModes = function() {
 };
 
 edidparser.prototype.getStandardDisplayModes = function() {
-    var STD_DISPLAY_MODES_START = 38;
-    var STD_DISPLAY_MODES_END = 53;
-
     var stdDispModesArray = [];
-    var arrayCounter = 0;
-    var index = STD_DISPLAY_MODES_START;
-    while (index < STD_DISPLAY_MODES_END) {
-        if ((this.edidData[index] !== 0x01) &&
-            (this.edidData[index + 1] !== 0x01)) {
-            var standardDisplayModes = {};
-            standardDisplayModes.xResolution = (this.edidData[index] + 31) << 8;
 
-            var XY_PIXEL_RATIO_OFF = 6;
-            var XY_PIXEL_RATIO_MASK = 0x03;
-            standardDisplayModes.xyPixelRatio = (this.edidData[index + 1] >>
-                XY_PIXEL_RATIO_OFF) && XY_PIXEL_RATIO_MASK;
-
-            var VERTICAL_FREQUENCY_MASK = 0x3F;
-            standardDisplayModes.vertFreq = (this.edidData[index + 1] &&
-                VERTICAL_FREQUENCY_MASK) + 60;
-
-            stdDispModesArray[arrayCounter] = standardDisplayModes;
-            arrayCounter += 1;
-        }
-        index += 2;
+    for (var i = 0; i < 8; i += 1) {
+        stdDispModesArray.push(this.getStandardDisplayMode(i))
     }
+
     return stdDispModesArray;
+};
+
+edidparser.prototype.getStandardDisplayMode = function(stdIndex) {
+    var STD_DISPLAY_MODES_START = 38;
+    var dataIndex = STD_DISPLAY_MODES_START + (stdIndex * 2);
+    var stdHorizontalActive = this.edidData[dataIndex];
+
+    // Is invalid standard mode.
+    if ((stdHorizontalActive === 0) || (stdHorizontalActive === 1)) {
+        return {
+            valid: false,
+            HActive: 0,
+            RefreshRate: 0,
+            AspectRatio: "0"
+        };
+    }
+
+    var VERTICAL_FREQUENCY_MASK = 0x3F;
+    var stdRefresh = this.edidData[dataIndex + 1] & VERTICAL_FREQUENCY_MASK;
+
+    var RATIO_MASK = 0x03;
+    var stdRatio = (this.edidData[dataIndex + 1] >> 6) & RATIO_MASK;
+
+    var AspectRatioEnum = [
+        {
+            string: "16:10"
+        },
+        {
+            string: "4:3"
+        },
+        {
+            string: "5:4"
+        },
+        {
+            string: "16:9"
+        }
+    ];
+
+    return {
+        valid: true,
+        HActive: (stdHorizontalActive + 31) * 8,
+        RefreshRate: stdRefresh + 60,
+        AspectRatio: AspectRatioEnum[stdRatio].string
+    }
 };
 
 edidparser.prototype.parseDtd = function(dtdIndex) {
