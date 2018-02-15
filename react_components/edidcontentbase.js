@@ -4,6 +4,7 @@
 
 var React = require("react"),
     Func = require("./edidcontent-func"),
+    StandardTimings = require("./edidBase/standardTimings"),
     _ = require("lodash");
 
 module.exports = React.createClass({
@@ -150,27 +151,6 @@ module.exports = React.createClass({
             }, this))
         );
     },
-    standardTimings: function() {
-        var standardTimings = this.props.edidParsed.getStandardDisplayModes();
-
-        return React.DOM.div({
-                className: "edid-content-group"
-            },
-            React.DOM.div({
-                className: "edid-content-title"
-            }, React.DOM.strong(null, "Standard timings")),
-            _.map(standardTimings, function(standardTiming, key) {
-                return React.DOM.div({
-                        key: key,
-                        className: "edid-content-standard"
-                    },
-                    Func.contentSubGroup("H. Acive pixels", standardTiming.HActive),
-                    Func.contentSubGroup("Refresh rate", standardTiming.RefreshRate),
-                    Func.contentSubGroup("Ratio", standardTiming.AspectRatio),
-                );
-            })
-        );
-    },
     render: function() {
         return React.DOM.div(
             null,
@@ -180,7 +160,9 @@ module.exports = React.createClass({
             React.DOM.div(null, this.screenSize()),
             React.DOM.div(null, this.featureSupport()),
             React.DOM.div(null, this.establishedTimings()),
-            React.DOM.div(null, this.standardTimings())
+            React.createElement(StandardTimings, {
+                standardTimings: this.props.edidParsed.getStandardDisplayModes()
+            })
         );
     }
 });
