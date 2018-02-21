@@ -7,6 +7,16 @@ var React = require("react"),
     _ = require("lodash");
 
 module.exports = React.createClass({
+    generateSection: function(name, data) {
+        return React.DOM.div(null,
+            React.DOM.div({
+                className: "detail width-80 inline-block"
+            }, name),
+            React.DOM.div({
+                className: "data width-20 inline-block"
+            }, data)
+        );
+    },
     render: function() {
         return React.DOM.div({
                 className: "edid-content-group"
@@ -14,17 +24,32 @@ module.exports = React.createClass({
             React.DOM.div({
                 className: "edid-content-title"
             }, React.DOM.strong(null, "Standard timings")),
-            _.map(this.props.standardTimings, function(standardTiming, key) {
+            _.map(this.props.standardTimings, _.bind(function(standardTiming, key) {
                 return React.DOM.div({
                         key: key,
-                        className: "edid-content-standard width-25"
+                        className: "edid-content-standard width-25 inline-block"
                     },
-                    Func.contentSubGroupCheckbox(" Timing " + Number(key + 1), standardTiming.valid),
-                    Func.contentSubGroup("H. Acive pixels", standardTiming.HActive),
-                    Func.contentSubGroup("Refresh rate", standardTiming.RefreshRate),
-                    Func.contentSubGroup("Ratio", standardTiming.AspectRatio),
+                    React.DOM.div({
+                            className: "border margin"
+                        },
+                        Func.contentSubGroupCheckbox(
+                            " Timing " + Number(key + 1),
+                            standardTiming.valid),
+                        this.generateSection(
+                            "H. Active pixels",
+                            standardTiming.HActive
+                        ),
+                        this.generateSection(
+                            "Refresh rate",
+                            standardTiming.RefreshRate
+                        ),
+                        this.generateSection(
+                            "Ratio",
+                            standardTiming.AspectRatio
+                        )
+                    )
                 );
-            })
+            }, this))
         );
     }
 });
