@@ -4,6 +4,7 @@
 
 var React = require("react"),
     Func = require("../edidcontent-func"),
+    Title = require("./edidContentTitle"),
     _ = require("lodash");
 
 module.exports = React.createClass({
@@ -21,9 +22,9 @@ module.exports = React.createClass({
         return React.DOM.div({
                 className: "edid-content-group"
             },
-            React.DOM.div({
-                className: "edid-content-title"
-            }, React.DOM.strong(null, "Standard timings")),
+            React.createElement(Title, {
+                title: "Standard timings"
+            }),
             _.map(this.props.standardTimings, _.bind(function(standardTiming, key) {
                 return React.DOM.div({
                         key: key,
