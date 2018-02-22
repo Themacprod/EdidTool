@@ -5,32 +5,10 @@
 var React = require("react"),
     Func = require("./edidcontent-func"),
     StandardTimings = require("./edidBase/standardTimings"),
+    ManufacturerInfo = require("./edidBase/manufacturerInfo"),
     _ = require("lodash");
 
 module.exports = React.createClass({
-    manufacturerInfo: function() {
-        return React.DOM.div({
-                className: "edid-content-group"
-            },
-            React.DOM.div({
-                className: "edid-content-title"
-            }, React.DOM.strong(null, "Manufacturer & Product ID")),
-            React.DOM.div({
-                    className: "edid-content-column width-50"
-                },
-                Func.contentSubGroup("Manufacturer ID (PnPID):", this.props.edidParsed.getManufacturerId()),
-                Func.contentSubGroup("Manufacturer name:", this.props.edidParsed.getManufacturerName()),
-                Func.contentSubGroup("Product ID:", this.props.edidParsed.getProductCode())
-            ),
-            React.DOM.div({
-                    className: "edid-content-column width-50"
-                },
-                Func.contentSubGroup("Serial Number:", this.props.edidParsed.getSerialNumber()),
-                Func.contentSubGroup("Week:", this.props.edidParsed.getManufactureWeek()),
-                Func.contentSubGroup("Year:", this.props.edidParsed.getManufactureYear())
-            )
-        );
-    },
     videoInputDefinition: function() {
         var dbp = this.props.edidParsed.getBasicDisplayParams();
 
@@ -154,7 +132,9 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             null,
-            React.DOM.div(null, this.manufacturerInfo()),
+            React.createElement(ManufacturerInfo, {
+                edidParsed: this.props.edidParsed
+            }),
             React.DOM.div(null, this.videoInputDefinition()),
             React.DOM.div(null, this.displayTransfertCharacteristics()),
             React.DOM.div(null, this.screenSize()),
