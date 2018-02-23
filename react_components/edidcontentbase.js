@@ -4,42 +4,12 @@
 
 var React = require("react"),
     Func = require("./edidcontent-func"),
-    StandardTimings = require("./edidBase/standardTimings"),
     ManufacturerInfo = require("./edidBase/manufacturerInfo"),
+    StandardTimings = require("./edidBase/standardTimings"),
+    VideoInputDefinition = require("./edidBase/videoInputDefinition"),
     _ = require("lodash");
 
 module.exports = React.createClass({
-    videoInputDefinition: function() {
-        var dbp = this.props.edidParsed.getBasicDisplayParams();
-
-        return React.DOM.div({
-                className: "edid-content-group"
-            },
-            React.DOM.div({
-                className: "edid-content-title"
-            }, React.DOM.strong(null, "Video Input Definition")),
-            React.DOM.div({
-                    className: "edid-content-column width-50"
-                },
-                Func.contentSubGroupRadio(" Analog", dbp.digitalInput === false),
-                React.DOM.div({
-                        className: (dbp.digitalInput === false) ? "collapse show" : "collapse",
-                        id: "collapseExample"
-                    },
-                    Func.contentSubGroupCheckbox(" Blank Setup Expected", (dbp.digitalInput === false) ? (dbp.whiteSyncLevels === true) : false),
-                    Func.contentSubGroupCheckbox(" Separate Sync", (dbp.digitalInput === false) ? (dbp.separateSyncSupported === true) : false),
-                    Func.contentSubGroupCheckbox(" Composite Sync", (dbp.digitalInput === false) ? (dbp.compositeSyncSupported === true) : false),
-                    Func.contentSubGroupCheckbox(" Sync On Green", (dbp.digitalInput === false) ? (dbp.synOnGreen === true) : false),
-                    Func.contentSubGroupCheckbox(" Serration", (dbp.digitalInput === false) ? (dbp.vsyncSerrated === true) : false)
-                )
-            ),
-            React.DOM.div({
-                    className: "edid-content-column width-50"
-                },
-                Func.contentSubGroupRadio(" Digital", dbp.digitalInput)
-            )
-        );
-    },
     displayTransfertCharacteristics: function() {
         var dbp = this.props.edidParsed.getBasicDisplayParams();
 
@@ -135,7 +105,9 @@ module.exports = React.createClass({
             React.createElement(ManufacturerInfo, {
                 edidParsed: this.props.edidParsed
             }),
-            React.DOM.div(null, this.videoInputDefinition()),
+            React.createElement(VideoInputDefinition, {
+                dbp: this.props.edidParsed.getBasicDisplayParams()
+            }),
             React.DOM.div(null, this.displayTransfertCharacteristics()),
             React.DOM.div(null, this.screenSize()),
             React.DOM.div(null, this.featureSupport()),
