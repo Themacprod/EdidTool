@@ -7,21 +7,11 @@ var React = require("react"),
     VideoInputDefinition = require("./edidBase/videoInputDefinition"),
     DisplayTransfertCharacteristics = require("./edidBase/displayTransfertCharacteristics"),
     ScreenSize = require("./edidBase/screenSize"),
+    FeatureSupport = require("./edidBase/featureSupport"),
     EstablishedTimings = require("./edidBase/establishedTimings"),
     StandardTimings = require("./edidBase/standardTimings");
 
 module.exports = React.createClass({
-    featureSupport: function() {
-        var dbp = this.props.edidParsed.getBasicDisplayParams();
-
-        return React.DOM.div({
-                className: "edid-content-group"
-            },
-            React.DOM.div({
-                className: "edid-content-title"
-            }, React.DOM.strong(null, "Feature Support"))
-        );
-    },
     render: function() {
         return React.DOM.div(
             null,
@@ -37,7 +27,7 @@ module.exports = React.createClass({
             React.createElement(ScreenSize, {
                 screenSize: this.props.edidParsed.getScreenSize()
             }),
-            React.DOM.div(null, this.featureSupport()),
+            React.createElement(FeatureSupport),
             React.createElement(EstablishedTimings, {
                 establishedTimingsGroups: this.props.edidParsed.getEstablishedModes()
             }),
