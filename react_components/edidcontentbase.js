@@ -7,21 +7,10 @@ var React = require("react"),
     ManufacturerInfo = require("./edidBase/manufacturerInfo"),
     StandardTimings = require("./edidBase/standardTimings"),
     VideoInputDefinition = require("./edidBase/videoInputDefinition"),
+    DisplayTransfertCharacteristics = require("./edidBase/displayTransfertCharacteristics"),
     _ = require("lodash");
 
 module.exports = React.createClass({
-    displayTransfertCharacteristics: function() {
-        var dbp = this.props.edidParsed.getBasicDisplayParams();
-
-        return React.DOM.div({
-                className: "edid-content-group"
-            },
-            React.DOM.div({
-                className: "edid-content-title"
-            }, React.DOM.strong(null, "Display Transfert Characteristics")),
-            Func.contentSubGroup("Gamma:", dbp.displayGamma.toFixed(2))
-        );
-    },
     screenSize: function() {
         var screenSize = this.props.edidParsed.getScreenSize();
 
@@ -108,7 +97,9 @@ module.exports = React.createClass({
             React.createElement(VideoInputDefinition, {
                 dbp: this.props.edidParsed.getBasicDisplayParams()
             }),
-            React.DOM.div(null, this.displayTransfertCharacteristics()),
+            React.createElement(DisplayTransfertCharacteristics, {
+                dbp: this.props.edidParsed.getBasicDisplayParams()
+            }),
             React.DOM.div(null, this.screenSize()),
             React.DOM.div(null, this.featureSupport()),
             React.DOM.div(null, this.establishedTimings()),
