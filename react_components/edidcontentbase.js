@@ -3,40 +3,14 @@
 "use strict";
 
 var React = require("react"),
-    Func = require("./edidcontent-func"),
     ManufacturerInfo = require("./edidBase/manufacturerInfo"),
-    EstablishedTimings = require("./edidBase/establishedTimings"),
-    StandardTimings = require("./edidBase/standardTimings"),
     VideoInputDefinition = require("./edidBase/videoInputDefinition"),
     DisplayTransfertCharacteristics = require("./edidBase/displayTransfertCharacteristics"),
-    _ = require("lodash");
+    ScreenSize = require("./edidBase/screenSize"),
+    EstablishedTimings = require("./edidBase/establishedTimings"),
+    StandardTimings = require("./edidBase/standardTimings");
 
 module.exports = React.createClass({
-    screenSize: function() {
-        var screenSize = this.props.edidParsed.getScreenSize();
-
-        return React.DOM.div({
-                className: "edid-content-group"
-            },
-            React.DOM.div({
-                className: "edid-content-title"
-            }, React.DOM.strong(null, "Screen size")),
-            React.DOM.div({
-                    className: "edid-content-column width-50"
-                },
-                Func.contentSubGroupRadio(" Dimensions", screenSize.imageSizePresent === true),
-                Func.contentSubGroup("Horizontal size (cm):", screenSize.horizontalSize),
-                Func.contentSubGroup("Vertical size (cm):", screenSize.verticalSize)
-            ),
-            React.DOM.div({
-                    className: "edid-content-column width-50"
-                },
-                Func.contentSubGroupRadio(" Aspect Ratio (1.4)", screenSize.imageSizePresent === false),
-                Func.contentSubGroupRadio(" Portrait", screenSize.portrait === true),
-                Func.contentSubGroupRadio(" Landscape", screenSize.portrait === false)
-            )
-        );
-    },
     featureSupport: function() {
         var dbp = this.props.edidParsed.getBasicDisplayParams();
 
@@ -60,7 +34,9 @@ module.exports = React.createClass({
             React.createElement(DisplayTransfertCharacteristics, {
                 dbp: this.props.edidParsed.getBasicDisplayParams()
             }),
-            React.DOM.div(null, this.screenSize()),
+            React.createElement(ScreenSize, {
+                screenSize: this.props.edidParsed.getScreenSize()
+            }),
             React.DOM.div(null, this.featureSupport()),
             React.createElement(EstablishedTimings, {
                 establishedTimingsGroups: this.props.edidParsed.getEstablishedModes()
