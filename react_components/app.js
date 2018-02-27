@@ -11,9 +11,10 @@ module.exports = React.createClass({
         require("../node_modules/react-bootstrap/lib");
     },
     render: function() {
-        return React.DOM.div(
-            {
-                className: "app"
+        return React.DOM.div({
+                className: "app",
+                id: "draggable",
+                draggable: "true"
             },
             React.createElement(fileSelector)
         );

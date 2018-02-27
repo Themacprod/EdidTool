@@ -12,6 +12,35 @@ var React = require("react"),
 // https://www.html5rocks.com/en/tutorials/file/dndfiles/
 
 module.exports = React.createClass({
+    componentDidMount: function() {
+        var target = document.getElementById("draggable");
+
+        target.addEventListener("drag", this.ondragFunction, false);
+        target.addEventListener("dragstart", this.ondragFunction, false);
+        target.addEventListener("dragover", this.ondragFunction, false);
+        target.addEventListener("drop", this.ondragFunction, false);
+    },
+    ondragFunction: function(event) {
+        event.preventDefault();
+
+        if (event.type === "drop") {
+            var dt = event.dataTransfer;
+            if (dt.items) {
+                // Use DataTransferItemList interface to access the file(s)
+                for (var i = 0; i < dt.items.length; i++) {
+                    if (dt.items[i].kind == "file") {
+                        var f = dt.items[i].getAsFile();
+                        this.extractEdid(f, f.name);
+                    }
+                }
+            } else {
+                // Use DataTransfer interface to access the file(s)
+                for (var i = 0; i < dt.files.length; i++) {
+                    this.extractEdid(f, f.name);
+                }
+            }
+        }
+    },
     getInitialState: function() {
         return {
             edidcontent: _.fill(Array(128), 0)
