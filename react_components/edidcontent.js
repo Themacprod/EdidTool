@@ -6,6 +6,7 @@ var React = require("react"),
     EdidParser = require("./edidparser"),
     _ = require("lodash"),
     EdidBase = require("./edidcontentbase"),
+    EdidBaseDetailedData = require("./edidcontentbasedetailed"),
     EdidCea = require("./edidcontentcea");
 
 module.exports = React.createClass({
@@ -26,7 +27,11 @@ module.exports = React.createClass({
         var ext = [];
 
         ext.push(
-            "Base"
+            "Standard data"
+        );
+
+        ext.push(
+            "Detailed data"
         );
 
         for (var i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
@@ -57,6 +62,10 @@ module.exports = React.createClass({
     generateExt: function() {
         if (this.state.selected === 0) {
             return React.createElement(EdidBase, {
+                edidParsed: this.edidParser
+            });
+        } else if (this.state.selected === 1) {
+            return React.createElement(EdidBaseDetailedData, {
                 edidParsed: this.edidParser
             });
         } else {

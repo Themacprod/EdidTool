@@ -143,6 +143,52 @@ var edidparser = function() {
         "Top Center (TC)",
         "Front Center High (FCH)"
     ];
+    this.detailedType = {
+        DETAILED_TIMING: {
+            string: "Detailed Timing",
+            value: 0x01
+        },
+        UNUSED: {
+            string: "Unused",
+            value: 0x10
+        },
+        MONITOR_SERIAL_NUMBER: {
+            string: "Monitor Serial Number",
+            value: 0xff
+        },
+        STRING: {
+            string: "String",
+            value: 0xfe
+        },
+        MONITOR_RANGE_LIMITS: {
+            string: "Monitor Range Limits",
+            value: 0xfd
+        },
+        MONITOR_NAME: {
+            string: "Monitor Name",
+            value: 0xfc
+        },
+        EXTRA_COLOR_DATA: {
+            string: "Extra Color Data",
+            value: 0xfb
+        },
+        EXTRA_STD_TIMING: {
+            string: "Extra Standard Timing",
+            value: 0xfa
+        },
+        DISPLAY_COLOR_MANAGEMENT: {
+            string: "Display Color Management",
+            value: 0xf9
+        },
+        CVT_CODE_DESCRIPTOR: {
+            string: "CVT Code Descriptor",
+            value: 0xf8
+        },
+        ESTABLISHED_TIMINGS_III: {
+            string: "Established Timings III",
+            value: 0xf7
+        }
+    };
 };
 
 edidparser.prototype.setEdidData = function(edid) {
@@ -671,12 +717,34 @@ edidparser.prototype.parseDtd = function(dtdIndex) {
 
 edidparser.prototype.getDtds = function() {
     var dtdArray = [];
+    var dtdType = [];
     var dtdCounter = 0;
 
     var DTD_START = 54;
     var DTD_END = 125;
 
     var dtdIndex = DTD_START;
+
+    while (dtdIndex < DTD_END) {
+        var found = _.find(this.detailedType, _.bind(function(detailedType) {
+            if ((this.edidData[dtdIndex]        === 0x00)   &&
+                (this.edidData[dtdIndex + 1]    === 0x00)   &&
+                (this.edidData[dtdIndex + 2]    === 0x00)   &&
+                (this.edidData[dtdIndex + 3]    === detailedType.value)) {
+                return detailedType;
+            }
+        }, this));
+
+        if (found) {
+            dtdType.push(found.string);
+        } else {
+            dtdType.push(this.detailedType.DETAILED_TIMING.string);
+        }
+
+        dtdIndex += this.DTD_LENGTH;
+    }
+
+    dtdIndex = DTD_START;
 
     /*
      * While the pixel clock is not equal to zero and the DTD index is less
@@ -694,8 +762,8 @@ edidparser.prototype.getDtds = function() {
     }
 
     // Add modelName parser
-    while (this.edidData[dtdIndex] === 0 && dtdIndex < DTD_END) {
-        if (this.edidData[dtdIndex + 3] === 0xFC) {
+    while (dtdIndex < DTD_END) {
+        if (this.edidData[dtdIndex + 3] === this.detailedType.MONITOR_NAME.value) {
             // Modelname
             var modelname = "";
             for (var k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
@@ -709,7 +777,11 @@ edidparser.prototype.getDtds = function() {
         dtdIndex += this.DTD_LENGTH;
     }
 
-    return dtdArray;
+    return {
+        dtdType: dtdType,
+        preferredTiming: dtdArray,
+        displayProductName: this.modelName || ""
+    };
 };
 
 edidparser.prototype.getNumberExtensions = function() {
