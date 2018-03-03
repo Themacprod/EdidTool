@@ -4,7 +4,7 @@
 
 var React = require("react"),
     Func = require("../edidcontent-func"),
-    Title = require("./edidContentTitle");
+    Title = require("../edidContentTitle");
 
 module.exports = React.createClass({
     render: function() {

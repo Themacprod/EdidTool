@@ -3,7 +3,7 @@
 "use strict";
 
 var React = require("react"),
-    Title = require("./edidContentTitle");
+    Title = require("../edidContentTitle");
 
 module.exports = React.createClass({
     render: function() {

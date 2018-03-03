@@ -4,7 +4,7 @@
 
 var React = require("react"),
     SubGroup = require("./subGroup"),
-    Title = require("./edidContentTitle");
+    Title = require("../edidContentTitle");
 
 module.exports = React.createClass({
     render: function() {

@@ -2,7 +2,8 @@
 
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+    Title = require("../edidContentTitle");
 
 module.exports = React.createClass({
     render: function() {
@@ -10,7 +11,9 @@ module.exports = React.createClass({
                 className: "width-25 inline-block",
                 key: this.props.key
             },
-            React.DOM.strong(null, this.props.title),
+            React.createElement(Title, {
+                title: this.props.title
+            }),
             React.DOM.div(null, this.props.type)
         );
     }
