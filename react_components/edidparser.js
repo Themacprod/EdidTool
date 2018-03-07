@@ -736,9 +736,26 @@ edidparser.prototype.getDtds = function() {
         }, this));
 
         if (found) {
-            dtdType.push(found.string);
+            var data;
+            if (this.edidData[dtdIndex + 3] === this.detailedType.MONITOR_NAME.value) {
+                var modelname = "";
+                for (var k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
+                    var char = String.fromCharCode(this.edidData[k]);
+                    if (typeof char !== "undefined") {
+                        modelname += String.fromCharCode(this.edidData[k]);
+                    }
+                }
+                data = modelname.trim();
+            }
+            dtdType.push({
+                string: found.string,
+                data: data
+            });
         } else {
-            dtdType.push(this.detailedType.DETAILED_TIMING.string);
+            dtdType.push({
+                string: this.detailedType.DETAILED_TIMING.string,
+                data: data
+            });
         }
 
         dtdIndex += this.DTD_LENGTH;

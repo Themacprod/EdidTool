@@ -10,11 +10,12 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             null,
-            _.map(this.props.edidParsed.getDtds().dtdType, function(block, key) {
+            _.map(this.props.edidParsed.getDtds().dtdType, function(detailedType, key) {
                 return React.createElement(DetailedDataBlock, {
                     key: key,
                     title: "Block " + String(key + 1),
-                    type: block
+                    string: detailedType.string,
+                    data: detailedType.data
                 });
             })
         );
