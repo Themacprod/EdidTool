@@ -9,7 +9,8 @@ var React = require("react"),
 
 module.exports = React.createClass({
     generateSection: function(name, data) {
-        return React.DOM.div(null,
+        return React.DOM.div(
+            null,
             React.DOM.div({
                 className: "detail width-80 inline-block"
             }, name),
@@ -19,23 +20,27 @@ module.exports = React.createClass({
         );
     },
     render: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content-group"
             },
             React.createElement(Title, {
                 title: "Standard timings"
             }),
             _.map(this.props.standardTimings, _.bind(function(standardTiming, key) {
-                return React.DOM.div({
+                return React.DOM.div(
+                    {
                         key: key,
                         className: "edid-content-standard width-25 inline-block"
                     },
-                    React.DOM.div({
+                    React.DOM.div(
+                        {
                             className: "border margin"
                         },
                         Func.contentSubGroupCheckbox(
                             " Timing " + Number(key + 1),
-                            standardTiming.valid),
+                            standardTiming.valid
+                        ),
                         this.generateSection(
                             "H. Active pixels",
                             standardTiming.HActive

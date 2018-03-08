@@ -8,13 +8,15 @@ var React = require("react"),
 
 module.exports = React.createClass({
     render: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content-group"
             },
             React.createElement(Title, {
                 title: "Manufacturer & Product ID"
             }),
-            React.DOM.div({
+            React.DOM.div(
+                {
                     className: "edid-content-column width-50"
                 },
                 React.createElement(SubGroup, {
@@ -30,7 +32,8 @@ module.exports = React.createClass({
                     data: this.props.edidParsed.getProductCode()
                 })
             ),
-            React.DOM.div({
+            React.DOM.div(
+                {
                     className: "edid-content-column width-50"
                 },
                 React.createElement(SubGroup, {

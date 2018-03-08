@@ -8,7 +8,8 @@ var React = require("react"),
 
 module.exports = React.createClass({
     render: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content-group"
             },
             React.createElement(Title, {

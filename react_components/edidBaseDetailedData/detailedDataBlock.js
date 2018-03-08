@@ -12,7 +12,7 @@ module.exports = React.createClass({
             if (dtdType === "Monitor Name") {
                 return React.createElement(MonitorName, {
                     data: data
-                })
+                });
             }
 
             return null;
@@ -21,7 +21,8 @@ module.exports = React.createClass({
         return null;
     },
     render: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "width-25 inline-block",
                 key: this.props.key
             },

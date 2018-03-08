@@ -9,18 +9,21 @@ var React = require("react"),
 
 module.exports = React.createClass({
     render: function() {
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content-group"
             },
             React.createElement(Title, {
                 title: "Established timings"
             }),
             _.map(this.props.establishedTimingsGroups, _.bind(function(establishedTimingsGroup, key) {
-                return React.DOM.div({
+                return React.DOM.div(
+                    {
                         className: "edid-content-column width-33",
                         key: key
                     },
-                    React.DOM.div({
+                    React.DOM.div(
+                        {
                             className: "edid-content-established",
                             key: key
                         },
@@ -31,7 +34,8 @@ module.exports = React.createClass({
                                 establishedTimingsGroup.description
                             )
                         ),
-                        React.DOM.div({
+                        React.DOM.div(
+                            {
                                 className: "edid-content-established"
                             },
                             _.map(establishedTimingsGroup, _.bind(function(establishedTimings, keygroup) {
