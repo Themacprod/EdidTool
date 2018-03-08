@@ -8,7 +8,8 @@ var React = require("react"),
 
 var Boot = React.createClass({
     render: function() {
-        return React.createElement(ReactRouter.Router, {
+        return React.createElement(
+            ReactRouter.Router, {
                 history: ReactRouter.browserHistory
             },
             React.createElement(ReactRouter.Route, {

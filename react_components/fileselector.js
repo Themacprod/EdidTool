@@ -27,17 +27,8 @@ module.exports = React.createClass({
             var dt = event.dataTransfer;
             if (dt.items) {
                 // Use DataTransferItemList interface to access the file(s)
-                for (var i = 0; i < dt.items.length; i++) {
-                    if (dt.items[i].kind == "file") {
-                        var f = dt.items[i].getAsFile();
-                        this.extractEdid(f, f.name);
-                    }
-                }
-            } else {
-                // Use DataTransfer interface to access the file(s)
-                for (var i = 0; i < dt.files.length; i++) {
-                    this.extractEdid(f, f.name);
-                }
+                var f = dt.items[0].getAsFile();
+                this.extractEdid(f, f.name);
             }
         }
     },
@@ -47,7 +38,7 @@ module.exports = React.createClass({
         };
     },
     getFileExtension: function(filename) {
-        return (/[.]/.exec(filename)) ? (/[^.]+$/).exec(filename) : undefined;
+        return (/[.]/).exec(filename) ? (/[^.]+$/).exec(filename) : undefined;
     },
     handleChange: function() {
         this.extractEdid(

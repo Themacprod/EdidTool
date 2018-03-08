@@ -26,36 +26,31 @@ module.exports = React.createClass({
     generateTabs: function() {
         var ext = [];
 
-        ext.push(
-            "Standard data"
-        );
-
-        ext.push(
-            "Detailed data"
-        );
+        ext.push("Standard data");
+        ext.push("Detailed data");
 
         for (var i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
-            let extcount = i + 1;
-            ext.push(
-                "CEA #" + extcount,
-            );
+            const extcount = i + 1;
+            ext.push("CEA #" + extcount);
         }
 
-        return React.DOM.ul({
+        return React.DOM.ul(
+            {
                 className: "nav nav-tabs"
             },
             _.map(ext, _.bind(function(data, key) {
+                var baseState = this.state.selected === key ? " active" : " disabled";
 
-                var baseState = (this.state.selected === key) ? " active" : " disabled"
-
-                return React.DOM.li({
+                return React.DOM.li(
+                    {
                         key: key,
                         className: "nav-item",
                         onClick: this.handleClick.bind(this, key)
                     },
                     React.DOM.a({
-                        className: "nav-link" + baseState,
-                    }, data));
+                        className: "nav-link" + baseState
+                    }, data)
+                );
             }, this))
         );
     },
@@ -68,17 +63,18 @@ module.exports = React.createClass({
             return React.createElement(EdidBaseDetailedData, {
                 edidParsed: this.edidParser
             });
-        } else {
-            return React.createElement(EdidCea, {
-                edidParsed: this.edidParser
-            });
         }
+
+        return React.createElement(EdidCea, {
+            edidParsed: this.edidParser
+        });
     },
     render: function() {
         this.edidParser.setEdidData(this.props.edid);
         this.edidParser.parse();
 
-        return React.DOM.div({
+        return React.DOM.div(
+            {
                 className: "edid-content"
             },
             this.generateTabs(),
