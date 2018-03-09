@@ -3,13 +3,13 @@
 "use strict";
 
 var React = require("react"),
-    ManufacturerInfo = require("./edidBase/manufacturerInfo"),
-    VideoInputDefinition = require("./edidBase/videoInputDefinition"),
-    DisplayTransfertCharacteristics = require("./edidBase/displayTransfertCharacteristics"),
-    ScreenSize = require("./edidBase/screenSize"),
-    FeatureSupport = require("./edidBase/featureSupport"),
-    EstablishedTimings = require("./edidBase/establishedTimings"),
-    StandardTimings = require("./edidBase/standardTimings");
+    ManufacturerInfo = require("./manufacturerInfo"),
+    VideoInputDefinition = require("./videoInputDefinition"),
+    DisplayTransfertCharacteristics = require("./displayTransfertCharacteristics"),
+    ScreenSize = require("./screenSize"),
+    FeatureSupport = require("./featureSupport"),
+    EstablishedTimings = require("./establishedTimings"),
+    StandardTimings = require("./standardTimings");
 
 module.exports = React.createClass({
     render: function() {

@@ -3,10 +3,10 @@
 "use strict";
 
 var React = require("react"),
-    EdidParser = require("./edidparser"),
+    EdidParser = require("../edidparser"),
     _ = require("lodash"),
-    EdidBase = require("./edidcontentbase"),
-    EdidBaseDetailedData = require("./edidcontentbasedetailed"),
+    EdidBase = require("./edidBase/edidcontentbase"),
+    EdidBaseDetailedData = require("./edidBaseDetailedData/edidcontentbasedetailed"),
     EdidCea = require("./edidcontentcea");
 
 module.exports = React.createClass({

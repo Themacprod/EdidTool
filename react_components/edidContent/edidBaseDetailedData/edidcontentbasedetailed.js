@@ -4,7 +4,7 @@
 
 var React = require("react"),
     _ = require("lodash"),
-    DetailedDataBlock = require("./edidBaseDetailedData/detailedDataBlock");
+    DetailedDataBlock = require("./detailedDataBlock");
 
 module.exports = React.createClass({
     render: function() {

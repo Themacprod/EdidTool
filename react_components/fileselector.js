@@ -6,7 +6,7 @@ var React = require("react"),
     _ = require("lodash"),
     edidExtractor = require("./edidextractor"),
     edidDisplayRaw = require("./ediddisplayraw"),
-    edidContent = require("./edidcontent"),
+    edidContent = require("./edidContent/edidcontent"),
     fileReader = new FileReader();
 
 // https://www.html5rocks.com/en/tutorials/file/dndfiles/
