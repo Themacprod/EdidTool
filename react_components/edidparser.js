@@ -568,7 +568,7 @@ edidparser.prototype.getStandardDisplayModes = function() {
     var stdDispModesArray = [];
 
     for (var i = 0; i < 8; i += 1) {
-        stdDispModesArray.push(this.getStandardDisplayMode(i))
+        stdDispModesArray.push(this.getStandardDisplayMode(i));
     }
 
     return stdDispModesArray;
@@ -615,7 +615,7 @@ edidparser.prototype.getStandardDisplayMode = function(stdIndex) {
         HActive: (stdHorizontalActive + 31) * 8,
         RefreshRate: stdRefresh + 60,
         AspectRatio: AspectRatioEnum[stdRatio].string
-    }
+    };
 };
 
 edidparser.prototype.parseDtd = function(dtdIndex) {
@@ -715,6 +715,26 @@ edidparser.prototype.parseDtd = function(dtdIndex) {
     return dtd;
 };
 
+edidparser.prototype.getValidDetailedType = function(dtdIndex) {
+    return _.find(this.detailedType, _.bind(function(detailedType) {
+        return ((this.edidData[dtdIndex] === 0x00) &&
+            (this.edidData[dtdIndex + 1] === 0x00) &&
+            (this.edidData[dtdIndex + 2] === 0x00) &&
+            (this.edidData[dtdIndex + 3] === detailedType.value));
+    }, this));
+};
+
+edidparser.prototype.getDetailedMonitorName = function(dtdIndex) {
+    let modelname = "";
+    for (let k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
+        const char = String.fromCharCode(this.edidData[k]);
+        if (typeof char !== "undefined") {
+            modelname += char;
+        }
+    }
+    return modelname.trim();
+};
+
 edidparser.prototype.getDtds = function() {
     var dtdArray = [];
     var dtdType = [];
@@ -726,26 +746,12 @@ edidparser.prototype.getDtds = function() {
     var dtdIndex = DTD_START;
 
     while (dtdIndex < DTD_END) {
-        var found = _.find(this.detailedType, _.bind(function(detailedType) {
-            if ((this.edidData[dtdIndex]        === 0x00)   &&
-                (this.edidData[dtdIndex + 1]    === 0x00)   &&
-                (this.edidData[dtdIndex + 2]    === 0x00)   &&
-                (this.edidData[dtdIndex + 3]    === detailedType.value)) {
-                return detailedType;
-            }
-        }, this));
+        var found = this.getValidDetailedType(dtdIndex);
+        var data = "";
 
         if (found) {
-            var data;
             if (this.edidData[dtdIndex + 3] === this.detailedType.MONITOR_NAME.value) {
-                var modelname = "";
-                for (var k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
-                    var char = String.fromCharCode(this.edidData[k]);
-                    if (typeof char !== "undefined") {
-                        modelname += String.fromCharCode(this.edidData[k]);
-                    }
-                }
-                data = modelname.trim();
+                data = this.getDetailedMonitorName(dtdIndex);
             }
             dtdType.push({
                 string: found.string,
@@ -782,9 +788,9 @@ edidparser.prototype.getDtds = function() {
     while (dtdIndex < DTD_END) {
         if (this.edidData[dtdIndex + 3] === this.detailedType.MONITOR_NAME.value) {
             // Modelname
-            var modelname = "";
-            for (var k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
-                var char = String.fromCharCode(this.edidData[k]);
+            let modelname = "";
+            for (let k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
+                const char = String.fromCharCode(this.edidData[k]);
                 if (typeof char !== "undefined") {
                     modelname += String.fromCharCode(this.edidData[k]);
                 }
