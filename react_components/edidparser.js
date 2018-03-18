@@ -2,7 +2,8 @@
 
 var _ = require("lodash"),
     manufacturerNames = require("./manufacturernames"),
-    establishedtimings = require("./establishedtimings");
+    establishedtimings = require("./establishedtimings"),
+    standardDetailedDataParser = require("./edidParser/edidBase/standardDetailedData");
 
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
@@ -227,8 +228,6 @@ edidparser.prototype.parse = function() {
     this.establishedModes = this.getEstablishedModes();
 
     this.standardDisplayModes = this.getStandardDisplayModes();
-
-    this.dtds = this.getDtds();
 
     this.numberOfExtensions = this.getNumberExtensions();
 
@@ -785,96 +784,8 @@ edidparser.prototype.parseDtd = function(dtdIndex) {
     return dtd;
 };
 
-edidparser.prototype.getValidDetailedType = function(dtdIndex) {
-    return _.find(this.detailedType, _.bind(function(detailedType) {
-        return ((this.edidData[dtdIndex] === 0x00) &&
-            (this.edidData[dtdIndex + 1] === 0x00) &&
-            (this.edidData[dtdIndex + 2] === 0x00) &&
-            (this.edidData[dtdIndex + 3] === detailedType.value));
-    }, this));
-};
-
-edidparser.prototype.getDetailedMonitorName = function(dtdIndex) {
-    let modelname = "";
-    for (let k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
-        const char = String.fromCharCode(this.edidData[k]);
-        if (typeof char !== "undefined") {
-            modelname += char;
-        }
-    }
-    return modelname.trim();
-};
-
 edidparser.prototype.getDtds = function() {
-    var dtdArray = [];
-    var dtdType = [];
-    var dtdCounter = 0;
-
-    var DTD_START = 54;
-    var DTD_END = 125;
-
-    var dtdIndex = DTD_START;
-
-    while (dtdIndex < DTD_END) {
-        var found = this.getValidDetailedType(dtdIndex);
-        var data = "";
-
-        if (found) {
-            if (this.edidData[dtdIndex + 3] === this.detailedType.MONITOR_NAME.value) {
-                data = this.getDetailedMonitorName(dtdIndex);
-            }
-            dtdType.push({
-                string: found.string,
-                data: data
-            });
-        } else {
-            dtdType.push({
-                string: this.detailedType.DETAILED_TIMING.string,
-                data: data
-            });
-        }
-
-        dtdIndex += this.DTD_LENGTH;
-    }
-
-    dtdIndex = DTD_START;
-
-    /*
-     * While the pixel clock is not equal to zero and the DTD index is less
-     * than the last byte of the DTD
-     */
-    while (((this.edidData[dtdIndex] !== 0) || (this.edidData[dtdIndex + 1] !== 0)) &&
-        (dtdIndex < DTD_END)) {
-        var dtd = this.parseDtd(dtdIndex);
-        // Add DTD to the DTD Array
-        dtdArray[dtdCounter] = dtd;
-        // Increment DTD Counter
-        dtdCounter += 1;
-        // Add a DTD length, to go to the next descriptor
-        dtdIndex += this.DTD_LENGTH;
-    }
-
-    // Add modelName parser
-    while (dtdIndex < DTD_END) {
-        if (this.edidData[dtdIndex + 3] === this.detailedType.MONITOR_NAME.value) {
-            // Modelname
-            let modelname = "";
-            for (let k = dtdIndex + 5; this.edidData[k] !== 0x0A && this.edidData[k] !== 0x00; k += 1) {
-                const char = String.fromCharCode(this.edidData[k]);
-                if (typeof char !== "undefined") {
-                    modelname += String.fromCharCode(this.edidData[k]);
-                }
-            }
-            this.modelName = modelname.trim();
-        }
-        dtdIndex += this.DTD_LENGTH;
-    }
-
-    return {
-        dtdType: dtdType,
-        preferredTiming: dtdArray,
-        displayProductName: this.modelName || ""
-    };
+    return standardDetailedDataParser.getStandardDetailedData(this.edidData);
 };
 
 edidparser.prototype.getNumberExtensions = function() {
