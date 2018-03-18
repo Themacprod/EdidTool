@@ -1,6 +1,7 @@
 "use strict";
 
-var _ = require("lodash");
+var _ = require("lodash"),
+    monitorName = require("./monitorName");
 
 var getPixelClockInMHz = function(edidData, dtdIndex) {
     return ((edidData[dtdIndex + 1] << 8) + edidData[dtdIndex]) / 100;
@@ -151,17 +152,6 @@ var getValidDetailedType = function(detailedTypes, edidData, dtdIndex) {
     });
 };
 
-var getDetailedMonitorName = function(edidData, dtdIndex) {
-    let modelname = "";
-    for (let k = dtdIndex + 5; edidData[k] !== 0x0A && edidData[k] !== 0x00; k += 1) {
-        const char = String.fromCharCode(edidData[k]);
-        if (typeof char !== "undefined") {
-            modelname += char;
-        }
-    }
-    return modelname.trim();
-};
-
 module.exports.getStandardDetailedData = function(edidData) {
     const detailedTypes = {
         DETAILED_TIMING: {
@@ -226,7 +216,7 @@ module.exports.getStandardDetailedData = function(edidData) {
 
         if (found) {
             if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_NAME.value) {
-                data = getDetailedMonitorName(edidData, dtdIndex);
+                data = monitorName.getDetailedMonitorName(edidData, dtdIndex);
             }
             dtdType.push({
                 string: found.string,
@@ -259,26 +249,9 @@ module.exports.getStandardDetailedData = function(edidData) {
         dtdIndex += DTD_LENGTH;
     }
 
-    // Add modelName parser
-    var data2 = "";
-    while (dtdIndex < DTD_END) {
-        if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_NAME.value) {
-            // Modelname
-            let modelname = "";
-            for (let k = dtdIndex + 5; edidData[k] !== 0x0A && edidData[k] !== 0x00; k += 1) {
-                const char = String.fromCharCode(edidData[k]);
-                if (typeof char !== "undefined") {
-                    modelname += String.fromCharCode(edidData[k]);
-                }
-            }
-            data2 = modelname.trim();
-        }
-        dtdIndex += DTD_LENGTH;
-    }
-
     return {
         dtdType: dtdType,
         preferredTiming: dtdArray,
-        displayProductName: data2 || ""
+        displayProductName: data || ""
     };
 };
