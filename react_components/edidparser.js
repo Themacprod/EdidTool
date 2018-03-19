@@ -1,8 +1,8 @@
 "use strict";
 
 var _ = require("lodash"),
-    manufacturerNames = require("./manufacturernames"),
     establishedtimings = require("./establishedtimings"),
+    vendorProductId = require("./edidParser/edidBase/vendorProductId"),
     standardDetailedDataParser = require("./edidParser/edidBase/standardDetailedData");
 
 var edidparser = function() {
@@ -205,14 +205,6 @@ edidparser.prototype.parse = function() {
 
     this.eisaId = this.getEisaId();
 
-    this.productCode = this.getProductCode();
-
-    this.manufacturerId = this.getManufacturerId();
-
-    this.manufacturerName = this.getManufacturerName();
-
-    this.serialNumber = this.getSerialNumber();
-
     this.manufactureDate = this.getManufactureWeek() + "/" +
         this.getManufactureYear();
 
@@ -309,72 +301,42 @@ edidparser.prototype.getEisaId = function() {
     return intToAscii(firstLetter) + intToAscii(secondLetter) + intToAscii(thirdLetter);
 };
 
+edidparser.prototype.getVendorProductId = function() {
+    const manufacturerId = this.getManufacturerId(this.edidData);
+
+    return {
+        manufacturerId: manufacturerId,
+        manufacturerName: vendorProductId.getManufacturerName(manufacturerId),
+        productCode: vendorProductId.getProductCodeId(this.edidData),
+        serialNumber: vendorProductId.getSerialNumber(this.edidData),
+        manufactureWeek: vendorProductId.getManufactureWeek(this.edidData),
+        manufactureYear: vendorProductId.getManufactureYear(this.edidData)
+    };
+};
+
 edidparser.prototype.getProductCode = function() {
-    var PRODUCT_CODE1 = 10;
-    var PRODUCT_CODE2 = 11;
-
-    var hexValue = ((this.edidData[PRODUCT_CODE2] << 8) +
-        this.edidData[PRODUCT_CODE1]).toString(16).toUpperCase();
-
-    if (hexValue.length < 4) {
-        hexValue = "0" + hexValue;
-    }
-
-    return hexValue;
+    return vendorProductId.getProductCodeId(this.edidData);
 };
 
 edidparser.prototype.getManufacturerId = function() {
-    var MANUFACTURER_ID_1 = 9;
-    var MANUFACTURER_ID_2 = 8;
-
-    if ((this.edidData[MANUFACTURER_ID_2] === 0) || (this.edidData[MANUFACTURER_ID_1] === 0)) {
-        return "-";
-    }
-
-    var manufacturerid = (this.edidData[MANUFACTURER_ID_2] << 8) + this.edidData[MANUFACTURER_ID_1];
-    var string1 = ((manufacturerid >> 10) & 0x1f) - 1;
-    var string2 = ((manufacturerid >> 5) & 0x1f) - 1;
-    var string3 = (manufacturerid & 0x1f) - 1;
-
-    string1 = String.fromCharCode(string1 + "A".charCodeAt(0));
-    string2 = String.fromCharCode(string2 + "A".charCodeAt(0));
-    string3 = String.fromCharCode(string3 + "A".charCodeAt(0));
-
-    return string1 + string2 + string3;
+    return vendorProductId.getManufacturerId(this.edidData);
 };
 
 edidparser.prototype.getManufacturerName = function() {
-    var found = _.find(manufacturerNames, _.bind(function(value) {
-        return value[0] === this.manufacturerId;
-    }, this));
-
-    if (found === undefined) {
-        return "-";
-    }
-
-    return found[1];
+    const manufacturerId = this.getManufacturerId(this.edidData);
+    return vendorProductId.getManufacturerName(manufacturerId);
 };
 
 edidparser.prototype.getSerialNumber = function() {
-    var SERIAL_NUMBER1 = 12;
-    var SERIAL_NUMBER2 = 13;
-    var SERIAL_NUMBER3 = 14;
-    var SERIAL_NUMBER4 = 15;
-
-    return (this.edidData[SERIAL_NUMBER4] << 24) +
-        (this.edidData[SERIAL_NUMBER3] << 16) +
-        (this.edidData[SERIAL_NUMBER2] << 8) +
-        this.edidData[SERIAL_NUMBER1];
+    return vendorProductId.getSerialNumber(this.edidData);
 };
 
 edidparser.prototype.getManufactureWeek = function() {
-    var MANUFACTURE_WEEK = 16;
-    return this.edidData[MANUFACTURE_WEEK];
+    return vendorProductId.getManufactureWeek(this.edidData);
 };
 
 edidparser.prototype.getManufactureYear = function() {
-    var MANUFACTURE_YEAR = 17;
-    return this.edidData[MANUFACTURE_YEAR] + 1990;
+    return vendorProductId.getManufactureYear(this.edidData);
 };
 
 edidparser.prototype.getEdidVersion = function() {

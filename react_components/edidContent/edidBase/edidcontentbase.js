@@ -16,7 +16,7 @@ module.exports = React.createClass({
         return React.DOM.div(
             null,
             React.createElement(ManufacturerInfo, {
-                edidParsed: this.props.edidParsed
+                vendorProductId: this.props.edidParsed.getVendorProductId()
             }),
             React.createElement(VideoInputDefinition, {
                 dbp: this.props.edidParsed.getBasicDisplayParams()

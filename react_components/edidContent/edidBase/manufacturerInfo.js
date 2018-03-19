@@ -21,15 +21,15 @@ module.exports = React.createClass({
                 },
                 React.createElement(SubGroup, {
                     detail: "Manufacturer ID (PnPID):",
-                    data: this.props.edidParsed.getManufacturerId()
+                    data: this.props.vendorProductId.manufacturerId
                 }),
                 React.createElement(SubGroup, {
                     detail: "Manufacturer name:",
-                    data: this.props.edidParsed.getManufacturerName()
+                    data: this.props.vendorProductId.manufacturerName
                 }),
                 React.createElement(SubGroup, {
                     detail: "Product ID:",
-                    data: this.props.edidParsed.getProductCode()
+                    data: this.props.vendorProductId.productCode
                 })
             ),
             React.DOM.div(
@@ -38,15 +38,15 @@ module.exports = React.createClass({
                 },
                 React.createElement(SubGroup, {
                     detail: "Serial Number:",
-                    data: this.props.edidParsed.getSerialNumber()
+                    data: this.props.vendorProductId.serialNumber
                 }),
                 React.createElement(SubGroup, {
                     detail: "Week:",
-                    data: this.props.edidParsed.getManufactureWeek()
+                    data: this.props.vendorProductId.manufactureWeek
                 }),
                 React.createElement(SubGroup, {
                     detail: "Year:",
-                    data: this.props.edidParsed.getManufactureYear()
+                    data: this.props.vendorProductId.manufactureYear
                 })
             )
         );
