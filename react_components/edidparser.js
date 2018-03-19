@@ -3,6 +3,7 @@
 var _ = require("lodash"),
     establishedtimings = require("./establishedtimings"),
     header = require("./edidParser/edidBase/header"),
+    edidVersionRevision = require("./edidParser/edidBase/versionRevision"),
     vendorProductId = require("./edidParser/edidBase/vendorProductId"),
     standardDetailedDataParser = require("./edidParser/edidBase/standardDetailedData");
 
@@ -206,9 +207,6 @@ edidparser.prototype.parse = function() {
 
     this.eisaId = this.getEisaId();
 
-    this.edidVersion = this.getEdidVersion() + "." +
-        this.getEdidRevision();
-
     this.bdp = this.getBasicDisplayParams();
 
     this.screenSize = this.getScreenSize();
@@ -303,14 +301,11 @@ edidparser.prototype.getVendorProductId = function() {
     };
 };
 
-edidparser.prototype.getEdidVersion = function() {
-    var EDID_VERSION = 18;
-    return this.edidData[EDID_VERSION];
-};
-
-edidparser.prototype.getEdidRevision = function() {
-    var EDID_REVISION = 19;
-    return this.edidData[EDID_REVISION];
+edidparser.prototype.getEdidVersionRevision = function() {
+    return {
+        version: edidVersionRevision.getVersion(this.edidData),
+        revision: edidVersionRevision.getRevision(this.edidData)
+    };
 };
 
 edidparser.prototype.getBasicDisplayParams = function() {
