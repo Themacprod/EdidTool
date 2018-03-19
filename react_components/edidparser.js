@@ -2,6 +2,7 @@
 
 var _ = require("lodash"),
     establishedtimings = require("./establishedtimings"),
+    header = require("./edidParser/edidBase/header"),
     vendorProductId = require("./edidParser/edidBase/vendorProductId"),
     standardDetailedDataParser = require("./edidParser/edidBase/standardDetailedData");
 
@@ -197,16 +198,13 @@ edidparser.prototype.setEdidData = function(edid) {
 };
 
 edidparser.prototype.parse = function() {
-    if (this.validateHeader() === true) {
+    if (header.isValidHeader(this.edidData) === true) {
         this.validHeader = "OK";
     } else {
         this.validHeader = "ERROR";
     }
 
     this.eisaId = this.getEisaId();
-
-    this.manufactureDate = this.getManufactureWeek() + "/" +
-        this.getManufactureYear();
 
     this.edidVersion = this.getEdidVersion() + "." +
         this.getEdidRevision();
@@ -250,21 +248,6 @@ edidparser.prototype.parse = function() {
     }
 };
 
-edidparser.prototype.validateHeader = function() {
-    var validHeader = false;
-    if (this.edidData[0] === 0x00 &&
-        this.edidData[1] === 0xFF &&
-        this.edidData[2] === 0xFF &&
-        this.edidData[3] === 0xFF &&
-        this.edidData[4] === 0xFF &&
-        this.edidData[5] === 0xFF &&
-        this.edidData[6] === 0xFF &&
-        this.edidData[7] === 0x00) {
-        validHeader = true;
-    }
-    return validHeader;
-};
-
 /**
  * Adds two numbers together.
  * @param {int} intCode The first number.
@@ -301,8 +284,14 @@ edidparser.prototype.getEisaId = function() {
     return intToAscii(firstLetter) + intToAscii(secondLetter) + intToAscii(thirdLetter);
 };
 
+edidparser.prototype.getHeader = function() {
+    return {
+        header: header.getHeader(this.edidData)
+    };
+};
+
 edidparser.prototype.getVendorProductId = function() {
-    const manufacturerId = this.getManufacturerId(this.edidData);
+    const manufacturerId = vendorProductId.getManufacturerId(this.edidData);
 
     return {
         manufacturerId: manufacturerId,
@@ -312,31 +301,6 @@ edidparser.prototype.getVendorProductId = function() {
         manufactureWeek: vendorProductId.getManufactureWeek(this.edidData),
         manufactureYear: vendorProductId.getManufactureYear(this.edidData)
     };
-};
-
-edidparser.prototype.getProductCode = function() {
-    return vendorProductId.getProductCodeId(this.edidData);
-};
-
-edidparser.prototype.getManufacturerId = function() {
-    return vendorProductId.getManufacturerId(this.edidData);
-};
-
-edidparser.prototype.getManufacturerName = function() {
-    const manufacturerId = this.getManufacturerId(this.edidData);
-    return vendorProductId.getManufacturerName(manufacturerId);
-};
-
-edidparser.prototype.getSerialNumber = function() {
-    return vendorProductId.getSerialNumber(this.edidData);
-};
-
-edidparser.prototype.getManufactureWeek = function() {
-    return vendorProductId.getManufactureWeek(this.edidData);
-};
-
-edidparser.prototype.getManufactureYear = function() {
-    return vendorProductId.getManufactureYear(this.edidData);
 };
 
 edidparser.prototype.getEdidVersion = function() {
