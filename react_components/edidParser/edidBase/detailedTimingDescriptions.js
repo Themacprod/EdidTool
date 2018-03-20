@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require("lodash"),
-	monitorName = require("./monitorName");
+	monitorName = require("./detailedTimingDescriptions/monitorName");
 
 var getPixelClockInMHz = function(edidData, dtdIndex) {
 	return ((edidData[dtdIndex + 1] << 8) + edidData[dtdIndex]) / 100;
@@ -152,7 +152,7 @@ var getValidDetailedType = function(detailedTypes, edidData, dtdIndex) {
 	});
 };
 
-module.exports.getStandardDetailedData = function(edidData) {
+module.exports.getData = function(edidData) {
 	const detailedTypes = {
 		DETAILED_TIMING: {
 			string: "Detailed Timing",

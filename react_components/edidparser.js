@@ -6,7 +6,7 @@ var header = require("./edidParser/edidBase/header"),
     colorCharacteristics = require("./edidParser/edidBase/colorCharacteristics"),
     establishedTimings = require("./edidParser/edidBase/establishedTimings"),
     standardTimings = require("./edidParser/edidBase/standardTimings"),
-    standardDetailedDataParser = require("./edidParser/edidBase/standardDetailedData");
+    detailedTimingDescriptions = require("./edidParser/edidBase/detailedTimingDescriptions");
 
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
@@ -550,7 +550,7 @@ edidparser.prototype.parseDtd = function(dtdIndex) {
 };
 
 edidparser.prototype.getDtds = function() {
-    return standardDetailedDataParser.getStandardDetailedData(this.edidData);
+    return detailedTimingDescriptions.getData(this.edidData);
 };
 
 edidparser.prototype.getNumberExtensions = function() {
