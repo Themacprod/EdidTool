@@ -5,6 +5,7 @@ var _ = require("lodash"),
     header = require("./edidParser/edidBase/header"),
     edidVersionRevision = require("./edidParser/edidBase/versionRevision"),
     vendorProductId = require("./edidParser/edidBase/vendorProductId"),
+    colorCharacteristics = require("./edidParser/edidBase/colorCharacteristics"),
     standardDetailedDataParser = require("./edidParser/edidBase/standardDetailedData");
 
 var edidparser = function() {
@@ -211,8 +212,6 @@ edidparser.prototype.parse = function() {
 
     this.screenSize = this.getScreenSize();
 
-    this.chromaticity = this.getChromaticityCoordinates();
-
     this.establishedModes = this.getEstablishedModes();
 
     this.standardDisplayModes = this.getStandardDisplayModes();
@@ -413,55 +412,7 @@ edidparser.prototype.getScreenSize = function() {
 };
 
 edidparser.prototype.getChromaticityCoordinates = function() {
-    var chromaticity = {};
-    var TWO_BIT_MASK = 0x03;
-    var TWO_BIT_OFF = 2;
-    var FOUR_BIT_OFF = 4;
-    var SIX_BIT_OFF = 6;
-
-    var RED_GREEN_LSB = 25;
-    var RED_X_MSB = 27;
-    chromaticity.redX = (this.edidData[RED_X_MSB] << TWO_BIT_OFF) +
-        ((this.edidData[RED_GREEN_LSB] / SIX_BIT_OFF) && TWO_BIT_MASK);
-    chromaticity.redXCoords = chromaticity.redX / 1024;
-
-    var RED_Y_MSB = 28;
-    chromaticity.redY = (this.edidData[RED_Y_MSB] << TWO_BIT_OFF) +
-        ((this.edidData[RED_GREEN_LSB] / FOUR_BIT_OFF) && TWO_BIT_MASK);
-    chromaticity.redYCoords = chromaticity.redY / 1024;
-
-    var GREEN_X_MSB = 29;
-    chromaticity.greenX = (this.edidData[GREEN_X_MSB] << TWO_BIT_OFF) +
-        ((this.edidData[RED_GREEN_LSB] / TWO_BIT_OFF) && TWO_BIT_MASK);
-    chromaticity.greenXCoords = chromaticity.greenX / 1024;
-
-    var GREEN_Y_MSB = 30;
-    chromaticity.greenY = (this.edidData[GREEN_Y_MSB] << TWO_BIT_OFF) +
-        (this.edidData[RED_GREEN_LSB] && TWO_BIT_MASK);
-    chromaticity.greenYCoords = chromaticity.greenY / 1024;
-
-    var BLUE_WHITE_LSB = 26;
-    var BLUE_X_MSB = 31;
-    chromaticity.blueX = (this.edidData[BLUE_X_MSB] << TWO_BIT_OFF) +
-        ((this.edidData[BLUE_WHITE_LSB] / SIX_BIT_OFF) && TWO_BIT_MASK);
-    chromaticity.blueXCoords = chromaticity.blueX / 1024;
-
-    var BLUE_Y_MSB = 32;
-    chromaticity.blueY = (this.edidData[BLUE_Y_MSB] << TWO_BIT_OFF) +
-        ((this.edidData[BLUE_WHITE_LSB] / FOUR_BIT_OFF) && TWO_BIT_MASK);
-    chromaticity.blueYCoords = chromaticity.blueY / 1024;
-
-    var WHITE_X_MSB = 33;
-    chromaticity.whiteX = (this.edidData[WHITE_X_MSB] << TWO_BIT_OFF) +
-        ((this.edidData[BLUE_WHITE_LSB] / TWO_BIT_OFF) && TWO_BIT_MASK);
-    chromaticity.whiteXCoords = chromaticity.whiteX / 1024;
-
-    var WHITE_Y_MSB = 34;
-    chromaticity.whiteY = (this.edidData[WHITE_Y_MSB] << TWO_BIT_OFF) +
-        (this.edidData[BLUE_WHITE_LSB] && TWO_BIT_MASK);
-    chromaticity.whiteYCoords = chromaticity.whiteY / 1024;
-
-    return chromaticity;
+    return colorCharacteristics.getColorCharacteristics(this.edidData);
 };
 
 edidparser.prototype.getEstablishedModes = function() {
