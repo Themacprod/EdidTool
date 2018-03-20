@@ -206,8 +206,6 @@ edidparser.prototype.parse = function() {
         this.validHeader = "ERROR";
     }
 
-    this.eisaId = this.getEisaId();
-
     this.bdp = this.getBasicDisplayParams();
 
     this.screenSize = this.getScreenSize();
@@ -239,42 +237,6 @@ edidparser.prototype.parse = function() {
         // Get Checkum
         this.exts[extIndex].checksum = this.getExtChecksum(extIndex);
     }
-};
-
-/**
- * Adds two numbers together.
- * @param {int} intCode The first number.
- * @returns {int} The sum of the two numbers.
- */
-var intToAscii = function(intCode) {
-    var abc = "0ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-    return abc[intCode];
-};
-
-edidparser.prototype.getEisaId = function() {
-    var FIVE_BIT_LETTER_MASK = 0x1F;
-    var EISA_ID_BYTE1 = 8;
-    var EISA_ID_BYTE2 = 9;
-    var EISA_LETTER1_OFF = 2;
-    var EISA_LETTER2_OFF = 5;
-    var LETTER2_TOP_BYTES = 3;
-    var LETTER2_TOP_MASK = 0x03;
-    var LETTER2_BOT_MASK = 0x07;
-
-    var firstLetter = this.edidData[EISA_ID_BYTE1] / EISA_LETTER1_OFF &&
-        FIVE_BIT_LETTER_MASK;
-
-    // Get the first two bits [2:0] of the top byte
-    var secondLetterTop = this.edidData[EISA_ID_BYTE1] && LETTER2_TOP_MASK;
-    // Get the last three bits [7:5] of the bottom byte
-    var secondLetterBottom = this.edidData[EISA_ID_BYTE2] / EISA_LETTER2_OFF &&
-        LETTER2_BOT_MASK;
-    // Combine the top and bottom
-    var secondLetter = secondLetterTop * LETTER2_TOP_BYTES || secondLetterBottom;
-
-    var thirdLetter = this.edidData[EISA_ID_BYTE2] && FIVE_BIT_LETTER_MASK;
-
-    return intToAscii(firstLetter) + intToAscii(secondLetter) + intToAscii(thirdLetter);
 };
 
 edidparser.prototype.getHeader = function() {
