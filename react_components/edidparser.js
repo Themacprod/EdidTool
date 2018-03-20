@@ -1,11 +1,10 @@
 "use strict";
 
-var _ = require("lodash"),
-    establishedtimings = require("./establishedtimings"),
-    header = require("./edidParser/edidBase/header"),
+var header = require("./edidParser/edidBase/header"),
     edidVersionRevision = require("./edidParser/edidBase/versionRevision"),
     vendorProductId = require("./edidParser/edidBase/vendorProductId"),
     colorCharacteristics = require("./edidParser/edidBase/colorCharacteristics"),
+    establishedTimings = require("./edidParser/edidBase/establishedTimings"),
     standardDetailedDataParser = require("./edidParser/edidBase/standardDetailedData");
 
 var edidparser = function() {
@@ -212,8 +211,6 @@ edidparser.prototype.parse = function() {
 
     this.screenSize = this.getScreenSize();
 
-    this.establishedModes = this.getEstablishedModes();
-
     this.standardDisplayModes = this.getStandardDisplayModes();
 
     this.numberOfExtensions = this.getNumberExtensions();
@@ -416,23 +413,7 @@ edidparser.prototype.getChromaticityCoordinates = function() {
 };
 
 edidparser.prototype.getEstablishedModes = function() {
-    return _.map(establishedtimings, _.bind(function(establishedtimingsdata) {
-        var establishedModes = [];
-
-        _.forEach(establishedtimingsdata.timings, _.bind(function(establishedtiming) {
-            if (this.edidData[establishedtimingsdata.offset] & (1 << establishedtiming.bit)) {
-                establishedtiming.checked = true;
-            } else {
-                establishedtiming.checked = false;
-            }
-
-            establishedModes.push(establishedtiming);
-        }, this));
-
-        establishedModes.description = establishedtimingsdata.description;
-
-        return establishedModes;
-    }, this));
+    return establishedTimings.getEstablishedModes(this.edidData);
 };
 
 edidparser.prototype.getStandardDisplayModes = function() {
