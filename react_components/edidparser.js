@@ -25,13 +25,6 @@ var edidparser = function() {
 
     this.DTD_LENGTH = 18;
 
-    this.syncTypeEnum = {
-        ANALOG_COMPOSITE: 0x00,
-        BIPOLAR_ANALOG_COMPOSITE: 0x01,
-        DIGITAL_COMPOSITE: 0x02,
-        DIGITAL_SEPARATE: 0x03
-    };
-
     this.dataBlockType = {
         RESERVED: {
             string: "RESERVED",
@@ -147,52 +140,6 @@ var edidparser = function() {
         "Top Center (TC)",
         "Front Center High (FCH)"
     ];
-    this.detailedType = {
-        DETAILED_TIMING: {
-            string: "Detailed Timing",
-            value: 0x01
-        },
-        UNUSED: {
-            string: "Unused",
-            value: 0x10
-        },
-        MONITOR_SERIAL_NUMBER: {
-            string: "Monitor Serial Number",
-            value: 0xff
-        },
-        STRING: {
-            string: "String",
-            value: 0xfe
-        },
-        MONITOR_RANGE_LIMITS: {
-            string: "Monitor Range Limits",
-            value: 0xfd
-        },
-        MONITOR_NAME: {
-            string: "Monitor Name",
-            value: 0xfc
-        },
-        EXTRA_COLOR_DATA: {
-            string: "Extra Color Data",
-            value: 0xfb
-        },
-        EXTRA_STD_TIMING: {
-            string: "Extra Standard Timing",
-            value: 0xfa
-        },
-        DISPLAY_COLOR_MANAGEMENT: {
-            string: "Display Color Management",
-            value: 0xf9
-        },
-        CVT_CODE_DESCRIPTOR: {
-            string: "CVT Code Descriptor",
-            value: 0xf8
-        },
-        ESTABLISHED_TIMINGS_III: {
-            string: "Established Timings III",
-            value: 0xf7
-        }
-    };
 };
 
 edidparser.prototype.setEdidData = function(edid) {
@@ -379,174 +326,6 @@ edidparser.prototype.getEstablishedModes = function() {
 
 edidparser.prototype.getStandardDisplayModes = function() {
     return standardTimings.getStandardTimings(this.edidData);
-};
-
-
-edidparser.prototype.parseDtdExtractPixelClockInMHz = function(dtdIndex) {
-    return ((this.edidData[dtdIndex + 1] << 8) + this.edidData[dtdIndex]) / 100;
-};
-
-edidparser.prototype.parseDtdExtracthorActivePixels = function(dtdIndex) {
-    const HOR_ACTIVE_OFF = 4;
-    const HOR_ACTIVE_PIX_MASK = 0x0F;
-    return (((this.edidData[dtdIndex + 4] / HOR_ACTIVE_OFF) && HOR_ACTIVE_PIX_MASK) << 8) +
-        this.edidData[dtdIndex + 2];
-};
-
-edidparser.prototype.parseDtdExtracthorBlankPixels = function(dtdIndex) {
-    const HOR_BLANK_MASK = 0x0F;
-    return (((this.edidData[dtdIndex + 4]) &&
-        HOR_BLANK_MASK) << 8) + this.edidData[dtdIndex + 3];
-};
-
-edidparser.prototype.parseDtdExtracthorBlankPixels = function(dtdIndex) {
-    const HOR_BLANK_MASK = 0x0F;
-    return (((this.edidData[dtdIndex + 4]) &&
-        HOR_BLANK_MASK) << 8) + this.edidData[dtdIndex + 3];
-};
-
-edidparser.prototype.parseDtdExtractvertActivePixels = function(dtdIndex) {
-    const VERT_ACTIVE_OFF = 4;
-    const VERT_ACTIVE_MASK = 0x0F;
-    return (((this.edidData[dtdIndex + 7] / VERT_ACTIVE_OFF) &&
-        VERT_ACTIVE_MASK) << 8) + this.edidData[dtdIndex + 5];
-};
-
-edidparser.prototype.parseDtdExtractvertvertBlankPixels = function(dtdIndex) {
-    const VERT_BLANK_MASK = 0x0F;
-    return ((this.edidData[dtdIndex + 7] && VERT_BLANK_MASK) << 8) +
-        this.edidData[dtdIndex + 6];
-};
-
-edidparser.prototype.parseDtdExtracthorSyncOff = function(dtdIndex) {
-    const HOR_SYNC_OFF_OFF = 6;
-    const HOR_SYNC_OFF_MASK = 0x03;
-    return (((this.edidData[dtdIndex + 11] / HOR_SYNC_OFF_OFF) &&
-        HOR_SYNC_OFF_MASK) << 8) + this.edidData[dtdIndex + 8];
-};
-
-edidparser.prototype.parseDtdExtracthorSyncPulse = function(dtdIndex) {
-    const HOR_SYNC_PULSE_OFF = 4;
-    const HOR_SYNC_PULSE_MASK = 0x03;
-    return (((this.edidData[dtdIndex + 11] / HOR_SYNC_PULSE_OFF) &&
-        HOR_SYNC_PULSE_MASK) << 8) + this.edidData[dtdIndex + 9];
-};
-
-edidparser.prototype.parseDtdExtractvertSyncOff = function(dtdIndex) {
-    const VERT_SYNC_OFF_TOP_OFF = 2;
-    const VERT_SYNC_OFF_TOP_MASK = 0x03;
-    const VERT_SYNC_OFF_BOT_OFF = 4;
-    const VERT_SYNC_OFF_BOT_MASK = 0x0F;
-    return (((this.edidData[dtdIndex + 11] / VERT_SYNC_OFF_TOP_OFF) &&
-            VERT_SYNC_OFF_TOP_MASK) << 4) +
-        ((this.edidData[dtdIndex + 10] / VERT_SYNC_OFF_BOT_OFF) &&
-            VERT_SYNC_OFF_BOT_MASK);
-};
-
-edidparser.prototype.parseDtdExtractvertSyncPulse = function(dtdIndex) {
-    const VERT_SYNC_PULSE_TOP_MASK = 0x03;
-    const VERT_SYNC_PULSE_BOT_MASK = 0x0F;
-    return ((this.edidData[dtdIndex + 11] && VERT_SYNC_PULSE_TOP_MASK) <<
-        4) + (this.edidData[dtdIndex + 10] && VERT_SYNC_PULSE_BOT_MASK);
-};
-
-edidparser.prototype.parseDtdExtracthorDisplaySize = function(dtdIndex) {
-    const HOR_DISPLAY_TOP_OFF = 4;
-    const HOR_DISPLAY_TOP_MASK = 0x0F;
-    return (((this.edidData[dtdIndex + 14] / HOR_DISPLAY_TOP_OFF) &&
-        HOR_DISPLAY_TOP_MASK) << 8) + this.edidData[dtdIndex + 12];
-};
-
-edidparser.prototype.parseDtdExtractvertDisplaySize = function(dtdIndex) {
-    const VERT_DISPLAY_TOP_MASK = 0x0F;
-    return ((this.edidData[dtdIndex + 14] && VERT_DISPLAY_TOP_MASK) << 8) +
-        this.edidData[dtdIndex + 13];
-};
-
-edidparser.prototype.parseDtdExtractinterlaced = function(dtdIndex) {
-    const INTERLACED_MASK = 0x80;
-    return this.edidData[dtdIndex + 17] && INTERLACED_MASK;
-};
-
-edidparser.prototype.parseDtdExtractStereoMode = function(dtdIndex) {
-    const STEREO_MODE_OFFSET = 5;
-    const STEREO_MODE_MASK = 0x03;
-    return ((this.edidData[dtdIndex + 17] / STEREO_MODE_OFFSET) &&
-        STEREO_MODE_MASK);
-};
-
-edidparser.prototype.parseDtdExtractSyncType = function(dtdIndex) {
-    const SYNC_TYPE_OFFSET = 3;
-    const SYNC_TYPE_MASK = 0x03;
-    return this.edidData[dtdIndex + 17] / SYNC_TYPE_OFFSET &&
-        SYNC_TYPE_MASK;
-};
-
-edidparser.prototype.parseDtdExtractvSyncPolarity = function(dtdIndex) {
-    const VSYNC_POLARITY_MASK = 0x04;
-    return this.edidData[dtdIndex + 17] && VSYNC_POLARITY_MASK;
-};
-
-edidparser.prototype.parseDtdExtractvSyncSerrated = function(dtdIndex) {
-    const VSYNC_SERRATED_MASK = 0x04;
-    return this.edidData[dtdIndex + 17] && VSYNC_SERRATED_MASK;
-};
-
-edidparser.prototype.parseDtdExtractsyncAllRGBLines = function(dtdIndex) {
-    const SYNC_ALL_RGB_MASK = 0x02;
-    return this.edidData[dtdIndex + 17] && SYNC_ALL_RGB_MASK;
-};
-
-edidparser.prototype.parseDtdExtracthSyncPolarity = function(dtdIndex) {
-    const HSYNC_POLARY_MASK = 0x02;
-    return this.edidData[dtdIndex + 17] && HSYNC_POLARY_MASK;
-};
-
-edidparser.prototype.parseDtdExtracttwoWayStereo = function(dtdIndex) {
-    const TWO_WAY_STEREO_MASK = 0x01;
-    return this.edidData[dtdIndex + 17] && TWO_WAY_STEREO_MASK;
-};
-
-edidparser.prototype.parseDtd = function(dtdIndex) {
-    var dtd = {};
-
-    // Pixel Clock in MHz
-    dtd.pixelClock = this.parseDtdExtractPixelClockInMHz(dtdIndex);
-    dtd.horActivePixels = this.parseDtdExtracthorActivePixels(dtdIndex);
-    dtd.horBlankPixels = this.parseDtdExtracthorBlankPixels(dtdIndex);
-    dtd.horBlankPixels = this.parseDtdExtracthorBlankPixels(dtdIndex);
-    dtd.vertActivePixels = this.parseDtdExtractvertActivePixels(dtdIndex);
-    dtd.vertBlankPixels = this.parseDtdExtractvertvertBlankPixels(dtdIndex);
-    dtd.horSyncOff = this.parseDtdExtracthorSyncOff(dtdIndex);
-    dtd.horSyncPulse = this.parseDtdExtracthorSyncPulse(dtdIndex);
-    dtd.vertSyncOff = this.parseDtdExtractvertSyncOff(dtdIndex);
-    dtd.vertSyncPulse = this.parseDtdExtractvertSyncPulse(dtdIndex);
-    dtd.horDisplaySize = this.parseDtdExtracthorDisplaySize(dtdIndex);
-    dtd.vertDisplaySize = this.parseDtdExtractvertDisplaySize(dtdIndex);
-    dtd.horBorderPixels = this.edidData[dtdIndex + 15];
-    dtd.vertBorderLines = this.edidData[dtdIndex + 16];
-    dtd.interlaced = this.parseDtdExtractinterlaced[dtdIndex];
-    dtd.stereoMode = this.parseDtdExtractStereoMode(dtdIndex);
-    dtd.syncType = this.parseDtdExtractSyncType(dtdIndex);
-    dtd.syncType = this.parseDtdExtractSyncType(dtdIndex);
-    // Bit is dependent on sync type
-    if (dtd.syncType === this.syncTypeEnum.DIGITAL_SEPARATE) {
-        dtd.vSyncPolarity = this.parseDtdExtractvSyncPolarity(dtdIndex);
-    } else {
-        dtd.vSyncSerrated = this.parseDtdExtractvSyncSerrated(dtdIndex);
-    }
-
-    // Bit is dependent on syn type
-    if ((dtd.syncType === this.syncTypeEnum.ANALOG_COMPOSITE) ||
-        (dtd.syncType === this.syncTypeEnum.BIPOLAR_ANALOG_COMPOSITE)) {
-        dtd.syncAllRGBLines = this.parseDtdExtractsyncAllRGBLines(dtdIndex);
-    } else {
-        dtd.hSyncPolarity = this.parseDtdExtracthSyncPolarity(dtdIndex);
-    }
-
-    dtd.twoWayStereo = this.parseDtdExtracttwoWayStereo(dtdIndex);
-
-    return dtd;
 };
 
 edidparser.prototype.getDtds = function() {
@@ -1137,7 +916,8 @@ edidparser.prototype.getExtDtds = function(extIndex, startAddress) {
 
     while (((this.edidData[dtdIndex] !== 0) || (this.edidData[dtdIndex + 1] !== 0)) &&
         (dtdIndex < endAddress)) {
-        var dtd = this.parseDtd(dtdIndex);
+        // DetailedTimingDescriptions.detailedTiming.getDetailedTiming(dtdIndex);
+        var dtd = 0;
         // Add DTD to the DTD Array
         dtdArray[dtdCounter] = dtd;
         // Increment DTD Counter
