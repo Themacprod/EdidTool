@@ -3,6 +3,7 @@
 var header = require("./edidParser/edidBase/header"),
     edidVersionRevision = require("./edidParser/edidBase/versionRevision"),
     vendorProductId = require("./edidParser/edidBase/vendorProductId"),
+    basicDisplayParameters = require("./edidParser/edidBase/basicDisplayParameters"),
     colorCharacteristics = require("./edidParser/edidBase/colorCharacteristics"),
     establishedTimings = require("./edidParser/edidBase/establishedTimings"),
     standardTimings = require("./edidParser/edidBase/standardTimings"),
@@ -10,18 +11,6 @@ var header = require("./edidParser/edidBase/header"),
 
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
-    this.digitalColorSpace = [
-        "RGB 4:4:4",
-        "RGB 4:4:4 + YCrCb 4:4:4",
-        "RGB 4:4:4 + YCrCb 4:2:2",
-        "RGB 4:4:4 + YCrCb 4:4:4 + YCrCb 4:2:2"
-    ];
-    this.analogColorSpace = [
-        "Monochrome or Grayscale",
-        "RGB color",
-        "Non-RGB color",
-        "Undefined"
-    ];
 
     this.DTD_LENGTH = 18;
 
@@ -153,8 +142,6 @@ edidparser.prototype.parse = function() {
         this.validHeader = "ERROR";
     }
 
-    this.bdp = this.getBasicDisplayParams();
-
     this.screenSize = this.getScreenSize();
 
     this.numberOfExtensions = this.getNumberExtensions();
@@ -213,77 +200,7 @@ edidparser.prototype.getEdidVersionRevision = function() {
 };
 
 edidparser.prototype.getBasicDisplayParams = function() {
-    var bdp = {};
-
-    var VIDEO_IN_PARAMS_BITMAP = 20;
-    var DIGITAL_INPUT = 0x80;
-    if (this.edidData[VIDEO_IN_PARAMS_BITMAP] && DIGITAL_INPUT) {
-        var VESA_DFP_COMPATIBLE = 0x01;
-        bdp.digitalInput = true;
-        if (this.edidData[VIDEO_IN_PARAMS_BITMAP] && VESA_DFP_COMPATIBLE) {
-            bdp.vesaDfpCompatible = true;
-        } else {
-            bdp.vesaDfpCompatible = false;
-        }
-    } else {
-        bdp.digitalInput = false;
-
-        var WHITE_SYNC_LVLS_OFF = 5;
-        var WHITE_SYNC_LVLS_MASK = 0x03;
-        bdp.whiteSyncLevels = this.edidData[VIDEO_IN_PARAMS_BITMAP] /
-            WHITE_SYNC_LVLS_OFF && WHITE_SYNC_LVLS_MASK;
-
-        var BLANK_TO_BLACK_OFF = 4;
-        var BLANK_TO_BLACK_MASK = 0x01;
-        bdp.blankToBlack = this.edidData[VIDEO_IN_PARAMS_BITMAP] /
-            BLANK_TO_BLACK_OFF && BLANK_TO_BLACK_MASK;
-
-        var SEPARATE_SYNC_OFF = 3;
-        var SEPARATE_SYNC_MASK = 0x01;
-        bdp.separateSyncSupported = this.edidData[VIDEO_IN_PARAMS_BITMAP] /
-            SEPARATE_SYNC_OFF && SEPARATE_SYNC_MASK;
-
-        var COMPOSITE_SYNC_OFF = 2;
-        var COMPOSITE_SYNC_MASK = 0x01;
-        bdp.compositeSyncSupported = this.edidData[VIDEO_IN_PARAMS_BITMAP] /
-            COMPOSITE_SYNC_OFF && COMPOSITE_SYNC_MASK;
-
-        var SYNC_ON_GREEN_OFF = 1;
-        var SYNC_ON_GREEN_MASK = 0x01;
-        bdp.synOnGreen = this.edidData[VIDEO_IN_PARAMS_BITMAP] /
-            SYNC_ON_GREEN_OFF && SYNC_ON_GREEN_MASK;
-
-        var VSYNC_SERRATED_MASK = 0x01;
-        bdp.vsyncSerrated = this.edidData[VIDEO_IN_PARAMS_BITMAP] && VSYNC_SERRATED_MASK;
-    }
-    var MAX_HOR_IMG_SIZE = 21;
-    bdp.maxHorImgSize = this.edidData[MAX_HOR_IMG_SIZE];
-
-    var MAX_VERT_IMG_SIZE = 22;
-    bdp.maxVertImgSize = this.edidData[MAX_VERT_IMG_SIZE];
-
-    var DISPLAY_GAMMA = 23;
-    bdp.displayGamma = (this.edidData[DISPLAY_GAMMA] * (2.54 / 255)) + 1;
-
-    var SUPPORTED_FEATURES_BITMAP = 24;
-    var DPMS_STANDBY = 0x80;
-    bdp.dpmsStandby = this.edidData[SUPPORTED_FEATURES_BITMAP] && DPMS_STANDBY;
-    var DPMS_SUSPEND = 0x40;
-    bdp.dpmsSuspend = this.edidData[SUPPORTED_FEATURES_BITMAP] && DPMS_SUSPEND;
-    var DPMS_ACTIVE_OFF = 0x20;
-    bdp.dpmsActiveOff = this.edidData[SUPPORTED_FEATURES_BITMAP] && DPMS_ACTIVE_OFF;
-    var DISPLAY_TYPE_OFF = 3;
-    var DISPLAY_TYPE_MASK = 0x03;
-    bdp.displayType = this.edidData[SUPPORTED_FEATURES_BITMAP] / DISPLAY_TYPE_OFF &&
-        DISPLAY_TYPE_MASK;
-
-    var STANDARD_SRGB = 0x04;
-    bdp.standardSRgb = this.edidData[SUPPORTED_FEATURES_BITMAP] && STANDARD_SRGB;
-    var PREFERRED_TIMING = 0x02;
-    bdp.preferredTiming = this.edidData[SUPPORTED_FEATURES_BITMAP] && PREFERRED_TIMING;
-    var GTF_SUPPORTED = 0x01;
-    bdp.gtfSupported = this.edidData[SUPPORTED_FEATURES_BITMAP] && GTF_SUPPORTED;
-    return bdp;
+    return basicDisplayParameters.getBasicDisplayParameters(this.edidData);
 };
 
 edidparser.prototype.getScreenSize = function() {
