@@ -1,7 +1,5 @@
-"use strict";
-
-var _ = require("lodash"),
-    establishedTimingsData = require("./establishedTimingsData");
+var _ = require('lodash'),
+    establishedTimingsData = require('./establishedTimingsData');
 
 /**
  * Gets the established timings

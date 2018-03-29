@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Gets the detailed timing
  * @param {array} edidData Byte array filled with EDID content.

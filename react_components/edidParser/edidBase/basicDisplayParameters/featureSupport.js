@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Gets display power management data.
  * @param {array} edidData Byte array filled with EDID content.
@@ -45,10 +43,10 @@ var getDisplayColorType = function(edidData) {
     const DISPLAY_COLOR_MASK = 0x03;
 
     const analogColorSpace = [
-        "Monochrome or Grayscale",
-        "RGB color",
-        "Non-RGB color",
-        "Undefined"
+        'Monochrome or Grayscale',
+        'RGB color',
+        'Non-RGB color',
+        'Undefined',
     ];
 
     const colorIndex = (edidData[FEATURE_SUPPORT] >> DISPLAY_COLOR_SHIFT) && DISPLAY_COLOR_MASK;
@@ -66,10 +64,10 @@ var getSupportedColorEncodingFormat = function(edidData) {
     const COLOR_ENCODING_MASK = 0x03;
 
     const digitalColorSpace = [
-        "RGB 4:4:4",
-        "RGB 4:4:4 + YCrCb 4:4:4",
-        "RGB 4:4:4 + YCrCb 4:2:2",
-        "RGB 4:4:4 + YCrCb 4:4:4 + YCrCb 4:2:2"
+        'RGB 4:4:4',
+        'RGB 4:4:4 + YCrCb 4:4:4',
+        'RGB 4:4:4 + YCrCb 4:2:2',
+        'RGB 4:4:4 + YCrCb 4:4:4 + YCrCb 4:2:2',
     ];
 
     const colorIndex = (edidData[FEATURE_SUPPORT] >> COLOR_ENCODING_SHIFT) && COLOR_ENCODING_MASK;
@@ -122,7 +120,7 @@ module.exports.getFeatureSupport = function(edidData) {
     // Digital case.
     if (edidData[VIDEO_SIGNAL_TYPE] && VIDEO_SIGNAL_TYPE_MASK) {
         return {
-            type: "Digial",
+            type: 'Digial',
             displayPowerManagement: getDisplayPowerManagement(edidData),
             supportColorEncodingFormat: getSupportedColorEncodingFormat(edidData),
             otherFeature: getOtherFeature(edidData)
@@ -131,7 +129,7 @@ module.exports.getFeatureSupport = function(edidData) {
 
     // Analog case.
     return {
-        type: "Analog",
+        type: 'Analog',
         displayPowerManagement: getDisplayPowerManagement(edidData),
         displayColorType: getDisplayColorType(edidData),
         otherFeature: getOtherFeature(edidData)

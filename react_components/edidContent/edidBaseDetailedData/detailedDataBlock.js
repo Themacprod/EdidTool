@@ -1,15 +1,11 @@
-/* global module:true */
-
-"use strict";
-
-var React = require("react"),
-    Title = require("../edidContentTitle"),
-    MonitorName = require("./monitorName");
+var React = require('react'),
+    Title = require('../edidContentTitle'),
+    MonitorName = require('./monitorName');
 
 module.exports = React.createClass({
     generateSection: function(dtdType, data) {
         if (data) {
-            if (dtdType === "Monitor Name") {
+            if (dtdType === 'Monitor Name') {
                 return React.createElement(MonitorName, {
                     data: data
                 });
@@ -23,7 +19,7 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             {
-                className: "width-25 inline-block",
+                className: 'width-25 inline-block',
                 key: this.props.key
             },
             React.createElement(Title, {

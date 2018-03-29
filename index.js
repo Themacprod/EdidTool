@@ -1,4 +1,3 @@
-"use strict";
+require('./server').listen(process.env.PORT);
 
-require("./server").listen(process.env.PORT);
-console.log("Server listening...");
+console.log('Server listening...');

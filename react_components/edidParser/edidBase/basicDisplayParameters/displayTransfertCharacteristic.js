@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Gets gamma
  * @param {array} edidData Byte array filled with EDID content.

@@ -1,9 +1,5 @@
-/* global module:true */
-
-"use strict";
-
-var React = require("react"),
-    _ = require("lodash");
+var React = require('react'),
+    _ = require('lodash');
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -19,7 +15,7 @@ module.exports = React.createClass({
     toHex: function(byte) {
         var hexValue = byte.toString(16).toUpperCase();
         if (hexValue.length < 2) {
-            hexValue = "0" + hexValue;
+            hexValue = '0' + hexValue;
         }
         return hexValue;
     },
@@ -30,51 +26,51 @@ module.exports = React.createClass({
 
         gridheader.push(React.DOM.input({
             key: 0,
-            className: "input-grid-selected text-center",
-            type: "text",
-            value: "",
-            readOnly: "readOnly"
+            className: 'input-grid-selected text-center',
+            type: 'text',
+            value: '',
+            readOnly: 'readOnly'
         }));
 
         for (var i = 0; i < (this.props.chunk || defaultChunk); i += 1) {
             gridheader.push(React.DOM.input({
                 key: i + 1,
-                className: "input-grid-selected",
-                type: "text",
+                className: 'input-grid-selected',
+                type: 'text',
                 value: this.toHex(i),
-                readOnly: "readOnly"
+                readOnly: 'readOnly'
             }));
         }
 
         return React.DOM.div(
             {
-                className: "edid-raw"
+                className: 'edid-raw'
             },
             React.DOM.div({
                 key: 0,
-                className: "input-grid-line text-center"
+                className: 'input-grid-line text-center'
             }, gridheader),
             _.map(_.chunk(this.props.edid, this.props.chunk || defaultChunk), _.bind(function(line, idx) {
                 return React.DOM.div(
                     {
                         key: idx,
-                        className: "input-grid-line text-center"
+                        className: 'input-grid-line text-center'
                     },
                     React.DOM.input({
                         key: 0,
-                        className: "input-grid-selected",
-                        type: "text",
+                        className: 'input-grid-selected',
+                        type: 'text',
                         value: this.toHex(byteindex),
-                        readOnly: "readOnly"
+                        readOnly: 'readOnly'
                     }),
                     _.map(line, _.bind(function(byte, key) {
                         byteindex += 1;
                         return React.DOM.input({
                             key: key,
-                            className: byteindex === this.state.byteselected ? "input-grid-selected" : "input-grid",
-                            type: "text",
+                            className: byteindex === this.state.byteselected ? 'input-grid-selected' : 'input-grid',
+                            type: 'text',
                             value: this.toHex(byte),
-                            readOnly: "readOnly",
+                            readOnly: 'readOnly',
                             onClick: this.handleClick.bind(this, this.toHex(byte))
                         });
                     }, this))

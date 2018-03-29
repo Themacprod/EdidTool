@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Checks if the passed in header is valid.
  * @param {array} edidData Byte array filled with EDID content.

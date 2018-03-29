@@ -1,5 +1,3 @@
-"use strict";
-
 var getPixelClockInMHz = function(edidData, dtdIndex) {
 	return ((edidData[dtdIndex + 1] << 8) + edidData[dtdIndex]) / 100;
 };

@@ -1,15 +1,11 @@
-/* global module:true */
-
-"use strict";
-
-var React = require("react"),
-    ManufacturerInfo = require("./manufacturerInfo"),
-    VideoInputDefinition = require("./videoInputDefinition"),
-    DisplayTransfertCharacteristics = require("./displayTransfertCharacteristics"),
-    ScreenSize = require("./screenSize"),
-    FeatureSupport = require("./featureSupport"),
-    EstablishedTimings = require("./establishedTimings"),
-    StandardTimings = require("./standardTimings");
+var React = require('react'),
+    ManufacturerInfo = require('./manufacturerInfo'),
+    VideoInputDefinition = require('./videoInputDefinition'),
+    DisplayTransfertCharacteristics = require('./displayTransfertCharacteristics'),
+    ScreenSize = require('./screenSize'),
+    FeatureSupport = require('./featureSupport'),
+    EstablishedTimings = require('./establishedTimings'),
+    StandardTimings = require('./standardTimings');
 
 module.exports = React.createClass({
     render: function() {

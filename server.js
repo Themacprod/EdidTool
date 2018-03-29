@@ -1,23 +1,21 @@
-"use strict";
-
-var path = require("path"),
-	express = require("express"),
-	bodyParser = require("body-parser"),
-	cookieParser = require("cookie-parser"),
-	favicon = require("serve-favicon"),
+var path = require('path'),
+	express = require('express'),
+	bodyParser = require('body-parser'),
+	cookieParser = require('cookie-parser'),
+	favicon = require('serve-favicon'),
 	server = express(),
-	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
-	fs = require("fs"),
-	_ = require("lodash"),
+	cacheMaxAge = process.env.NODE_ENV === 'development' ? 0 : 3600000,
+	fs = require('fs'),
+	_ = require('lodash'),
 	// eslint-disable-next-line no-sync
-	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, "/public/index.tpl"), {
-		encoding: "utf8"
+	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, '/public/index.tpl'), {
+		encoding: 'utf8'
 	})),
-	url = require("url");
+	url = require('url');
 
 // Server setup.
 
-server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
+server.use(favicon(path.join(__dirname, 'public/img/favicon-32x32.png'), {
 	maxAge: cacheMaxAge
 }));
 
@@ -31,7 +29,7 @@ server.use(bodyParser.urlencoded({
 
 server.use(cookieParser());
 
-server.use(express.static(path.join(__dirname, "public"), {
+server.use(express.static(path.join(__dirname, 'public'), {
 	maxAge: cacheMaxAge
 }));
 
@@ -48,12 +46,12 @@ server.use(function(req, res, next) {
 		next();
 	} else {
 		// If not, redirect the request to /fr
-		urlObj.pathname = "/fr" + urlObj.pathname;
+		urlObj.pathname = '/fr' + urlObj.pathname;
 		res.redirect(301, url.format(urlObj));
 	}
 });
 
-server.get("*", function(req, res) {
+server.get('*', function(req, res) {
 	res.send(indexTemplate({
 		lang: req.params.lang
 	}));

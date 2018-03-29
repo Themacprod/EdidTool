@@ -13,6 +13,13 @@
 	},
 	"rules": {
 		"callback-return": ["off"],
+		"comma-dangle": ["error", {
+			"arrays": "always",
+			"objects": "never",
+			"imports": "always",
+			"exports": "always",
+			"functions": "ignore"
+		}],
 		"dot-location": ["error", "property"],
 		"func-names": ["error", "never"],
 		"generator-star-spacing": ["error", "neither"],

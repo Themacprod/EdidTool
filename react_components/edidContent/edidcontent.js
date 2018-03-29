@@ -1,13 +1,9 @@
-/* global module:true */
-
-"use strict";
-
-var React = require("react"),
-    EdidParser = require("../edidparser"),
-    _ = require("lodash"),
-    EdidBase = require("./edidBase/edidcontentbase"),
-    EdidBaseDetailedData = require("./edidBaseDetailedData/edidcontentbasedetailed"),
-    EdidCea = require("./edidcontentcea");
+var React = require('react'),
+    EdidParser = require('../edidparser'),
+    _ = require('lodash'),
+    EdidBase = require('./edidBase/edidcontentbase'),
+    EdidBaseDetailedData = require('./edidBaseDetailedData/edidcontentbasedetailed'),
+    EdidCea = require('./edidcontentcea');
 
 module.exports = React.createClass({
     componentWillMount: function() {
@@ -26,29 +22,29 @@ module.exports = React.createClass({
     generateTabs: function() {
         var ext = [];
 
-        ext.push("Standard data");
-        ext.push("Detailed data");
+        ext.push('Standard data');
+        ext.push('Detailed data');
 
         for (var i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
             const extcount = i + 1;
-            ext.push("CEA #" + extcount);
+            ext.push('CEA #' + extcount);
         }
 
         return React.DOM.ul(
             {
-                className: "nav nav-tabs"
+                className: 'nav nav-tabs'
             },
             _.map(ext, _.bind(function(data, key) {
-                var baseState = this.state.selected === key ? " active" : " disabled";
+                var baseState = this.state.selected === key ? ' active' : ' disabled';
 
                 return React.DOM.li(
                     {
                         key: key,
-                        className: "nav-item",
+                        className: 'nav-item',
                         onClick: this.handleClick.bind(this, key)
                     },
                     React.DOM.a({
-                        className: "nav-link" + baseState
+                        className: 'nav-link' + baseState
                     }, data)
                 );
             }, this))
@@ -75,7 +71,7 @@ module.exports = React.createClass({
 
         return React.DOM.div(
             {
-                className: "edid-content"
+                className: 'edid-content'
             },
             this.generateTabs(),
             this.generateExt()

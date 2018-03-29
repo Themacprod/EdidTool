@@ -1,8 +1,6 @@
-"use strict";
-
-var _ = require("lodash"),
-	detailedTiming = require("./detailedTimingDescriptions/detailedTiming"),
-	monitorName = require("./detailedTimingDescriptions/monitorName");
+var _ = require('lodash'),
+	detailedTiming = require('./detailedTimingDescriptions/detailedTiming'),
+	monitorName = require('./detailedTimingDescriptions/monitorName');
 
 
 var getValidDetailedType = function(detailedTypes, edidData, dtdIndex) {
@@ -17,47 +15,47 @@ var getValidDetailedType = function(detailedTypes, edidData, dtdIndex) {
 module.exports.getData = function(edidData) {
 	const detailedTypes = {
 		DETAILED_TIMING: {
-			string: "Detailed Timing",
+			string: 'Detailed Timing',
 			value: 0x01
 		},
 		UNUSED: {
-			string: "Unused",
+			string: 'Unused',
 			value: 0x10
 		},
 		MONITOR_SERIAL_NUMBER: {
-			string: "Monitor Serial Number",
+			string: 'Monitor Serial Number',
 			value: 0xff
 		},
 		STRING: {
-			string: "String",
+			string: 'String',
 			value: 0xfe
 		},
 		MONITOR_RANGE_LIMITS: {
-			string: "Monitor Range Limits",
+			string: 'Monitor Range Limits',
 			value: 0xfd
 		},
 		MONITOR_NAME: {
-			string: "Monitor Name",
+			string: 'Monitor Name',
 			value: 0xfc
 		},
 		EXTRA_COLOR_DATA: {
-			string: "Extra Color Data",
+			string: 'Extra Color Data',
 			value: 0xfb
 		},
 		EXTRA_STD_TIMING: {
-			string: "Extra Standard Timing",
+			string: 'Extra Standard Timing',
 			value: 0xfa
 		},
 		DISPLAY_COLOR_MANAGEMENT: {
-			string: "Display Color Management",
+			string: 'Display Color Management',
 			value: 0xf9
 		},
 		CVT_CODE_DESCRIPTOR: {
-			string: "CVT Code Descriptor",
+			string: 'CVT Code Descriptor',
 			value: 0xf8
 		},
 		ESTABLISHED_TIMINGS_III: {
-			string: "Established Timings III",
+			string: 'Established Timings III',
 			value: 0xf7
 		}
 	};
@@ -74,7 +72,7 @@ module.exports.getData = function(edidData) {
 
 	while (dtdIndex < DTD_END) {
 		var found = getValidDetailedType(detailedTypes, edidData, dtdIndex);
-		var data = "";
+		var data = '';
 
 		if (found) {
 			if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_NAME.value) {

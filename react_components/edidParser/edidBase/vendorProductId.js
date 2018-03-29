@@ -1,7 +1,5 @@
-"use strict";
-
-var _ = require("lodash"),
-	manufacturerNames = require("./manufacturernames");
+var _ = require('lodash'),
+	manufacturerNames = require('./manufacturernames');
 
 /**
  * Gets the ID manufacturer Name (format is EISA 3-character ID).
@@ -14,7 +12,7 @@ module.exports.getManufacturerId = function(edidData) {
 	const MANUFACTURER_ID_2 = 0x08;
 
 	if ((edidData[MANUFACTURER_ID_2] === 0) || (edidData[MANUFACTURER_ID_1] === 0)) {
-		return "-";
+		return '-';
 	}
 
 	var manufacturerid = (edidData[MANUFACTURER_ID_2] << 8) + edidData[MANUFACTURER_ID_1];
@@ -22,9 +20,9 @@ module.exports.getManufacturerId = function(edidData) {
 	var string2 = ((manufacturerid >> 5) & 0x1f) - 1;
 	var string3 = (manufacturerid & 0x1f) - 1;
 
-	string1 = String.fromCharCode(string1 + "A".charCodeAt(0));
-	string2 = String.fromCharCode(string2 + "A".charCodeAt(0));
-	string3 = String.fromCharCode(string3 + "A".charCodeAt(0));
+	string1 = String.fromCharCode(string1 + 'A'.charCodeAt(0));
+	string2 = String.fromCharCode(string2 + 'A'.charCodeAt(0));
+	string3 = String.fromCharCode(string3 + 'A'.charCodeAt(0));
 
 	return string1 + string2 + string3;
 };
@@ -44,7 +42,7 @@ module.exports.getManufacturerName = function(manufacturerId) {
 		return manufacturerNameFound[1];
 	}
 
-	return "-";
+	return '-';
 };
 
 /**
@@ -60,7 +58,7 @@ module.exports.getProductCodeId = function(edidData) {
 		edidData[PRODUCT_CODE1]).toString(16).toUpperCase();
 
 	if (hexValue.length < 4) {
-		hexValue = "0" + hexValue;
+		hexValue = '0' + hexValue;
 	}
 
 	return hexValue;

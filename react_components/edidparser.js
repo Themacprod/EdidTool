@@ -1,5 +1,3 @@
-"use strict";
-
 var header = require("./edidParser/edidBase/header"),
     edidVersionRevision = require("./edidParser/edidBase/versionRevision"),
     vendorProductId = require("./edidParser/edidBase/vendorProductId"),
@@ -137,9 +135,9 @@ edidparser.prototype.setEdidData = function(edid) {
 
 edidparser.prototype.parse = function() {
     if (header.isValidHeader(this.edidData) === true) {
-        this.validHeader = "OK";
+        this.validHeader = 'OK';
     } else {
-        this.validHeader = "ERROR";
+        this.validHeader = 'ERROR';
     }
 
     this.screenSize = this.getScreenSize();
@@ -188,14 +186,14 @@ edidparser.prototype.getVendorProductId = function() {
         productCode: vendorProductId.getProductCodeId(this.edidData),
         serialNumber: vendorProductId.getSerialNumber(this.edidData),
         manufactureWeek: vendorProductId.getManufactureWeek(this.edidData),
-        manufactureYear: vendorProductId.getManufactureYear(this.edidData)
+        manufactureYear: vendorProductId.getManufactureYear(this.edidData),
     };
 };
 
 edidparser.prototype.getEdidVersionRevision = function() {
     return {
         version: edidVersionRevision.getVersion(this.edidData),
-        revision: edidVersionRevision.getRevision(this.edidData)
+        revision: edidVersionRevision.getRevision(this.edidData),
     };
 };
 
@@ -226,7 +224,7 @@ edidparser.prototype.getScreenSize = function() {
         } else if ((this.edidData[OFFSET_SCREEN_SIZE1] === 1) && (this.edidData[OFFSET_SCREEN_SIZE2] === 0)) {
             screenSize.portrait = false;
         } else {
-            console.log("Invalid screen orientation");
+            console.log('Invalid screen orientation');
         }
     }
 

@@ -1,7 +1,6 @@
 {
   "name": "EDIDTool",
   "description": "EDID Tool Web Edition",
-  "private": "true",
   "version": "1.0.0",
   "engines": {
     "node": "6.11.2",
@@ -30,6 +29,7 @@
     "express": "^4.13.4",
     "font-awesome": "^4.6.3",
     "jquery": "^2.2.2",
+    "lodash": "^4.17.5",
     "node-sass": "^3.4.2",
     "react": "^0.14.8",
     "react-bootstrap": "^0.30.3",

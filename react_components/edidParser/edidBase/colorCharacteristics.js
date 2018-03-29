@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Gets color chromaticity for specific color
  * @param {array} edidData Byte array filled with EDID content.

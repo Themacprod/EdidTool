@@ -1,10 +1,8 @@
-"use strict";
-
-var _ = require("lodash");
+var _ = require('lodash');
 
 module.exports.extractEdid = function(rawEdidData) {
-    var startIdx = rawEdidData.indexOf("| ");
-    var endIdx = rawEdidData.toLowerCase().indexOf("real buffer size: ");
+    var startIdx = rawEdidData.indexOf('| ');
+    var endIdx = rawEdidData.toLowerCase().indexOf('real buffer size: ');
 
     // Remove header information.
     var rawEdid = rawEdidData.slice(startIdx, endIdx);
@@ -18,8 +16,8 @@ module.exports.extractEdid = function(rawEdidData) {
     // Parse each line
     var edidContent = _.map(rawLinesFilter, function(line) {
         // Remove line prefix.
-        var lineSlice = line.slice(line.indexOf("|") + 3, line.length);
-        return lineSlice.trimRight().split("  ");
+        var lineSlice = line.slice(line.indexOf('|') + 3, line.length);
+        return lineSlice.trimRight().split('  ');
     });
 
     var edidContentFlat = _.flattenDeep(edidContent);

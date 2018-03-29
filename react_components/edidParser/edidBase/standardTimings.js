@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Gets the standard timing
  * @param {array} edidData Byte array filled with EDID content.
@@ -17,7 +15,7 @@ var getStandardTiming = function(edidData, stdIndex) {
             valid: false,
             HActive: 0,
             RefreshRate: 0,
-            AspectRatio: "0"
+            AspectRatio: '0'
         };
     }
 
@@ -29,17 +27,17 @@ var getStandardTiming = function(edidData, stdIndex) {
 
     const AspectRatioEnum = [
         {
-            string: "16:10"
+            string: '16:10'
         },
         {
-            string: "4:3"
+            string: '4:3'
         },
         {
-            string: "5:4"
+            string: '5:4'
         },
         {
-            string: "16:9"
-        }
+            string: '16:9'
+        },
     ];
 
     return {

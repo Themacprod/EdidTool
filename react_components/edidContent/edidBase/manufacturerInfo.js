@@ -1,7 +1,3 @@
-/* global module:true */
-
-"use strict";
-
 var React = require("react"),
     SubGroup = require("./subGroup"),
     Title = require("../edidContentTitle");
