@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Gets the EDID version
  * @param {array} edidData Byte array filled with EDID content.

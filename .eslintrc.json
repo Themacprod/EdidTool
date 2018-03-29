@@ -1,5 +1,8 @@
 {
-	"extends": "eslint:all",
+	"extends": [
+		"eslint:all",
+		"airbnb"
+	],
 	"env": {
 		"browser": true,
 		"node": true,
