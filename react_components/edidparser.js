@@ -1,11 +1,11 @@
-var header = require("./edidParser/edidBase/header"),
-    edidVersionRevision = require("./edidParser/edidBase/versionRevision"),
-    vendorProductId = require("./edidParser/edidBase/vendorProductId"),
-    basicDisplayParameters = require("./edidParser/edidBase/basicDisplayParameters"),
-    colorCharacteristics = require("./edidParser/edidBase/colorCharacteristics"),
-    establishedTimings = require("./edidParser/edidBase/establishedTimings"),
-    standardTimings = require("./edidParser/edidBase/standardTimings"),
-    detailedTimingDescriptions = require("./edidParser/edidBase/detailedTimingDescriptions");
+var header = require('./edidParser/edidBase/header'),
+    edidVersionRevision = require('./edidParser/edidBase/versionRevision'),
+    vendorProductId = require('./edidParser/edidBase/vendorProductId'),
+    basicDisplayParameters = require('./edidParser/edidBase/basicDisplayParameters'),
+    colorCharacteristics = require('./edidParser/edidBase/colorCharacteristics'),
+    establishedTimings = require('./edidParser/edidBase/establishedTimings'),
+    standardTimings = require('./edidParser/edidBase/standardTimings'),
+    detailedTimingDescriptions = require('./edidParser/edidBase/detailedTimingDescriptions');
 
 var edidparser = function() {
     this.EDID_BLOCK_LENGTH = 128;
@@ -14,66 +14,66 @@ var edidparser = function() {
 
     this.dataBlockType = {
         RESERVED: {
-            string: "RESERVED",
+            string: 'RESERVED',
             value: 0
         },
         AUDIO: {
-            string: "AUDIO",
+            string: 'AUDIO',
             value: 1
         },
         VIDEO: {
-            string: "VIDEO",
+            string: 'VIDEO',
             value: 2
         },
         VENDOR_SPECIFIC: {
-            string: "VENDOR SPECIFIC",
+            string: 'VENDOR SPECIFIC',
             value: 3
         },
         SPEAKER_ALLOCATION: {
-            string: "SPEAKER ALLOCATION",
+            string: 'SPEAKER ALLOCATION',
             value: 4
         },
         EXTENDED_TAG: {
-            string: "EXTENDED TAG",
+            string: 'EXTENDED TAG',
             value: 7
         }
     };
 
     this.extendedDataBlockType = {
         VIDEO_CAPABILITY: {
-            string: "VIDEO CAPABILITY",
+            string: 'VIDEO CAPABILITY',
             value: 0
         },
         COLORIMETRY: {
-            string: "COLORIMETRY",
+            string: 'COLORIMETRY',
             value: 5
         },
         YCBCR420_VIDEO: {
-            string: "YCBCR420 VIDEO DATA",
+            string: 'YCBCR420 VIDEO DATA',
             value: 14
         },
         YCBCR420_CAPABILITY_MAP: {
-            string: "YCBCR420_CAPABILITY_MAP",
+            string: 'YCBCR420_CAPABILITY_MAP',
             value: 15
         }
     };
 
     this.ieeeOuiType = {
         HDMI14: {
-            string: "HDMI14",
+            string: 'HDMI14',
             value: 0x000C03
         },
         HDMI20: {
-            string: "HDMI20",
+            string: 'HDMI20',
             value: 0xC45DD8
         }
     };
 
     this.overscanBehavior = [
-        "No data",
-        "Always overscanned",
-        "Always underscanned",
-        "Supports both overscan and underscan"
+        'No data',
+        'Always overscanned',
+        'Always underscanned',
+        'Supports both overscan and underscan',
     ];
 
     this.audioFormatArray = [
@@ -81,51 +81,51 @@ var edidparser = function() {
         8,
         13,
         14,
-        15
+        15,
     ];
     this.shortAudioDescriptors = [
-        "RESERVED",
-        "LPCM",
-        "AC-3",
-        "MPEG-1",
-        "MP3",
-        "MPEG2",
-        "AAC LC",
-        "DTS",
-        "ATRAC",
-        "DSD",
-        "E-AC-3",
-        "DTS-HD",
-        "MLP",
-        "DST",
-        "WMA Pro"
+        'RESERVED',
+        'LPCM',
+        'AC-3',
+        'MPEG-1',
+        'MP3',
+        'MPEG2',
+        'AAC LC',
+        'DTS',
+        'ATRAC',
+        'DSD',
+        'E-AC-3',
+        'DTS-HD',
+        'MLP',
+        'DST',
+        'WMA Pro',
     ];
     this.sadSampleRates = [
-        "32 kHz",
-        "44.1 kHz",
-        "48 kHz",
-        "88.2 kHz",
-        "96 kHz",
-        "176.4 kHz",
-        "192 kHz"
+        '32 kHz',
+        '44.1 kHz',
+        '48 kHz',
+        '88.2 kHz',
+        '96 kHz',
+        '176.4 kHz',
+        '192 kHz',
     ];
     this.sadBitDepths = [
-        "16 bit",
-        "20 bit",
-        "24 bit"
+        '16 bit',
+        '20 bit',
+        '24 bit',
     ];
     this.speakerAllocation = [
-        "Front Left/Front Right (FL/FR)",
-        "Low Frequency Effort (LFE)",
-        "Front Center (FC)",
-        "Rear Left/Rear Right (RL/RR)",
-        "Rear Center (RC)",
-        "Front Left Center/Front Right Center (FLC/FRC)",
-        "Rear Left Center/Rear Right Center (RLC/RRC)",
-        "Front Left Wide/Front Right Wide (FLW/FRW)",
-        "Front Left High/Frong Right High (FLH/FRH)",
-        "Top Center (TC)",
-        "Front Center High (FCH)"
+        'Front Left/Front Right (FL/FR)',
+        'Low Frequency Effort (LFE)',
+        'Front Center (FC)',
+        'Rear Left/Rear Right (RL/RR)',
+        'Rear Center (RC)',
+        'Front Left Center/Front Right Center (FLC/FRC)',
+        'Rear Left Center/Rear Right Center (RLC/RRC)',
+        'Front Left Wide/Front Right Wide (FLW/FRW)',
+        'Front Left High/Frong Right High (FLH/FRH)',
+        'Top Center (TC)',
+        'Front Center High (FCH)',
     ];
 };
 
@@ -186,14 +186,14 @@ edidparser.prototype.getVendorProductId = function() {
         productCode: vendorProductId.getProductCodeId(this.edidData),
         serialNumber: vendorProductId.getSerialNumber(this.edidData),
         manufactureWeek: vendorProductId.getManufactureWeek(this.edidData),
-        manufactureYear: vendorProductId.getManufactureYear(this.edidData),
+        manufactureYear: vendorProductId.getManufactureYear(this.edidData)
     };
 };
 
 edidparser.prototype.getEdidVersionRevision = function() {
     return {
         version: edidVersionRevision.getVersion(this.edidData),
-        revision: edidVersionRevision.getRevision(this.edidData),
+        revision: edidVersionRevision.getRevision(this.edidData)
     };
 };
 
@@ -259,7 +259,7 @@ edidparser.prototype.getChecksum = function() {
 
 edidparser.prototype.calcChecksum = function(block) {
     var startAddress = block * this.EDID_BLOCK_LENGTH;
-    var endAddress = startAddress + this.EDID_BLOCK_LENGTH - 1;
+    var endAddress = (startAddress + this.EDID_BLOCK_LENGTH) - 1;
     var checksum = 0;
     for (var index = startAddress; index < endAddress; index += 1) {
         checksum += this.edidData[index];
@@ -758,7 +758,7 @@ edidparser.prototype.parseYCbCr420CapabilityMapDataBlock = function(startAddress
 
     /*
      * YCbCr420 Capability Map block contains a bit map of SVDs from the Video block
-     * If a bit is set to "1", the corresponding SVD supports YCbCr 4:2:0 color format
+     * If a bit is set to '1', the corresponding SVD supports YCbCr 4:2:0 color format
      * This data block is only used for SVDs which support 4:2:0 and some other colour
      * Format (e.g. 4:2:2).
      * For SVDs which support only 4:2:0, YCbCr 4:2:0 Video data block is used.
