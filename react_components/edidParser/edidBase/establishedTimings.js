@@ -11,13 +11,15 @@ module.exports.getEstablishedModes = function(edidData) {
         var establishedModes = [];
 
         _.forEach(establishedtimingsdata.timings, function(establishedtiming) {
+            var checked = false;
             if (edidData[establishedtimingsdata.offset] & (1 << establishedtiming.bit)) {
-                establishedtiming.checked = true;
-            } else {
-                establishedtiming.checked = false;
+                checked = true;
             }
 
-            establishedModes.push(establishedtiming);
+            establishedModes.push({
+                timing: establishedtiming,
+                checked: checked
+            });
         });
 
         establishedModes.description = establishedtimingsdata.description;

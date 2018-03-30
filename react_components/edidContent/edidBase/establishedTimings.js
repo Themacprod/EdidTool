@@ -34,10 +34,10 @@ module.exports = React.createClass({
                             {
                                 className: 'edid-content-established'
                             },
-                            _.map(establishedTimingsGroup, _.bind(function(establishedTimings, keygroup) {
+                            _.map(establishedTimingsGroup, _.bind(function(data, keygroup) {
                                 return Func.contentSubGroupCheckboxKey(
-                                    establishedTimings.hactive + 'x' + establishedTimings.vactive + ' @ ' + establishedTimings.refresh + ' Hz [' + establishedTimings.description + ']',
-                                    establishedTimings.checked,
+                                    data.timing.hactive + 'x' + data.timing.vactive + ' @ ' + data.timing.refresh + ' Hz [' + data.timing.description + ']',
+                                    data.checked,
                                     keygroup
                                 );
                             }, this))
