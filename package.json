@@ -33,7 +33,7 @@
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "font-awesome": "^4.6.3",
-    "jquery": "^2.2.4",
+    "jquery": "^3.0.0",
     "lodash": "^4.17.5",
     "node-sass": "^3.13.1",
     "react": "^0.14.8",
