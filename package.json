@@ -6,8 +6,13 @@
     "node": "6.11.2",
     "npm": "5.4.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Themacprod/EdidTool.git"
+  },
+  "private": true,
   "scripts": {
-    "sass": "node-sass --include-path scss scss/index.scss public/bundle.css",
+    "sass": "node-sass --include-path sass sass/index.sass public/bundle.css",
     "browserify": "browserify react_components/boot.js -t envify -o public/bundle.js",
     "uglifyjs": "uglifyjs public/bundle.js -m -o public/bundle.js",
     "cleancss": "cleancss -o public/bundle.css public/bundle.css",
@@ -22,15 +27,15 @@
   "license": "Proprietary",
   "dependencies": {
     "body-parser": "^1.15.0",
-    "bootstrap": "github:twbs/bootstrap#v4-dev",
+    "bootstrap": "^4.0.0",
     "browserify": "^14.4.0",
     "clean-css": "^3.4.19",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "font-awesome": "^4.6.3",
-    "jquery": "^2.2.2",
+    "jquery": "^2.2.4",
     "lodash": "^4.17.5",
-    "node-sass": "^3.4.2",
+    "node-sass": "^3.13.1",
     "react": "^0.14.8",
     "react-bootstrap": "^0.30.3",
     "react-dom": "^0.14.8",
@@ -39,11 +44,14 @@
     "uglify-js": "^2.7.3"
   },
   "devDependencies": {
+    "ajv": "^6.0.0",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "jshint": "^2.9.3"
+    "jshint": "^2.9.3",
+    "popper": "^1.0.1",
+    "popper.js": "^1.12.9"
   }
 }
