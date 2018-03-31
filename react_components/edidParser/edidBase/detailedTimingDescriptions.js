@@ -78,6 +78,9 @@ module.exports.getData = function(edidData) {
 			if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_NAME.value) {
 				data = monitorName.getDetailedMonitorName(edidData, dtdIndex);
 			}
+			if (edidData[dtdIndex + 3] === detailedTypes.DETAILED_TIMING.value) {
+				data = detailedTiming.getDetailedTiming(edidData, dtdIndex);
+			}
 			dtdType.push({
 				string: found.string,
 				data: data
@@ -85,7 +88,7 @@ module.exports.getData = function(edidData) {
 		} else {
 			dtdType.push({
 				string: detailedTypes.DETAILED_TIMING.string,
-				data: data
+				data: detailedTiming.getDetailedTiming(edidData, dtdIndex)
 			});
 		}
 

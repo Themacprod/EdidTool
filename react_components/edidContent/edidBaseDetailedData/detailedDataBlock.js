@@ -1,10 +1,16 @@
 var React = require('react'),
     Title = require('../edidContentTitle'),
+    DetailedTiming = require('./detailedTiming'),
     MonitorName = require('./monitorName');
 
 module.exports = React.createClass({
     generateSection: function(dtdType, data) {
         if (data) {
+            if (dtdType === 'Detailed Timing') {
+                return React.createElement(DetailedTiming, {
+                    data: data
+                });
+            }
             if (dtdType === 'Monitor Name') {
                 return React.createElement(MonitorName, {
                     data: data
