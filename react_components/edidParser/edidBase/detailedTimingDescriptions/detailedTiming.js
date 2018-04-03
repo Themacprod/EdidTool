@@ -52,7 +52,8 @@ var getVerticalParams = function(edidData, dtdIndex) {
 		SyncPulse: ((edidData[dtdIndex + 11] && VERT_SYNC_PULSE_TOP_MASK) <<
 			4) + (edidData[dtdIndex + 10] && VERT_SYNC_PULSE_BOT_MASK),
 		DisplaySize: ((edidData[dtdIndex + 14] && VERT_DISPLAY_TOP_MASK) << 8) +
-			edidData[dtdIndex + 13]
+			edidData[dtdIndex + 13],
+		BorderLines: edidData[dtdIndex + 15]
 	};
 };
 

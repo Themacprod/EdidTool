@@ -7,35 +7,53 @@ module.exports = React.createClass({
                 className: 'timing'
             },
             React.DOM.div({
-                className: 'detail width-80 inline-block'
+                className: 'detail width-70 inline-block'
             }, detail),
             React.DOM.div({
-                className: 'data width-20 inline-block'
+                className: 'data width-30 inline-block'
             }, data)
         );
     },
     render: function() {
-        const horizontalParams = this.props.data.HorizontalParams;
+        const hParams = this.props.data.HorizontalParams;
+        const vParams = this.props.data.VerticalParams;
 
         return React.DOM.div(
             null,
             this.generateTiming('Pix clock:', this.props.data.pixelClock),
             React.DOM.div(
                 {
-                    className: 'width-50 inline-block'
+                    className: 'width-50 inline-block border'
                 },
                     React.DOM.div(
                         {
-                            className: 'text-center'
+                            className: 'text-center border'
                         },
                     'Horizontal'
                 ),
-                this.generateTiming('Active Pixels:', horizontalParams.ActivePixels),
-                this.generateTiming('Blank:', horizontalParams.BlankPixels),
-                this.generateTiming('Front Porch:', horizontalParams.SyncOff),
-                this.generateTiming('Sync Width:', horizontalParams.SyncPulse),
-                this.generateTiming('Image Size:', horizontalParams.DisplaySize),
-                this.generateTiming('Border:', horizontalParams.BorderPixels)
+                this.generateTiming('Active Pixels:', hParams.ActivePixels),
+                this.generateTiming('Blank:', hParams.BlankPixels),
+                this.generateTiming('Front Porch:', hParams.SyncOff),
+                this.generateTiming('Sync Width:', hParams.SyncPulse),
+                this.generateTiming('Image Size:', hParams.DisplaySize),
+                this.generateTiming('Border:', hParams.BorderPixels)
+            ),
+            React.DOM.div(
+                {
+                    className: 'width-50 inline-block border'
+                },
+                    React.DOM.div(
+                        {
+                            className: 'text-center border'
+                        },
+                    'Vertical'
+                ),
+                this.generateTiming('Active Lines:', vParams.ActiveLines),
+                this.generateTiming('Blank:', vParams.BlankLines),
+                this.generateTiming('Front Porch:', vParams.SyncOff),
+                this.generateTiming('Sync Width:', vParams.SyncPulse),
+                this.generateTiming('Image Size:', vParams.DisplaySize),
+                this.generateTiming('Border:', vParams.BorderLines)
             )
         );
     }

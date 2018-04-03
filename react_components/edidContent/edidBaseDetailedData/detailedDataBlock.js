@@ -25,7 +25,7 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             {
-                className: 'width-25 inline-block',
+                className: 'width-25 inline-block vertical-top',
                 key: this.props.key
             },
             React.createElement(Title, {
