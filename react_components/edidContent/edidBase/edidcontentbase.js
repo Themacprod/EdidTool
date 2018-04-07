@@ -23,7 +23,9 @@ module.exports = React.createClass({
             React.createElement(ScreenSize, {
                 screenSize: this.props.edidParsed.getScreenSize()
             }),
-            React.createElement(FeatureSupport),
+            React.createElement(FeatureSupport, {
+                featureSupport: this.props.edidParsed.getFeatureSupport()
+            }),
             React.createElement(EstablishedTimings, {
                 establishedTimingsGroups: this.props.edidParsed.getEstablishedModes()
             }),

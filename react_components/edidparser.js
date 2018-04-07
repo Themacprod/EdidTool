@@ -6,6 +6,7 @@ var header = require('./edidParser/edidBase/header'),
     establishedTimings = require('./edidParser/edidBase/establishedTimings'),
     standardTimings = require('./edidParser/edidBase/standardTimings'),
     screenSize = require('./edidParser/edidBase/basicDisplayParameters/screenSizeAspectRatio'),
+    featureSupport = require('./edidParser/edidBase/basicDisplayParameters/featureSupport'),
     detailedTimingDescriptions = require('./edidParser/edidBase/detailedTimingDescriptions');
 
 var edidparser = function() {
@@ -202,6 +203,10 @@ edidparser.prototype.getBasicDisplayParams = function() {
 
 edidparser.prototype.getScreenSize = function() {
     return screenSize.getScreenSizeAspectRatio(this.edidData);
+};
+
+edidparser.prototype.getFeatureSupport = function() {
+    return featureSupport.getFeatureSupport(this.edidData);
 };
 
 edidparser.prototype.getChromaticityCoordinates = function() {

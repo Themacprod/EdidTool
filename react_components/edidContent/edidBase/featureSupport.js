@@ -1,4 +1,5 @@
 var React = require('react'),
+    Func = require('../edidcontent-func'),
     Title = require('../edidContentTitle');
 
 module.exports = React.createClass({
@@ -9,7 +10,11 @@ module.exports = React.createClass({
             },
             React.createElement(Title, {
                 title: 'Feature Support'
-            })
+            }),
+            Func.contentSubGroupCheckbox(
+                'Standby Mode',
+                this.props.featureSupport.standbyMode
+            )
         );
     }
 });
