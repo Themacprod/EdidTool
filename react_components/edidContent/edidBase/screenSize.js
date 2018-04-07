@@ -6,7 +6,7 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             {
-                className: 'edid-content-group'
+                className: 'edid-content-group screen-size'
             },
             React.createElement(Title, {
                 title: 'Screen size'

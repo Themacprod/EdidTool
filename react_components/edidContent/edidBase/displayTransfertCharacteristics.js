@@ -6,7 +6,7 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             {
-                className: 'edid-content-group'
+                className: 'edid-content-group transfert-characteristics'
             },
             React.createElement(Title, {
                 title: 'Display Transfert Characteristics'

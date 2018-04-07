@@ -18,7 +18,7 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             {
-                className: 'edid-content-group'
+                className: 'edid-content-group standard-timings'
             },
             React.createElement(Title, {
                 title: 'Standard timings'

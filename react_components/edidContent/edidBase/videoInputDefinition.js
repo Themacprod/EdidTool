@@ -6,7 +6,7 @@ module.exports = React.createClass({
     render: function() {
         return React.DOM.div(
             {
-                className: 'edid-content-group'
+                className: 'edid-content-group video-input-definition'
             },
             React.createElement(Title, {
                 title: 'Video Input Definition'
