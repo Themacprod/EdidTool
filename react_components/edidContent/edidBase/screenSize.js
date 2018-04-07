@@ -16,8 +16,8 @@ module.exports = React.createClass({
                     className: 'edid-content-column width-50'
                 },
                 Func.contentSubGroupRadio(' Dimensions', this.props.screenSize.type === 'ScreenSize'),
-                Func.contentSubGroup('Horizontal size (cm):', this.props.screenSize.screenSize.horizontalSize),
-                Func.contentSubGroup('Vertical size (cm):', this.props.screenSize.screenSize.verticalSize)
+                Func.contentSubGroup('Horizontal size:', String(this.props.screenSize.screenSize.horizontalSize || 0) + ' (cm)'),
+                Func.contentSubGroup('Vertical size:', String(this.props.screenSize.screenSize.verticalSize || 0) + ' (cm)')
             ),
             React.DOM.div(
                 {
