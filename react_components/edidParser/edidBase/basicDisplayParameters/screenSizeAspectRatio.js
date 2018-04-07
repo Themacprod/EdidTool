@@ -12,8 +12,8 @@ module.exports.getScreenSizeAspectRatio = function(edidData) {
 
     if ((edidData[OFFSET_DATA_1] !== 0) && (edidData[OFFSET_DATA_2] !== 0)) {
         type = 'ScreenSize';
-        screenSize.horizontalSize = this.edidData[OFFSET_DATA_1];
-        screenSize.verticalSize = this.edidData[OFFSET_DATA_2];
+        screenSize.horizontalSize = edidData[OFFSET_DATA_1];
+        screenSize.verticalSize = edidData[OFFSET_DATA_2];
     } else {
         type = 'AspectRatio';
 

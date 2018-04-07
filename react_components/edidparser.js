@@ -5,6 +5,7 @@ var header = require('./edidParser/edidBase/header'),
     colorCharacteristics = require('./edidParser/edidBase/colorCharacteristics'),
     establishedTimings = require('./edidParser/edidBase/establishedTimings'),
     standardTimings = require('./edidParser/edidBase/standardTimings'),
+    screenSize = require('./edidParser/edidBase/basicDisplayParameters/screenSizeAspectRatio'),
     detailedTimingDescriptions = require('./edidParser/edidBase/detailedTimingDescriptions');
 
 var edidparser = function() {
@@ -140,8 +141,6 @@ edidparser.prototype.parse = function() {
         this.validHeader = 'ERROR';
     }
 
-    this.screenSize = this.getScreenSize();
-
     this.numberOfExtensions = this.getNumberExtensions();
 
     this.checksum = this.getChecksum();
@@ -202,33 +201,7 @@ edidparser.prototype.getBasicDisplayParams = function() {
 };
 
 edidparser.prototype.getScreenSize = function() {
-    var screenSize = {};
-
-    var OFFSET_SCREEN_SIZE1 = 21;
-    var OFFSET_SCREEN_SIZE2 = 22;
-
-    screenSize.imageSizePresent = true;
-    screenSize.horizontalSize = 0;
-    screenSize.verticalSize = 0;
-    screenSize.portrait = true;
-
-    if ((this.edidData[OFFSET_SCREEN_SIZE1] !== 0) && (this.edidData[OFFSET_SCREEN_SIZE2] !== 0)) {
-        screenSize.imageSizePresent = true;
-        screenSize.horizontalSize = this.edidData[OFFSET_SCREEN_SIZE1];
-        screenSize.verticalSize = this.edidData[OFFSET_SCREEN_SIZE2];
-    } else {
-        screenSize.imageSizePresent = false;
-
-        if ((this.edidData[OFFSET_SCREEN_SIZE1] === 0) && (this.edidData[OFFSET_SCREEN_SIZE2] === 2)) {
-            screenSize.portrait = true;
-        } else if ((this.edidData[OFFSET_SCREEN_SIZE1] === 1) && (this.edidData[OFFSET_SCREEN_SIZE2] === 0)) {
-            screenSize.portrait = false;
-        } else {
-            console.log('Invalid screen orientation');
-        }
-    }
-
-    return screenSize;
+    return screenSize.getScreenSizeAspectRatio(this.edidData);
 };
 
 edidparser.prototype.getChromaticityCoordinates = function() {
