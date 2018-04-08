@@ -58,12 +58,6 @@ module.exports.getBasicDisplayParameters = function(edidData) {
     bdp.displayGamma = (edidData[DISPLAY_GAMMA] * (2.54 / 255)) + 1;
 
     const SUPPORTED_FEATURES_BITMAP = 24;
-    const DPMS_STANDBY = 0x80;
-    bdp.dpmsStandby = edidData[SUPPORTED_FEATURES_BITMAP] && DPMS_STANDBY;
-    const DPMS_SUSPEND = 0x40;
-    bdp.dpmsSuspend = edidData[SUPPORTED_FEATURES_BITMAP] && DPMS_SUSPEND;
-    const DPMS_ACTIVE_OFF = 0x20;
-    bdp.dpmsActiveOff = edidData[SUPPORTED_FEATURES_BITMAP] && DPMS_ACTIVE_OFF;
     const DISPLAY_TYPE_OFF = 3;
     const DISPLAY_TYPE_MASK = 0x03;
     bdp.displayType = edidData[SUPPORTED_FEATURES_BITMAP] / DISPLAY_TYPE_OFF &&

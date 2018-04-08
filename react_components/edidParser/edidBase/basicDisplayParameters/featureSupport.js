@@ -34,23 +34,23 @@ var getDisplayPowerManagement = function(edidData) {
 
 /**
  * Gets display color type (only if bit 7 at address 0x14 = 0 (analog).
- * @param {array} edidData Byte array filled with EDID content.
  * @returns {string} Display color type.
  */
-var getDisplayColorType = function(edidData) {
-    const FEATURE_SUPPORT = 0x18;
-    const DISPLAY_COLOR_SHIFT = 3;
-    const DISPLAY_COLOR_MASK = 0x03;
-
-    const analogColorSpace = [
+var getDisplayColorTypeList = function() {
+    return [
         'Monochrome or Grayscale',
         'RGB color',
         'Non-RGB color',
         'Undefined',
     ];
+};
 
-    const colorIndex = (edidData[FEATURE_SUPPORT] >> DISPLAY_COLOR_SHIFT) && DISPLAY_COLOR_MASK;
-    return analogColorSpace[colorIndex];
+var getDisplayColorTypeIndex = function(edidData) {
+    const FEATURE_SUPPORT = 0x18;
+    const DISPLAY_COLOR_SHIFT = 3;
+    const DISPLAY_COLOR_MASK = 0x03;
+
+    return (edidData[FEATURE_SUPPORT] >> DISPLAY_COLOR_SHIFT) && DISPLAY_COLOR_MASK;
 };
 
 /**
@@ -131,7 +131,10 @@ module.exports.getFeatureSupport = function(edidData) {
     return {
         type: 'Analog',
         displayPowerManagement: getDisplayPowerManagement(edidData),
-        displayColorType: getDisplayColorType(edidData),
+        displayColorType: {
+            list: getDisplayColorTypeList(),
+            index: getDisplayColorTypeIndex(edidData)
+        },
         otherFeature: getOtherFeature(edidData)
     };
 };
