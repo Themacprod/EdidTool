@@ -4,32 +4,37 @@ var React = require('react'),
     Title = require('../edidContentTitle');
 
 module.exports = React.createClass({
-    render: function() {
+    powerManagement: function() {
         const power = this.props.featureSupport.displayPowerManagement;
-        const colorTypes = this.props.featureSupport.displayColorType;
+
         return React.DOM.div(
-            {
-                className: 'edid-content-group feature-support'
-            },
-            React.createElement(Title, {
-                title: 'Feature Support'
-            }),
-            React.DOM.div(
+            null,
+            React.DOM.strong(
                 null,
-                React.DOM.strong(
-                    null,
-                    'Display Power Management'
-                )
+                'Display Power Management'
             ),
-            Func.contentSubGroupCheckbox('Standby Mode', power.standbyMode),
-            Func.contentSubGroupCheckbox('Suspend Mode', power.suspendMode),
-            Func.contentSubGroupCheckbox('Very Low Power', power.lowPowerSupport),
-            React.DOM.div(
+            Func.contentSubGroupCheckbox(
+                'Standby Mode',
+                power.standbyMode
+            ),
+            Func.contentSubGroupCheckbox(
+                'Suspend Mode',
+                power.suspendMode
+            ),
+            Func.contentSubGroupCheckbox(
+                'Very Low Power',
+                power.lowPowerSupport
+            )
+        );
+    },
+    colorType: function() {
+        const colorTypes = this.props.featureSupport.displayColorType;
+
+        React.DOM.div(
+            null,
+            React.DOM.strong(
                 null,
-                React.DOM.strong(
-                    null,
-                    'Color Type'
-                )
+                'Color Type'
             ),
             _.map(colorTypes.list, function(colorType, key) {
                 return React.DOM.div(
@@ -48,6 +53,20 @@ module.exports = React.createClass({
                     }, colorType)
                 );
             })
+        );
+    },
+    render: function() {
+        console.log(this.props);
+
+        return React.DOM.div(
+            {
+                className: 'edid-content-group feature-support'
+            },
+            React.createElement(Title, {
+                title: 'Feature Support'
+            }),
+            this.powerManagement(),
+            this.props.featureSupport.type === 'Analog' ? this.colorType() : this.colorType()
         );
     }
 });
