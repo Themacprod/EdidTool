@@ -56,8 +56,6 @@ module.exports = React.createClass({
         );
     },
     render: function() {
-        console.log(this.props);
-
         return React.DOM.div(
             {
                 className: 'edid-content-group feature-support'
