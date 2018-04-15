@@ -25,7 +25,7 @@
 		"generator-star-spacing": ["error", "neither"],
 		"global-require": "off",
 		"id-length": "off",
-		"indent": ["off", "tab"],
+		"indent": ["error", "4"],
 		"linebreak-style": ["error", "windows"],
 		"max-len": "off",
 		"max-lines": "off",
