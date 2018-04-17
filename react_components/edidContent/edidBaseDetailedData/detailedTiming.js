@@ -1,7 +1,7 @@
 var React = require('react');
 
 module.exports = React.createClass({
-    generateTiming: function(detail, data) {
+    generateTiming: function (detail, data) {
         return React.DOM.div(
             {
                 className: 'timing'
@@ -14,7 +14,7 @@ module.exports = React.createClass({
             }, data)
         );
     },
-    render: function() {
+    render: function () {
         const hParams = this.props.data.HorizontalParams;
         const vParams = this.props.data.VerticalParams;
 
@@ -25,10 +25,10 @@ module.exports = React.createClass({
                 {
                     className: 'width-50 inline-block border'
                 },
-                    React.DOM.div(
-                        {
-                            className: 'text-center border'
-                        },
+                React.DOM.div(
+                    {
+                        className: 'text-center border'
+                    },
                     'Horizontal'
                 ),
                 this.generateTiming('Active Pixels:', hParams.ActivePixels),
@@ -42,10 +42,10 @@ module.exports = React.createClass({
                 {
                     className: 'width-50 inline-block border'
                 },
-                    React.DOM.div(
-                        {
-                            className: 'text-center border'
-                        },
+                React.DOM.div(
+                    {
+                        className: 'text-center border'
+                    },
                     'Vertical'
                 ),
                 this.generateTiming('Active Lines:', vParams.ActiveLines),

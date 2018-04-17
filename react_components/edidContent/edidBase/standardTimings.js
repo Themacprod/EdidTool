@@ -4,7 +4,7 @@ var React = require('react'),
     _ = require('lodash');
 
 module.exports = React.createClass({
-    generateSection: function(name, data) {
+    generateSection: function (name, data) {
         return React.DOM.div(
             null,
             React.DOM.div({
@@ -15,7 +15,7 @@ module.exports = React.createClass({
             }, data)
         );
     },
-    render: function() {
+    render: function () {
         return React.DOM.div(
             {
                 className: 'edid-content-group standard-timings'
@@ -23,7 +23,7 @@ module.exports = React.createClass({
             React.createElement(Title, {
                 title: 'Standard timings'
             }),
-            _.map(this.props.standardTimings, _.bind(function(standardTiming, key) {
+            _.map(this.props.standardTimings, _.bind(function (standardTiming, key) {
                 return React.DOM.div(
                     {
                         key: key,
@@ -34,7 +34,7 @@ module.exports = React.createClass({
                             className: 'border margin'
                         },
                         Func.contentSubGroupCheckbox(
-                            ' Timing ' + Number(key + 1),
+                            ` Timing ${Number(key + 1)}`,
                             standardTiming.valid
                         ),
                         this.generateSection(

@@ -6,26 +6,26 @@ var React = require('react'),
     EdidCea = require('./edidcontentcea');
 
 module.exports = React.createClass({
-    componentWillMount: function() {
+    componentWillMount: function () {
         this.edidParser = new EdidParser();
     },
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             selected: 0
         };
     },
-    handleClick: function(key) {
+    handleClick: function (key) {
         this.setState({
             selected: key
         });
     },
-    generateTabs: function() {
+    generateTabs: function () {
         var ext = [];
 
         ext.push('Standard data');
         ext.push('Detailed data');
 
-        for (var i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
+        for (let i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
             const extcount = i + 1;
             ext.push('CEA #' + extcount);
         }
@@ -34,7 +34,7 @@ module.exports = React.createClass({
             {
                 className: 'nav nav-tabs'
             },
-            _.map(ext, _.bind(function(data, key) {
+            _.map(ext, _.bind(function (data, key) {
                 var baseState = this.state.selected === key ? ' active' : ' disabled';
 
                 return React.DOM.li(
@@ -50,7 +50,7 @@ module.exports = React.createClass({
             }, this))
         );
     },
-    generateExt: function() {
+    generateExt: function () {
         if (this.state.selected === 0) {
             return React.createElement(EdidBase, {
                 edidParsed: this.edidParser
@@ -65,7 +65,7 @@ module.exports = React.createClass({
             edidParsed: this.edidParser
         });
     },
-    render: function() {
+    render: function () {
         this.edidParser.setEdidData(this.props.edid);
         this.edidParser.parse();
 

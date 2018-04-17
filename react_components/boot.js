@@ -5,7 +5,7 @@ var React = require('react'),
     ReactRouter = require('react-router');
 
 var Boot = React.createClass({
-    render: function() {
+    render: function () {
         return React.createElement(
             ReactRouter.Router, {
                 history: ReactRouter.browserHistory

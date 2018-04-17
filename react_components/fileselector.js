@@ -8,7 +8,7 @@ var React = require('react'),
 // https://www.html5rocks.com/en/tutorials/file/dndfiles/
 
 module.exports = React.createClass({
-    componentDidMount: function() {
+    componentDidMount: function () {
         var target = document.getElementById('draggable');
 
         target.addEventListener('drag', this.ondragFunction, false);
@@ -16,34 +16,34 @@ module.exports = React.createClass({
         target.addEventListener('dragover', this.ondragFunction, false);
         target.addEventListener('drop', this.ondragFunction, false);
     },
-    ondragFunction: function(event) {
+    ondragFunction: function (event) {
         event.preventDefault();
 
         if (event.type === 'drop') {
-            var dt = event.dataTransfer;
+            const dt = event.dataTransfer;
             if (dt.items) {
                 // Use DataTransferItemList interface to access the file(s)
-                var f = dt.items[0].getAsFile();
+                const f = dt.items[0].getAsFile();
                 this.extractEdid(f, f.name);
             }
         }
     },
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             edidcontent: _.fill(Array(128), 0)
         };
     },
-    getFileExtension: function(filename) {
+    getFileExtension: function (filename) {
         return (/[.]/).exec(filename) ? (/[^.]+$/).exec(filename) : undefined;
     },
-    handleChange: function() {
+    handleChange: function () {
         this.extractEdid(
             document.getElementById('files').files[0],
             document.getElementById('files').value
         );
     },
-    extractEdid: function(file, filename) {
-        fileReader.onloadend = function(evt) {
+    extractEdid: function (file, filename) {
+        fileReader.onloadend = function (evt) {
             // If we use onloadend, we need to check the readyState.
             if (evt.target.readyState === 2) {
                 this.setState({
@@ -52,7 +52,7 @@ module.exports = React.createClass({
             }
         }.bind(this);
 
-        var fileExtension = String(this.getFileExtension(filename));
+        const fileExtension = String(this.getFileExtension(filename));
 
         if (fileExtension.toLowerCase() === 'dat') {
             fileReader.readAsText(file);
@@ -62,7 +62,7 @@ module.exports = React.createClass({
             console.log('Unknown extension : ', fileExtension);
         }
     },
-    render: function() {
+    render: function () {
         return React.DOM.div(
             null,
             React.DOM.input({

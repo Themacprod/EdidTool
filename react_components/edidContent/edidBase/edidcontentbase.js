@@ -8,7 +8,7 @@ var React = require('react'),
     StandardTimings = require('./standardTimings');
 
 module.exports = React.createClass({
-    render: function() {
+    render: function () {
         return React.DOM.div(
             null,
             React.createElement(ManufacturerInfo, {

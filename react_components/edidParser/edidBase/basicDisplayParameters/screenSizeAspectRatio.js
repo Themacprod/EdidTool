@@ -3,7 +3,7 @@
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {int} Gamma value.
  */
-module.exports.getScreenSizeAspectRatio = function(edidData) {
+module.exports.getScreenSizeAspectRatio = function (edidData) {
     const OFFSET_DATA_1 = 0x15;
     const OFFSET_DATA_2 = 0x16;
     var type = '';

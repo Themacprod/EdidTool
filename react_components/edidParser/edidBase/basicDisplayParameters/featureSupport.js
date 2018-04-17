@@ -3,7 +3,7 @@
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {struct} Structure with display power mamangement data.
  */
-var getDisplayPowerManagement = function(edidData) {
+var getDisplayPowerManagement = function (edidData) {
     const FEATURE_SUPPORT = 0x18;
     const STANDBY_MODE_MASK = 0x80;
     const SUSPEND_MODE_MASK = 0x40;
@@ -36,7 +36,7 @@ var getDisplayPowerManagement = function(edidData) {
  * Gets display color type (only if bit 7 at address 0x14 = 0 (analog).
  * @returns {string} Display color type.
  */
-var getDisplayColorTypeList = function() {
+var getDisplayColorTypeList = function () {
     return [
         'Monochrome or Grayscale',
         'RGB color',
@@ -45,7 +45,7 @@ var getDisplayColorTypeList = function() {
     ];
 };
 
-var getDisplayColorTypeIndex = function(edidData) {
+var getDisplayColorTypeIndex = function (edidData) {
     const FEATURE_SUPPORT = 0x18;
     const DISPLAY_COLOR_SHIFT = 3;
     const DISPLAY_COLOR_MASK = 0x03;
@@ -58,7 +58,7 @@ var getDisplayColorTypeIndex = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {string} Display color type.
  */
-var getSupportedColorEncodingFormat = function(edidData) {
+var getSupportedColorEncodingFormat = function (edidData) {
     const FEATURE_SUPPORT = 0x18;
     const COLOR_ENCODING_SHIFT = 3;
     const COLOR_ENCODING_MASK = 0x03;
@@ -79,7 +79,7 @@ var getSupportedColorEncodingFormat = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {struct} Other feature data.
  */
-var getOtherFeature = function(edidData) {
+var getOtherFeature = function (edidData) {
     const FEATURE_SUPPORT = 0x18;
     const SRGB_MASK = 0x04;
     const PREFERRED_TIMING_MASK = 0x02;
@@ -113,7 +113,7 @@ var getOtherFeature = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {struct} Structure with feature support.
  */
-module.exports.getFeatureSupport = function(edidData) {
+module.exports.getFeatureSupport = function (edidData) {
     const VIDEO_SIGNAL_TYPE = 0x14;
     const VIDEO_SIGNAL_TYPE_MASK = 0x80;
 

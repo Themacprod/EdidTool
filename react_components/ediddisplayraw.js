@@ -2,24 +2,24 @@ var React = require('react'),
     _ = require('lodash');
 
 module.exports = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             byteselected: -1
         };
     },
-    handleClick: function(byte) {
+    handleClick: function (byte) {
         this.setState({
             byteselected: byte
         });
     },
-    toHex: function(byte) {
+    toHex: function (byte) {
         var hexValue = byte.toString(16).toUpperCase();
         if (hexValue.length < 2) {
-            hexValue = '0' + hexValue;
+            hexValue = `0${hexValue}`;
         }
         return hexValue;
     },
-    render: function() {
+    render: function () {
         var byteindex = 0;
         var defaultChunk = 16;
         var gridheader = [];
@@ -32,7 +32,7 @@ module.exports = React.createClass({
             readOnly: 'readOnly'
         }));
 
-        for (var i = 0; i < (this.props.chunk || defaultChunk); i += 1) {
+        for (let i = 0; i < (this.props.chunk || defaultChunk); i += 1) {
             gridheader.push(React.DOM.input({
                 key: i + 1,
                 className: 'input-grid-selected',
@@ -50,7 +50,7 @@ module.exports = React.createClass({
                 key: 0,
                 className: 'input-grid-line text-center'
             }, gridheader),
-            _.map(_.chunk(this.props.edid, this.props.chunk || defaultChunk), _.bind(function(line, idx) {
+            _.map(_.chunk(this.props.edid, this.props.chunk || defaultChunk), _.bind(function (line, idx) {
                 return React.DOM.div(
                     {
                         key: idx,
@@ -63,7 +63,7 @@ module.exports = React.createClass({
                         value: this.toHex(byteindex),
                         readOnly: 'readOnly'
                     }),
-                    _.map(line, _.bind(function(byte, key) {
+                    _.map(line, _.bind(function (byte, key) {
                         byteindex += 1;
                         return React.DOM.input({
                             key: key,

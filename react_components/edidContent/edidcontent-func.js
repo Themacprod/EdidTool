@@ -1,6 +1,6 @@
 var React = require('react');
 
-var contentSubGroup = function(detail, data) {
+var contentSubGroup = function (detail, data) {
     return React.DOM.div(
         {
             className: 'edid-content-subgroup'
@@ -13,7 +13,7 @@ var contentSubGroup = function(detail, data) {
     );
 };
 
-var contentSubGroupRadio = function(detail, checked) {
+var contentSubGroupRadio = function (detail, checked) {
     return React.DOM.div(
         {
             className: 'edid-content-subgroup'
@@ -30,7 +30,7 @@ var contentSubGroupRadio = function(detail, checked) {
     );
 };
 
-var contentSubGroupCheckbox = function(detail, checked) {
+var contentSubGroupCheckbox = function (detail, checked) {
     return React.DOM.div(
         {
             className: 'edid-content-subgroup'
@@ -47,7 +47,7 @@ var contentSubGroupCheckbox = function(detail, checked) {
     );
 };
 
-var contentSubGroupCheckboxKey = function(detail, checked, key) {
+var contentSubGroupCheckboxKey = function (detail, checked, key) {
     return React.DOM.div(
         {
             className: 'edid-content-subgroup',

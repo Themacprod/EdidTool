@@ -4,7 +4,7 @@
  * @param {struct} color bit shift data.
  * @returns {struct} struct filled with color characteristics.
  */
-var getChromaticity = function(edidData, color) {
+var getChromaticity = function (edidData, color) {
     const TWO_BIT_OFF = 2;
     const TWO_BIT_MASK = 0x03;
 
@@ -24,7 +24,7 @@ var getChromaticity = function(edidData, color) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {struct} struct filled with color characteristics.
  */
-module.exports.getColorCharacteristics = function(edidData) {
+module.exports.getColorCharacteristics = function (edidData) {
     const oRedColor = {
         xMsb: 27,
         yMsb: 28,

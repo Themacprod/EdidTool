@@ -1,7 +1,7 @@
 {
-	"indent_size": 1,
-	"indent_char": "\t",
-	"indent_with_tabs": true,
-	"max_preserve_newlines": 2,
-	"end_with_newline": true
+    "indent_size": 1,
+    "indent_char": "\t",
+    "indent_with_tabs": true,
+    "max_preserve_newlines": 2,
+    "end_with_newline": true
 }

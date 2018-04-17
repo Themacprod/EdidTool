@@ -9,7 +9,7 @@ var header = require('./edidParser/edidBase/header'),
     featureSupport = require('./edidParser/edidBase/basicDisplayParameters/featureSupport'),
     detailedTimingDescriptions = require('./edidParser/edidBase/detailedTimingDescriptions');
 
-var edidparser = function() {
+var edidparser = function () {
     this.EDID_BLOCK_LENGTH = 128;
 
     this.DTD_LENGTH = 18;
@@ -131,11 +131,11 @@ var edidparser = function() {
     ];
 };
 
-edidparser.prototype.setEdidData = function(edid) {
+edidparser.prototype.setEdidData = function (edid) {
     this.edidData = edid;
 };
 
-edidparser.prototype.parse = function() {
+edidparser.prototype.parse = function () {
     if (header.isValidHeader(this.edidData) === true) {
         this.validHeader = 'OK';
     } else {
@@ -148,7 +148,7 @@ edidparser.prototype.parse = function() {
 
     this.exts = [];
     // Begin Parsing Extension blocks
-    for (var extIndex = 0; extIndex < this.numberOfExtensions; extIndex += 1) {
+    for (let extIndex = 0; extIndex < this.numberOfExtensions; extIndex += 1) {
         this.exts[extIndex] = {};
         this.exts[extIndex].blockNumber = extIndex + 1;
         this.exts[extIndex].extTag = this.getExtTag(extIndex);
@@ -171,13 +171,13 @@ edidparser.prototype.parse = function() {
     }
 };
 
-edidparser.prototype.getHeader = function() {
+edidparser.prototype.getHeader = function () {
     return {
         header: header.getHeader(this.edidData)
     };
 };
 
-edidparser.prototype.getVendorProductId = function() {
+edidparser.prototype.getVendorProductId = function () {
     const manufacturerId = vendorProductId.getManufacturerId(this.edidData);
 
     return {
@@ -190,120 +190,120 @@ edidparser.prototype.getVendorProductId = function() {
     };
 };
 
-edidparser.prototype.getEdidVersionRevision = function() {
+edidparser.prototype.getEdidVersionRevision = function () {
     return {
         version: edidVersionRevision.getVersion(this.edidData),
         revision: edidVersionRevision.getRevision(this.edidData)
     };
 };
 
-edidparser.prototype.getBasicDisplayParams = function() {
+edidparser.prototype.getBasicDisplayParams = function () {
     return basicDisplayParameters.getBasicDisplayParameters(this.edidData);
 };
 
-edidparser.prototype.getScreenSize = function() {
+edidparser.prototype.getScreenSize = function () {
     return screenSize.getScreenSizeAspectRatio(this.edidData);
 };
 
-edidparser.prototype.getFeatureSupport = function() {
+edidparser.prototype.getFeatureSupport = function () {
     return featureSupport.getFeatureSupport(this.edidData);
 };
 
-edidparser.prototype.getChromaticityCoordinates = function() {
+edidparser.prototype.getChromaticityCoordinates = function () {
     return colorCharacteristics.getColorCharacteristics(this.edidData);
 };
 
-edidparser.prototype.getEstablishedModes = function() {
+edidparser.prototype.getEstablishedModes = function () {
     return establishedTimings.getEstablishedModes(this.edidData);
 };
 
-edidparser.prototype.getStandardDisplayModes = function() {
+edidparser.prototype.getStandardDisplayModes = function () {
     return standardTimings.getStandardTimings(this.edidData);
 };
 
-edidparser.prototype.getDtds = function() {
+edidparser.prototype.getDtds = function () {
     return detailedTimingDescriptions.getData(this.edidData);
 };
 
-edidparser.prototype.getNumberExtensions = function() {
+edidparser.prototype.getNumberExtensions = function () {
     var NUMBER_OF_EXTENSIONS = 126;
     return this.edidData[NUMBER_OF_EXTENSIONS];
 };
 
-edidparser.prototype.getChecksum = function() {
+edidparser.prototype.getChecksum = function () {
     var CHECKSUM = 127;
     return this.edidData[CHECKSUM];
 };
 
-edidparser.prototype.calcChecksum = function(block) {
+edidparser.prototype.calcChecksum = function (block) {
     var startAddress = block * this.EDID_BLOCK_LENGTH;
     var endAddress = (startAddress + this.EDID_BLOCK_LENGTH) - 1;
     var checksum = 0;
-    for (var index = startAddress; index < endAddress; index += 1) {
+    for (let index = startAddress; index < endAddress; index += 1) {
         checksum += this.edidData[index];
     }
     return (256 - (checksum % 256));
 };
 
-edidparser.prototype.validChecksum = function(block) {
+edidparser.prototype.validChecksum = function (block) {
     var checksum = this.edidData[((block + 1) * this.EDID_BLOCK_LENGTH) - 1];
     return checksum === this.calcChecksum(block);
 };
 
-edidparser.prototype.getExtTag = function(extIndex) {
+edidparser.prototype.getExtTag = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var EXT_TAG = BLOCK_OFFSET + 0;
     return this.edidData[EXT_TAG];
 };
 
-edidparser.prototype.getRevisionNumber = function(extIndex) {
+edidparser.prototype.getRevisionNumber = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var REV_NUMBER = BLOCK_OFFSET + 1;
     return this.edidData[REV_NUMBER];
 };
 
-edidparser.prototype.getDtdStart = function(extIndex) {
+edidparser.prototype.getDtdStart = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var DTD_START = BLOCK_OFFSET + 2;
     return this.edidData[DTD_START];
 };
 
-edidparser.prototype.getNumberExtDtds = function(extIndex) {
+edidparser.prototype.getNumberExtDtds = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var NUM_DTDS = BLOCK_OFFSET + 3;
     var NUM_DTDS_MASK = 0x0F;
     return (this.edidData[NUM_DTDS] & NUM_DTDS_MASK);
 };
 
-edidparser.prototype.getUnderscan = function(extIndex) {
+edidparser.prototype.getUnderscan = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var UNDERSCAN = BLOCK_OFFSET + 3;
     var UNDERSCAN_MASK = 0x80;
     return this.edidData[UNDERSCAN] & UNDERSCAN_MASK;
 };
 
-edidparser.prototype.getBasicAudio = function(extIndex) {
+edidparser.prototype.getBasicAudio = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var BASIC_AUDIO = BLOCK_OFFSET + 3;
     var BASIC_AUDIO_MASK = 0x40;
     return this.edidData[BASIC_AUDIO] & BASIC_AUDIO_MASK;
 };
 
-edidparser.prototype.getYcBcR444 = function(extIndex) {
+edidparser.prototype.getYcBcR444 = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var YCBCR_444 = BLOCK_OFFSET + 3;
     var YCBCR_444_MASK = 0x20;
     return this.edidData[YCBCR_444] & YCBCR_444_MASK;
 };
 
-edidparser.prototype.getYcBcR422 = function(extIndex) {
+edidparser.prototype.getYcBcR422 = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var YCBCR_422 = BLOCK_OFFSET + 3;
     var YCBCR_422_MASK = 0x10;
     return this.edidData[YCBCR_422] & YCBCR_422_MASK;
 };
 
-edidparser.prototype.parseDataBlockCollection = function(extIndex) {
+edidparser.prototype.parseDataBlockCollection = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var START_DATA_BLOCK = 4;
     var startAddress = BLOCK_OFFSET + START_DATA_BLOCK;
@@ -318,12 +318,12 @@ edidparser.prototype.parseDataBlockCollection = function(extIndex) {
     var numberDataBlocks = 0;
     while (index < endAddress) {
         // Parse tag code
-        var blockTagCode = (this.edidData[index] / TAG_CODE_OFFSET) & TAG_CODE_MASK;
+        const blockTagCode = (this.edidData[index] / TAG_CODE_OFFSET) & TAG_CODE_MASK;
         // Parse Length
-        var blockLength = (this.edidData[index] & DATA_BLOCK_LENGTH_MASK);
+        const blockLength = (this.edidData[index] & DATA_BLOCK_LENGTH_MASK);
 
         // Object that holds Parsed Data block
-        var dataBlock = [];
+        let dataBlock = [];
 
         // Parse the data block by the tag code
         if (blockTagCode === this.dataBlockType.AUDIO.value) {
@@ -348,7 +348,7 @@ edidparser.prototype.parseDataBlockCollection = function(extIndex) {
     return dataBlockCollection;
 };
 
-edidparser.prototype.parseAudioDataBlock = function(startAddress, blockLength) {
+edidparser.prototype.parseAudioDataBlock = function (startAddress, blockLength) {
     var audioBlock = [];
     // Audio blocks are made up of Short Audio Descriptors that are three bytes each
     var SHORT_AUDIO_DESC_LENGTH = 3;
@@ -368,13 +368,13 @@ edidparser.prototype.parseAudioDataBlock = function(startAddress, blockLength) {
 
 
     // Parse the short audio descriptors in the Audio Data Block
-    var SHORT_AUDIO_DESC_MASK = 0x0F;
-    var SHORT_AUDIO_DESC_OFF = 3;
-    var MAX_CHANNELS_MASK = 0x07;
-    var SAMPLE_RATE_MASK = 0x7F;
+    const SHORT_AUDIO_DESC_MASK = 0x0F;
+    const SHORT_AUDIO_DESC_OFF = 3;
+    const MAX_CHANNELS_MASK = 0x07;
+    const SAMPLE_RATE_MASK = 0x7F;
     while (shortAudDescIndex < numberShortAudioDescriptors) {
         // Each Short Audio Descriptor is a 3 byte object
-        var shortAudDesc = {};
+        const shortAudDesc = {};
 
         // Parse the format
         shortAudDesc.format = (this.edidData[index] / SHORT_AUDIO_DESC_OFF) & SHORT_AUDIO_DESC_MASK;
@@ -384,20 +384,20 @@ edidparser.prototype.parseAudioDataBlock = function(startAddress, blockLength) {
         shortAudDesc.sampleRates = this.edidData[index + 1] & SAMPLE_RATE_MASK;
 
         if (shortAudDesc.format <= this.audioFormatArray[0]) {
-            var BIT_DEPTH_MASK = 0x07;
+            const BIT_DEPTH_MASK = 0x07;
             shortAudDesc.bitDepth = this.edidData[index + 2] & BIT_DEPTH_MASK;
         } else if (shortAudDesc.format <= this.audioFormatArray[1]) {
-            var MAX_BIT_RATE_MASK = 0xFF;
+            const MAX_BIT_RATE_MASK = 0xFF;
             shortAudDesc.bitRate = (this.edidData[index + 2] & MAX_BIT_RATE_MASK) << 8;
         } else if (shortAudDesc.format <= this.audioFormatArray[2]) {
-            var AUDIO_FORMAT_CODE_MASK = 0xFF;
+            const AUDIO_FORMAT_CODE_MASK = 0xFF;
             shortAudDesc.audioFormatCode = this.edidData[index + 2] & AUDIO_FORMAT_CODE_MASK;
         } else if (shortAudDesc.format <= this.audioFormatArray[3]) {
-            var PROFILE_MASK = 0x07;
+            const PROFILE_MASK = 0x07;
             shortAudDesc.profile = this.edidData[index + 2] & PROFILE_MASK;
         } else if (shortAudDesc.format <= this.audioFormatArray[4]) {
-            var FORMAT_CODE_EXT_OFF = 3;
-            var FORMAT_CODE_EXT_MASK = 0x1F;
+            const FORMAT_CODE_EXT_OFF = 3;
+            const FORMAT_CODE_EXT_MASK = 0x1F;
             shortAudDesc.formatCodeExt = (this.edidData[index + 2] / FORMAT_CODE_EXT_OFF) & FORMAT_CODE_EXT_MASK;
         }
 
@@ -412,21 +412,21 @@ edidparser.prototype.parseAudioDataBlock = function(startAddress, blockLength) {
     return audioBlock;
 };
 
-edidparser.prototype.parseVideoDataBlock = function(startAddress, blockLength) {
+edidparser.prototype.parseVideoDataBlock = function (startAddress, blockLength) {
     var videoBlock = {};
     videoBlock.tag = this.dataBlockType.VIDEO;
     videoBlock.length = blockLength;
 
-    var index = 0;
+    let index = 0;
     videoBlock.shortVideoDescriptors = [];
 
-    var NATIVE_RESOLUTION_MASK = 0x80;
-    var CEA861F_VIC_MASK = 0x40;
-    var LOW_VIC_MASK = 0x3F;
-    var HIGH_VIC_MASK = 0xFF;
+    const NATIVE_RESOLUTION_MASK = 0x80;
+    const CEA861F_VIC_MASK = 0x40;
+    const LOW_VIC_MASK = 0x3F;
+    const HIGH_VIC_MASK = 0xFF;
     while (index < blockLength) {
-        var shortVideoDescriptor = {};
-        var dataByte = this.edidData[startAddress + index];
+        const shortVideoDescriptor = {};
+        const dataByte = this.edidData[startAddress + index];
         if ((dataByte & CEA861F_VIC_MASK) > 0) {
             shortVideoDescriptor.vic = dataByte & HIGH_VIC_MASK;
             shortVideoDescriptor.nativeResolution = false;
@@ -445,7 +445,7 @@ edidparser.prototype.parseVideoDataBlock = function(startAddress, blockLength) {
     return videoBlock;
 };
 
-edidparser.prototype.parseVendorDataBlockHDMI14 = function(startAddress, blockLength, vendorBlock) {
+edidparser.prototype.parseVendorDataBlockHDMI14 = function (startAddress, blockLength, vendorBlock) {
     // Subtract one, so the indexing matches the HDMI Specification
     var vsdbAddress = startAddress - 1;
 
@@ -455,21 +455,21 @@ edidparser.prototype.parseVendorDataBlockHDMI14 = function(startAddress, blockLe
     vendorBlock.physicalAddress = (this.edidData[vsdbAddress + PHYSICAL_ADDRESS_1] << 8) |
         (this.edidData[vsdbAddress + PHYSICAL_ADDRESS_2]);
 
-    var AI_DC_DUAL_ADDRESS = 6;
+    const AI_DC_DUAL_ADDRESS = 6;
     if (blockLength >= AI_DC_DUAL_ADDRESS) {
-        var SUPPORT_AI_MASK = 0x80;
+        const SUPPORT_AI_MASK = 0x80;
         // Parse Supports ACP, ISRC1, ISRC2
         vendorBlock.supportsAI = this.edidData[vsdbAddress + AI_DC_DUAL_ADDRESS] & SUPPORT_AI_MASK;
 
-        var DEEP_COLOR_48_MASK = 0x40;
+        const DEEP_COLOR_48_MASK = 0x40;
         vendorBlock.deepColor48 = this.edidData[vsdbAddress + AI_DC_DUAL_ADDRESS] & DEEP_COLOR_48_MASK;
-        var DEEP_COLOR_36_MASK = 0x20;
+        const DEEP_COLOR_36_MASK = 0x20;
         vendorBlock.deepColor36 = this.edidData[vsdbAddress + AI_DC_DUAL_ADDRESS] & DEEP_COLOR_36_MASK;
-        var DEEP_COLOR_30_MASK = 0x10;
+        const DEEP_COLOR_30_MASK = 0x10;
         vendorBlock.deepColor30 = this.edidData[vsdbAddress + AI_DC_DUAL_ADDRESS] & DEEP_COLOR_30_MASK;
-        var DEEP_COLOR_Y444_MASK = 0x08;
+        const DEEP_COLOR_Y444_MASK = 0x08;
         vendorBlock.deepColorY444 = this.edidData[vsdbAddress + AI_DC_DUAL_ADDRESS] & DEEP_COLOR_Y444_MASK;
-        var DUAL_DVI_MASK = 0x01;
+        const DUAL_DVI_MASK = 0x01;
         vendorBlock.dualDvi = this.edidData[vsdbAddress + AI_DC_DUAL_ADDRESS] & DUAL_DVI_MASK;
     }
 
@@ -477,25 +477,25 @@ edidparser.prototype.parseVendorDataBlockHDMI14 = function(startAddress, blockLe
      * Parse Max TMDS rate, the edid has TMDS clock. Multiply TMDS clock x 5Mhz
      * And you'll get max TMDS rate
      */
-     var MAX_TMDS_CLOCK_ADDRESS = 7;
-     if (blockLength >= MAX_TMDS_CLOCK_ADDRESS) {
-         vendorBlock.maxTmdsRate = this.edidData[vsdbAddress + MAX_TMDS_CLOCK_ADDRESS] * 5;
-     }
+    const MAX_TMDS_CLOCK_ADDRESS = 7;
+    if (blockLength >= MAX_TMDS_CLOCK_ADDRESS) {
+        vendorBlock.maxTmdsRate = this.edidData[vsdbAddress + MAX_TMDS_CLOCK_ADDRESS] * 5;
+    }
 
-    var LATENCY_PRESENT_ADDRESS = 8;
+    const LATENCY_PRESENT_ADDRESS = 8;
     if (blockLength >= LATENCY_PRESENT_ADDRESS) {
-        var LATENCY_FIELDS_PRESENT_MASK = 0x80;
+        const LATENCY_FIELDS_PRESENT_MASK = 0x80;
         vendorBlock.latencyPresent = this.edidData[vsdbAddress + LATENCY_PRESENT_ADDRESS] & LATENCY_FIELDS_PRESENT_MASK;
 
-        var I_LATENCY_FIELDS_PRESENT_MASK = 0x80;
+        const I_LATENCY_FIELDS_PRESENT_MASK = 0x80;
         vendorBlock.iLatencyPresent = this.edidData[vsdbAddress + LATENCY_PRESENT_ADDRESS] & I_LATENCY_FIELDS_PRESENT_MASK;
     }
 
-    var AUDIO_LATENCY_ADDRESS = 10;
+    const AUDIO_LATENCY_ADDRESS = 10;
 
     // If Latency fields are present
     if (vendorBlock.latencyPresent && (blockLength >= AUDIO_LATENCY_ADDRESS)) {
-        var VIDEO_LATENCY_ADDRESS = 9;
+        const VIDEO_LATENCY_ADDRESS = 9;
         vendorBlock.videoLatency = ((this.edidData[vsdbAddress + VIDEO_LATENCY_ADDRESS] - 1) *
             2);
         vendorBlock.audioLatency = ((this.edidData[vsdbAddress + AUDIO_LATENCY_ADDRESS] - 1) *
@@ -504,11 +504,11 @@ edidparser.prototype.parseVendorDataBlockHDMI14 = function(startAddress, blockLe
 
     // If Interlaced Latency fields are present
     if (vendorBlock.iLatencyPresent && (blockLength >= AUDIO_LATENCY_ADDRESS)) {
-        var I_VIDEO_LATENCY_ADDRESS = 11;
+        const I_VIDEO_LATENCY_ADDRESS = 11;
         vendorBlock.iVideoLatency = ((this.edidData[vsdbAddress + I_VIDEO_LATENCY_ADDRESS] - 1) *
             2);
 
-        var I_AUDIO_LATENCY_ADDRESS = 12;
+        const I_AUDIO_LATENCY_ADDRESS = 12;
         vendorBlock.iAudioLatency = ((this.edidData[vsdbAddress + I_AUDIO_LATENCY_ADDRESS] - 1) *
             2);
     }
@@ -517,7 +517,7 @@ edidparser.prototype.parseVendorDataBlockHDMI14 = function(startAddress, blockLe
 };
 
 
-edidparser.prototype.parseVendorDataBlockHDMI20 = function(startAddress, blockLength, vendorBlock) {
+edidparser.prototype.parseVendorDataBlockHDMI20 = function (startAddress, blockLength, vendorBlock) {
     // Subtract one, so the indexing matches the HDMI Specification
     var vsdbAddress = startAddress - 1;
 
@@ -571,17 +571,17 @@ edidparser.prototype.parseVendorDataBlockHDMI20 = function(startAddress, blockLe
 };
 
 
-edidparser.prototype.parseVendorDataBlock = function(startAddress, blockLength) {
+edidparser.prototype.parseVendorDataBlock = function (startAddress, blockLength) {
     var vendorBlock = {};
     vendorBlock.tag = this.dataBlockType.VENDOR_SPECIFIC;
     vendorBlock.length = blockLength;
 
     // Subtract one, so the indexing matches the HDMI Specification
-    var vsdbAddress = startAddress - 1;
+    const vsdbAddress = startAddress - 1;
 
-    var IEEE_REG_IDENTIFIER_1 = 1;
-    var IEEE_REG_IDENTIFIER_2 = 2;
-    var IEEE_REG_IDENTIFIER_3 = 3;
+    const IEEE_REG_IDENTIFIER_1 = 1;
+    const IEEE_REG_IDENTIFIER_2 = 2;
+    const IEEE_REG_IDENTIFIER_3 = 3;
     // 24-bit IEEE Registration Identifier
     vendorBlock.ieeeIdentifier = (this.edidData[vsdbAddress + IEEE_REG_IDENTIFIER_3] << 16) +
         (this.edidData[vsdbAddress + IEEE_REG_IDENTIFIER_2] << 8) +
@@ -598,13 +598,13 @@ edidparser.prototype.parseVendorDataBlock = function(startAddress, blockLength) 
     return vendorBlock;
 };
 
-edidparser.prototype.parseVideoCapabilityDataBlock = function(startAddress, blockLength, extendedTagBlock) {
+edidparser.prototype.parseVideoCapabilityDataBlock = function (startAddress, blockLength, extendedTagBlock) {
     extendedTagBlock.extendedTag = this.extendedDataBlockType.VIDEO_CAPABILITY;
 
-    var FIELD_ADDRESS = 0;
-    var FIELD_MASK = 0x0;
-    var FIELD_SHIFT = 0;
-    var fieldData = 0;
+    let FIELD_ADDRESS = 0;
+    let FIELD_MASK = 0x0;
+    let FIELD_SHIFT = 0;
+    let fieldData = 0;
 
     FIELD_ADDRESS = 1;
     FIELD_MASK = 0x80;
@@ -635,11 +635,11 @@ edidparser.prototype.parseVideoCapabilityDataBlock = function(startAddress, bloc
     return extendedTagBlock;
 };
 
-edidparser.prototype.parseColorimetryDataBlock = function(startAddress, blockLength, extendedTagBlock) {
+edidparser.prototype.parseColorimetryDataBlock = function (startAddress, blockLength, extendedTagBlock) {
     extendedTagBlock.extendedTag = this.extendedDataBlockType.COLORIMETRY;
 
-    var FIELD_ADDRESS = 0;
-    var FIELD_MASK = 0x0;
+    let FIELD_ADDRESS = 0;
+    let FIELD_MASK = 0x0;
 
     FIELD_ADDRESS = 1;
     FIELD_MASK = 0x80;
@@ -692,15 +692,15 @@ edidparser.prototype.parseColorimetryDataBlock = function(startAddress, blockLen
     return extendedTagBlock;
 };
 
-edidparser.prototype.parseYCbCr420VideoDataBlock = function(startAddress, blockLength, extendedTagBlock) {
+edidparser.prototype.parseYCbCr420VideoDataBlock = function (startAddress, blockLength, extendedTagBlock) {
     extendedTagBlock.extendedTag = this.extendedDataBlockType.YCBCR420_VIDEO;
 
-    var svdIndex = 0;
+    let svdIndex = 0;
 
-    var NATIVE_RESOLUTION_MASK = 0x80;
-    var CEA861F_VIC_MASK = 0x40;
-    var LOW_VIC_MASK = 0x3F;
-    var HIGH_VIC_MASK = 0xFF;
+    const NATIVE_RESOLUTION_MASK = 0x80;
+    const CEA861F_VIC_MASK = 0x40;
+    const LOW_VIC_MASK = 0x3F;
+    const HIGH_VIC_MASK = 0xFF;
 
     /*
      * SVDs listed in this block support only YCbCr 4:2:0 color format.
@@ -709,9 +709,9 @@ edidparser.prototype.parseYCbCr420VideoDataBlock = function(startAddress, blockL
     extendedTagBlock.YCbCr420OnlyShortVideoDescriptors = [];
 
     for (svdIndex = 0; svdIndex < (blockLength - 1); svdIndex += 1) {
-        var shortVideoDescriptor = {};
+        const shortVideoDescriptor = {};
         // Add 1 as this is an extended tag data block
-        var dataByte = this.edidData[startAddress + 1 + svdIndex];
+        const dataByte = this.edidData[startAddress + 1 + svdIndex];
         if ((dataByte & CEA861F_VIC_MASK) > 0) {
             shortVideoDescriptor.vic = dataByte & HIGH_VIC_MASK;
             shortVideoDescriptor.nativeResolution = false;
@@ -725,14 +725,14 @@ edidparser.prototype.parseYCbCr420VideoDataBlock = function(startAddress, blockL
     return extendedTagBlock;
 };
 
-edidparser.prototype.parseYCbCr420CapabilityMapDataBlock = function(startAddress, blockLength, extendedTagBlock) {
+edidparser.prototype.parseYCbCr420CapabilityMapDataBlock = function (startAddress, blockLength, extendedTagBlock) {
     extendedTagBlock.extendedTag = this.extendedDataBlockType.YCBCR420_CAPABILITY_MAP;
 
-    var FIELD_ADDRESS = 0;
-    var FIELD_MASK = 0x0;
-    var svdIndex = 0;
-    var YCbCr420Capable = false;
-    var YCbCr420svdIndex = 0;
+    let FIELD_ADDRESS = 0;
+    let FIELD_MASK = 0x0;
+    let svdIndex = 0;
+    let YCbCr420Capable = false;
+    let YCbCr420svdIndex = 0;
 
     /*
      * YCbCr420 Capability Map block contains a bit map of SVDs from the Video block
@@ -757,7 +757,7 @@ edidparser.prototype.parseYCbCr420CapabilityMapDataBlock = function(startAddress
     return extendedTagBlock;
 };
 
-edidparser.prototype.parseSpeakerDataBlock = function(startAddress, blockLength) {
+edidparser.prototype.parseSpeakerDataBlock = function (startAddress, blockLength) {
     var speakerBlock = {};
     speakerBlock.tag = this.dataBlockType.SPEAKER_ALLOCATION;
     speakerBlock.length = blockLength;
@@ -769,14 +769,13 @@ edidparser.prototype.parseSpeakerDataBlock = function(startAddress, blockLength)
     return speakerBlock;
 };
 
-edidparser.prototype.parseExtendedTagDataBlock = function(startAddress, blockLength) {
+edidparser.prototype.parseExtendedTagDataBlock = function (startAddress, blockLength) {
     var extendedTagBlock = {};
     extendedTagBlock.tag = this.dataBlockType.EXTENDED_TAG;
     extendedTagBlock.length = blockLength;
 
-    var EXTENDED_TAG_ADDRESS = 0;
-
-    var extendedBlockTagCode = this.edidData[startAddress + EXTENDED_TAG_ADDRESS];
+    const EXTENDED_TAG_ADDRESS = 0;
+    const extendedBlockTagCode = this.edidData[startAddress + EXTENDED_TAG_ADDRESS];
 
     if (extendedBlockTagCode === this.extendedDataBlockType.VIDEO_CAPABILITY.value) {
         return this.parseVideoCapabilityDataBlock(startAddress, blockLength, extendedTagBlock);
@@ -793,14 +792,14 @@ edidparser.prototype.parseExtendedTagDataBlock = function(startAddress, blockLen
     return extendedTagBlock;
 };
 
-edidparser.prototype.getExtChecksum = function(extIndex) {
+edidparser.prototype.getExtChecksum = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var CHECKSUM_OFFSET = 127;
 
     return this.edidData[BLOCK_OFFSET + CHECKSUM_OFFSET];
 };
 
-edidparser.prototype.getExtDtds = function(extIndex, startAddress) {
+edidparser.prototype.getExtDtds = function (extIndex, startAddress) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var dtdArray = [];
     var dtdCounter = 0;
@@ -810,7 +809,7 @@ edidparser.prototype.getExtDtds = function(extIndex, startAddress) {
     while (((this.edidData[dtdIndex] !== 0) || (this.edidData[dtdIndex + 1] !== 0)) &&
         (dtdIndex < endAddress)) {
         // DetailedTimingDescriptions.detailedTiming.getDetailedTiming(dtdIndex);
-        var dtd = 0;
+        const dtd = 0;
         // Add DTD to the DTD Array
         dtdArray[dtdCounter] = dtd;
         // Increment DTD Counter

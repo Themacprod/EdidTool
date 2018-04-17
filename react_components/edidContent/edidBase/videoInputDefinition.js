@@ -3,7 +3,7 @@ var React = require('react'),
     Title = require('../edidContentTitle');
 
 module.exports = React.createClass({
-    render: function() {
+    render: function () {
         return React.DOM.div(
             {
                 className: 'edid-content-group video-input-definition'

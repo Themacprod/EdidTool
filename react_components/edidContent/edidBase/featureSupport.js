@@ -4,7 +4,7 @@ var React = require('react'),
     Title = require('../edidContentTitle');
 
 module.exports = React.createClass({
-    powerManagement: function() {
+    powerManagement: function () {
         const power = this.props.featureSupport.displayPowerManagement;
 
         return React.DOM.div(
@@ -27,7 +27,7 @@ module.exports = React.createClass({
             )
         );
     },
-    colorType: function() {
+    colorType: function () {
         const colorTypes = this.props.featureSupport.displayColorType;
 
         React.DOM.div(
@@ -36,7 +36,7 @@ module.exports = React.createClass({
                 null,
                 'Color Type'
             ),
-            _.map(colorTypes.list, function(colorType, key) {
+            _.map(colorTypes.list, function (colorType, key) {
                 return React.DOM.div(
                     {
                         className: 'edid-content-subgroup',
@@ -55,7 +55,7 @@ module.exports = React.createClass({
             })
         );
     },
-    render: function() {
+    render: function () {
         return React.DOM.div(
             {
                 className: 'edid-content-group feature-support'

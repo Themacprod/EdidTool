@@ -4,7 +4,7 @@ var React = require('react'),
     MonitorName = require('./monitorName');
 
 module.exports = React.createClass({
-    generateSection: function(dtdType, data) {
+    generateSection: function (dtdType, data) {
         if (data) {
             if (dtdType === 'Detailed Timing') {
                 return React.createElement(DetailedTiming, {
@@ -22,7 +22,7 @@ module.exports = React.createClass({
 
         return null;
     },
-    render: function() {
+    render: function () {
         return React.DOM.div(
             {
                 className: 'width-25 inline-block vertical-top',

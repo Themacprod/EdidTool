@@ -4,7 +4,7 @@
  * @param {int} stdIndex Standard timing index.
  * @returns {struct} Structure filled with standard timing data.
  */
-var getStandardTiming = function(edidData, stdIndex) {
+var getStandardTiming = function (edidData, stdIndex) {
     const STD_DISPLAY_MODES_START = 38;
     const dataIndex = STD_DISPLAY_MODES_START + (stdIndex * 2);
     const stdHorizontalActive = edidData[dataIndex];
@@ -53,10 +53,10 @@ var getStandardTiming = function(edidData, stdIndex) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {array} Array of supported standard timings.
  */
-module.exports.getStandardTimings = function(edidData) {
+module.exports.getStandardTimings = function (edidData) {
     var stdDispModesArray = [];
 
-    for (var i = 0; i < 8; i += 1) {
+    for (let i = 0; i < 8; i += 1) {
         stdDispModesArray.push(getStandardTiming(edidData, i));
     }
 

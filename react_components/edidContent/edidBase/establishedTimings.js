@@ -4,7 +4,7 @@ var React = require('react'),
     _ = require('lodash');
 
 module.exports = React.createClass({
-    render: function() {
+    render: function () {
         return React.DOM.div(
             {
                 className: 'edid-content-group established-timings'
@@ -12,7 +12,7 @@ module.exports = React.createClass({
             React.createElement(Title, {
                 title: 'Established timings'
             }),
-            _.map(this.props.establishedTimingsGroups, _.bind(function(establishedTimingsGroup, key) {
+            _.map(this.props.establishedTimingsGroups, _.bind(function (establishedTimingsGroup, key) {
                 return React.DOM.div(
                     {
                         className: 'edid-content-column width-33',
@@ -34,9 +34,9 @@ module.exports = React.createClass({
                             {
                                 className: 'edid-content-established'
                             },
-                            _.map(establishedTimingsGroup, _.bind(function(data, keygroup) {
+                            _.map(establishedTimingsGroup, _.bind(function (data, keygroup) {
                                 return Func.contentSubGroupCheckboxKey(
-                                    data.timing.hactive + 'x' + data.timing.vactive + ' @ ' + data.timing.refresh + ' Hz [' + data.timing.description + ']',
+                                    `${data.timing.hactive}x${data.timing.vactive} @ ${data.timing.refresh} Hz [${data.timing.description}]`,
                                     data.checked,
                                     keygroup
                                 );

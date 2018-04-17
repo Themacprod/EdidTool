@@ -3,7 +3,7 @@
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {struct} Array of supported standard timings.
  */
-module.exports.getBasicDisplayParameters = function(edidData) {
+module.exports.getBasicDisplayParameters = function (edidData) {
     var bdp = {};
 
     const VIDEO_IN_PARAMS_BITMAP = 20;

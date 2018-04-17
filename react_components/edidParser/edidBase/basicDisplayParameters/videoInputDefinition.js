@@ -3,7 +3,7 @@
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {string} Display color type.
  */
-var getVideoSignalInterface = function(edidData) {
+var getVideoSignalInterface = function (edidData) {
     const VIDEO_INPUT_DEFINITION = 0x14;
     const VIDEO_INPUT_MASK = 0x80;
 
@@ -20,7 +20,7 @@ var getVideoSignalInterface = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {string} Signal level standard
  */
-var getSignalLevelStandard = function(edidData) {
+var getSignalLevelStandard = function (edidData) {
     const VIDEO_INPUT_DEFINITION = 0x14;
     const SIGNAL_LEVEL_SHIFT = 5;
     const SIGNAL_LEVEL_MASK = 0x03;
@@ -43,7 +43,7 @@ var getSignalLevelStandard = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {struct} Synchronization types supports.
  */
-var getSynchronizationTypes = function(edidData) {
+var getSynchronizationTypes = function (edidData) {
     const VIDEO_INPUT_DEFINITION = 0x14;
     const SUPPORT_SEPARATE_SYNC_MASK = 0x80;
     const SUPPORT_COMPOSITE_HOR = 0x40;
@@ -77,7 +77,7 @@ var getSynchronizationTypes = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {bool} Serrations support
  */
-var getSerrations = function(edidData) {
+var getSerrations = function (edidData) {
     const VIDEO_INPUT_DEFINITION = 0x14;
     const SUPPORT_SERRATION = 0x01;
 
@@ -95,7 +95,7 @@ var getSerrations = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {string} Video setup.
  */
-var getVideoSetup = function(edidData) {
+var getVideoSetup = function (edidData) {
     const VIDEO_INPUT_DEFINITION = 0x14;
     const VIDEO_SETUP = 0x10;
 
@@ -112,7 +112,7 @@ var getVideoSetup = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {string} Color bit depth.
  */
-var getColorBitDepth = function(edidData) {
+var getColorBitDepth = function (edidData) {
     const VIDEO_INPUT_DEFINITION = 0x14;
     const COLOR_BIT_SHIFT = 4;
     const COLOR_BIT_MASK = 0x07;
@@ -139,7 +139,7 @@ var getColorBitDepth = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {string} Digital video interface
  */
-var getDigitalVideoInterface = function(edidData) {
+var getDigitalVideoInterface = function (edidData) {
     const VIDEO_INPUT_DEFINITION = 0x14;
     const COLOR_BIT_MASK = 0x0F;
 
@@ -166,7 +166,7 @@ var getDigitalVideoInterface = function(edidData) {
  * @param {array} edidData Byte array filled with EDID content.
  * @returns {struct} Structure with feature support.
  */
-module.exports.getVideoInputDefinition = function(edidData) {
+module.exports.getVideoInputDefinition = function (edidData) {
     const signalInterface = getVideoSignalInterface(edidData);
 
     // Digital case.
