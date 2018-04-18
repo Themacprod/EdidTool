@@ -9,7 +9,7 @@ var getVideoSignalInterface = function (edidData) {
 
     var videoSignalInterface = 'Analog';
 
-    if (edidData[VIDEO_INPUT_DEFINITION] && VIDEO_INPUT_MASK) {
+    if (edidData[VIDEO_INPUT_DEFINITION] & VIDEO_INPUT_MASK) {
         videoSignalInterface = 'DVI';
     }
     return videoSignalInterface;
@@ -53,15 +53,15 @@ var getSynchronizationTypes = function (edidData) {
     var supportCompositeH = false;
     var supportCompositeG = false;
 
-    if (edidData[VIDEO_INPUT_DEFINITION] && SUPPORT_SEPARATE_SYNC_MASK) {
+    if (edidData[VIDEO_INPUT_DEFINITION] & SUPPORT_SEPARATE_SYNC_MASK) {
         separateSync = true;
     }
 
-    if (edidData[VIDEO_INPUT_DEFINITION] && SUPPORT_COMPOSITE_HOR) {
+    if (edidData[VIDEO_INPUT_DEFINITION] & SUPPORT_COMPOSITE_HOR) {
         supportCompositeH = true;
     }
 
-    if (edidData[VIDEO_INPUT_DEFINITION] && SUPPORT_COMPOSITE_GREEN) {
+    if (edidData[VIDEO_INPUT_DEFINITION] & SUPPORT_COMPOSITE_GREEN) {
         supportCompositeG = true;
     }
 
@@ -83,7 +83,7 @@ var getSerrations = function (edidData) {
 
     var serrationSupport = false;
 
-    if (edidData[VIDEO_INPUT_DEFINITION] && SUPPORT_SERRATION) {
+    if (edidData[VIDEO_INPUT_DEFINITION] & SUPPORT_SERRATION) {
         serrationSupport = true;
     }
 
@@ -101,7 +101,7 @@ var getVideoSetup = function (edidData) {
 
     var videoSetup = 'Blank Level = Black Level';
 
-    if (edidData[VIDEO_INPUT_DEFINITION] && VIDEO_SETUP) {
+    if (edidData[VIDEO_INPUT_DEFINITION] & VIDEO_SETUP) {
         videoSetup = 'Blank-to-Black setup or pedestal';
     }
     return videoSetup;
@@ -152,7 +152,7 @@ var getDigitalVideoInterface = function (edidData) {
         'DisplayPort is supported',
     ];
 
-    const index = edidData[VIDEO_INPUT_DEFINITION] && COLOR_BIT_MASK;
+    const index = edidData[VIDEO_INPUT_DEFINITION] & COLOR_BIT_MASK;
 
     if (index <= 5) {
         return digitalVideoInterface[index];

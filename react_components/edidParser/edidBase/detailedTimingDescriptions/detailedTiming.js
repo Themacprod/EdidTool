@@ -14,9 +14,9 @@ var getHorizontalParams = function (edidData, dtdIndex) {
     const HOR_DISPLAY_TOP_MASK = 0x0F;
 
     return {
-        ActivePixels: (((edidData[dtdIndex + 4] / HOR_ACTIVE_OFF) && HOR_ACTIVE_PIX_MASK) << 8) +
+        ActivePixels: (((edidData[dtdIndex + 4] / HOR_ACTIVE_OFF) & HOR_ACTIVE_PIX_MASK) << 8) +
             edidData[dtdIndex + 2],
-        BlankPixels: (((edidData[dtdIndex + 4]) && HOR_BLANK_MASK) << 8) +
+        BlankPixels: (((edidData[dtdIndex + 4]) & HOR_BLANK_MASK) << 8) +
             edidData[dtdIndex + 3],
         SyncOff: (((edidData[dtdIndex + 11] / HOR_SYNC_OFF_OFF) &&
             HOR_SYNC_OFF_MASK) << 8) + edidData[dtdIndex + 8],
@@ -43,15 +43,15 @@ var getVerticalParams = function (edidData, dtdIndex) {
     return {
         ActiveLines: (((edidData[dtdIndex + 7] / VERT_ACTIVE_OFF) &&
             VERT_ACTIVE_MASK) << 8) + edidData[dtdIndex + 5],
-        BlankLines: ((edidData[dtdIndex + 7] && VERT_BLANK_MASK) << 8) +
+        BlankLines: ((edidData[dtdIndex + 7] & VERT_BLANK_MASK) << 8) +
             edidData[dtdIndex + 6],
         SyncOff: (((edidData[dtdIndex + 11] / VERT_SYNC_OFF_TOP_OFF) &&
                 VERT_SYNC_OFF_TOP_MASK) << 4) +
             ((edidData[dtdIndex + 10] / VERT_SYNC_OFF_BOT_OFF) &&
                 VERT_SYNC_OFF_BOT_MASK),
-        SyncPulse: ((edidData[dtdIndex + 11] && VERT_SYNC_PULSE_TOP_MASK) <<
-            4) + (edidData[dtdIndex + 10] && VERT_SYNC_PULSE_BOT_MASK),
-        DisplaySize: ((edidData[dtdIndex + 14] && VERT_DISPLAY_TOP_MASK) << 8) +
+        SyncPulse: ((edidData[dtdIndex + 11] & VERT_SYNC_PULSE_TOP_MASK) <<
+            4) + (edidData[dtdIndex + 10] & VERT_SYNC_PULSE_BOT_MASK),
+        DisplaySize: ((edidData[dtdIndex + 14] & VERT_DISPLAY_TOP_MASK) << 8) +
             edidData[dtdIndex + 13],
         BorderLines: edidData[dtdIndex + 15]
     };
@@ -59,7 +59,7 @@ var getVerticalParams = function (edidData, dtdIndex) {
 
 var getInterlaced = function (edidData, dtdIndex) {
     const INTERLACED_MASK = 0x80;
-    return edidData[dtdIndex + 17] && INTERLACED_MASK;
+    return edidData[dtdIndex + 17] & INTERLACED_MASK;
 };
 
 var getStereoMode = function (edidData, dtdIndex) {
@@ -78,27 +78,27 @@ var getSyncType = function (edidData, dtdIndex) {
 
 var getvSyncPolarity = function (edidData, dtdIndex) {
     const VSYNC_POLARITY_MASK = 0x04;
-    return edidData[dtdIndex + 17] && VSYNC_POLARITY_MASK;
+    return edidData[dtdIndex + 17] & VSYNC_POLARITY_MASK;
 };
 
 var getvSyncSerrated = function (edidData, dtdIndex) {
     const VSYNC_SERRATED_MASK = 0x04;
-    return edidData[dtdIndex + 17] && VSYNC_SERRATED_MASK;
+    return edidData[dtdIndex + 17] & VSYNC_SERRATED_MASK;
 };
 
 var getsyncAllRGBLines = function (edidData, dtdIndex) {
     const SYNC_ALL_RGB_MASK = 0x02;
-    return edidData[dtdIndex + 17] && SYNC_ALL_RGB_MASK;
+    return edidData[dtdIndex + 17] & SYNC_ALL_RGB_MASK;
 };
 
 var gethSyncPolarity = function (edidData, dtdIndex) {
     const HSYNC_POLARY_MASK = 0x02;
-    return edidData[dtdIndex + 17] && HSYNC_POLARY_MASK;
+    return edidData[dtdIndex + 17] & HSYNC_POLARY_MASK;
 };
 
 var gettwoWayStereo = function (edidData, dtdIndex) {
     const TWO_WAY_STEREO_MASK = 0x01;
-    return edidData[dtdIndex + 17] && TWO_WAY_STEREO_MASK;
+    return edidData[dtdIndex + 17] & TWO_WAY_STEREO_MASK;
 };
 
 /**

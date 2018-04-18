@@ -28,9 +28,13 @@ module.exports = React.createClass({
         );
     },
     colorType: function () {
+        if (this.props.featureSupport.type === 'Digital') {
+            return null;
+        }
+
         const colorTypes = this.props.featureSupport.displayColorType;
 
-        React.DOM.div(
+        return React.DOM.div(
             null,
             React.DOM.strong(
                 null,

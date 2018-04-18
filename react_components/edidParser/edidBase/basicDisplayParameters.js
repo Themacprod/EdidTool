@@ -8,10 +8,10 @@ module.exports.getBasicDisplayParameters = function (edidData) {
 
     const VIDEO_IN_PARAMS_BITMAP = 20;
     const DIGITAL_INPUT = 0x80;
-    if (edidData[VIDEO_IN_PARAMS_BITMAP] && DIGITAL_INPUT) {
+    if (edidData[VIDEO_IN_PARAMS_BITMAP] & DIGITAL_INPUT) {
         const VESA_DFP_COMPATIBLE = 0x01;
         bdp.digitalInput = true;
-        if (edidData[VIDEO_IN_PARAMS_BITMAP] && VESA_DFP_COMPATIBLE) {
+        if (edidData[VIDEO_IN_PARAMS_BITMAP] & VESA_DFP_COMPATIBLE) {
             bdp.vesaDfpCompatible = true;
         } else {
             bdp.vesaDfpCompatible = false;
@@ -22,30 +22,30 @@ module.exports.getBasicDisplayParameters = function (edidData) {
         const WHITE_SYNC_LVLS_OFF = 5;
         const WHITE_SYNC_LVLS_MASK = 0x03;
         bdp.whiteSyncLevels = edidData[VIDEO_IN_PARAMS_BITMAP] /
-            WHITE_SYNC_LVLS_OFF && WHITE_SYNC_LVLS_MASK;
+            WHITE_SYNC_LVLS_OFF & WHITE_SYNC_LVLS_MASK;
 
         const BLANK_TO_BLACK_OFF = 4;
         const BLANK_TO_BLACK_MASK = 0x01;
         bdp.blankToBlack = edidData[VIDEO_IN_PARAMS_BITMAP] /
-            BLANK_TO_BLACK_OFF && BLANK_TO_BLACK_MASK;
+            BLANK_TO_BLACK_OFF & BLANK_TO_BLACK_MASK;
 
         const SEPARATE_SYNC_OFF = 3;
         const SEPARATE_SYNC_MASK = 0x01;
         bdp.separateSyncSupported = edidData[VIDEO_IN_PARAMS_BITMAP] /
-            SEPARATE_SYNC_OFF && SEPARATE_SYNC_MASK;
+            SEPARATE_SYNC_OFF & SEPARATE_SYNC_MASK;
 
         const COMPOSITE_SYNC_OFF = 2;
         const COMPOSITE_SYNC_MASK = 0x01;
         bdp.compositeSyncSupported = edidData[VIDEO_IN_PARAMS_BITMAP] /
-            COMPOSITE_SYNC_OFF && COMPOSITE_SYNC_MASK;
+            COMPOSITE_SYNC_OFF & COMPOSITE_SYNC_MASK;
 
         const SYNC_ON_GREEN_OFF = 1;
         const SYNC_ON_GREEN_MASK = 0x01;
         bdp.synOnGreen = edidData[VIDEO_IN_PARAMS_BITMAP] /
-            SYNC_ON_GREEN_OFF && SYNC_ON_GREEN_MASK;
+            SYNC_ON_GREEN_OFF & SYNC_ON_GREEN_MASK;
 
         const VSYNC_SERRATED_MASK = 0x01;
-        bdp.vsyncSerrated = edidData[VIDEO_IN_PARAMS_BITMAP] && VSYNC_SERRATED_MASK;
+        bdp.vsyncSerrated = edidData[VIDEO_IN_PARAMS_BITMAP] & VSYNC_SERRATED_MASK;
     }
 
     const MAX_HOR_IMG_SIZE = 21;
@@ -64,11 +64,11 @@ module.exports.getBasicDisplayParameters = function (edidData) {
         DISPLAY_TYPE_MASK;
 
     const STANDARD_SRGB = 0x04;
-    bdp.standardSRgb = edidData[SUPPORTED_FEATURES_BITMAP] && STANDARD_SRGB;
+    bdp.standardSRgb = edidData[SUPPORTED_FEATURES_BITMAP] & STANDARD_SRGB;
     const PREFERRED_TIMING = 0x02;
-    bdp.preferredTiming = edidData[SUPPORTED_FEATURES_BITMAP] && PREFERRED_TIMING;
+    bdp.preferredTiming = edidData[SUPPORTED_FEATURES_BITMAP] & PREFERRED_TIMING;
     const GTF_SUPPORTED = 0x01;
-    bdp.gtfSupported = edidData[SUPPORTED_FEATURES_BITMAP] && GTF_SUPPORTED;
+    bdp.gtfSupported = edidData[SUPPORTED_FEATURES_BITMAP] & GTF_SUPPORTED;
 
     return bdp;
 };

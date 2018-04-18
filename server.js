@@ -59,7 +59,7 @@ server.get('*', function (req, res) {
 
 // Unhandled exception handler.
 server.use(function (err, req, res) {
-    console.log(err);
+    console.error(err);
     res.sendStatus(500);
 });
 

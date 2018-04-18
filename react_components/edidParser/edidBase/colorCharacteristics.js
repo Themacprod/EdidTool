@@ -9,10 +9,10 @@ var getChromaticity = function (edidData, color) {
     const TWO_BIT_MASK = 0x03;
 
     const xData = (edidData[color.xMsb] << TWO_BIT_OFF) +
-        ((edidData[color.lsb] / color.xBitShift) && TWO_BIT_MASK);
+        ((edidData[color.lsb] / color.xBitShift) & TWO_BIT_MASK);
 
     const yData = (edidData[color.yMsb] << TWO_BIT_OFF) +
-        ((edidData[color.lsb] / color.yBitShift) && TWO_BIT_MASK);
+        ((edidData[color.lsb] / color.yBitShift) & TWO_BIT_MASK);
     return {
         x: xData / 1024,
         y: yData / 1024

@@ -732,7 +732,6 @@ edidparser.prototype.parseYCbCr420CapabilityMapDataBlock = function (startAddres
     let FIELD_MASK = 0x0;
     let svdIndex = 0;
     let YCbCr420Capable = false;
-    let YCbCr420svdIndex = 0;
 
     /*
      * YCbCr420 Capability Map block contains a bit map of SVDs from the Video block
@@ -747,8 +746,7 @@ edidparser.prototype.parseYCbCr420CapabilityMapDataBlock = function (startAddres
         for (FIELD_MASK = 0x01; FIELD_MASK <= 0x80; FIELD_MASK *= 1) {
             YCbCr420Capable = this.edidData[startAddress + FIELD_ADDRESS] & FIELD_MASK;
             if (YCbCr420Capable) {
-                extendedTagBlock.YCbCr420CapableShortVideoDescriptors[YCbCr420svdIndex] = this.videoBlock.shortVideoDescriptors[svdIndex];
-                YCbCr420svdIndex += 1;
+                extendedTagBlock.YCbCr420CapableShortVideoDescriptors.push(this.videoBlock.shortVideoDescriptors[svdIndex]);
             }
             svdIndex += 1;
         }

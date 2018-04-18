@@ -59,7 +59,7 @@ module.exports = React.createClass({
         } else if (fileExtension.toLowerCase() === 'bin') {
             fileReader.readAsBinaryString(file);
         } else {
-            console.log('Unknown extension : ', fileExtension);
+            console.error('Unknown extension : ', fileExtension);
         }
     },
     render: function () {

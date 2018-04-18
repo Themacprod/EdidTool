@@ -13,15 +13,15 @@ var getDisplayPowerManagement = function (edidData) {
     var suspendMode = false;
     var lowPowerSupport = false;
 
-    if (edidData[FEATURE_SUPPORT] && STANDBY_MODE_MASK) {
+    if (edidData[FEATURE_SUPPORT] & STANDBY_MODE_MASK) {
         standbyMode = true;
     }
 
-    if (edidData[FEATURE_SUPPORT] && SUSPEND_MODE_MASK) {
+    if (edidData[FEATURE_SUPPORT] & SUSPEND_MODE_MASK) {
         suspendMode = true;
     }
 
-    if (edidData[FEATURE_SUPPORT] && LOW_POWER_MASK) {
+    if (edidData[FEATURE_SUPPORT] & LOW_POWER_MASK) {
         lowPowerSupport = true;
     }
 
@@ -50,7 +50,7 @@ var getDisplayColorTypeIndex = function (edidData) {
     const DISPLAY_COLOR_SHIFT = 3;
     const DISPLAY_COLOR_MASK = 0x03;
 
-    return (edidData[FEATURE_SUPPORT] >> DISPLAY_COLOR_SHIFT) && DISPLAY_COLOR_MASK;
+    return (edidData[FEATURE_SUPPORT] >> DISPLAY_COLOR_SHIFT) & DISPLAY_COLOR_MASK;
 };
 
 /**
@@ -70,7 +70,7 @@ var getSupportedColorEncodingFormat = function (edidData) {
         'RGB 4:4:4 + YCrCb 4:4:4 + YCrCb 4:2:2',
     ];
 
-    const colorIndex = (edidData[FEATURE_SUPPORT] >> COLOR_ENCODING_SHIFT) && COLOR_ENCODING_MASK;
+    const colorIndex = (edidData[FEATURE_SUPPORT] >> COLOR_ENCODING_SHIFT) & COLOR_ENCODING_MASK;
     return digitalColorSpace[colorIndex];
 };
 
@@ -89,15 +89,15 @@ var getOtherFeature = function (edidData) {
     var preferredTiming = false;
     var frequency = false;
 
-    if (edidData[FEATURE_SUPPORT] && SRGB_MASK) {
+    if (edidData[FEATURE_SUPPORT] & SRGB_MASK) {
         sRgbDefault = true;
     }
 
-    if (edidData[FEATURE_SUPPORT] && PREFERRED_TIMING_MASK) {
+    if (edidData[FEATURE_SUPPORT] & PREFERRED_TIMING_MASK) {
         preferredTiming = true;
     }
 
-    if (edidData[FEATURE_SUPPORT] && FREQUENCY_MASK) {
+    if (edidData[FEATURE_SUPPORT] & FREQUENCY_MASK) {
         frequency = true;
     }
 
@@ -118,9 +118,9 @@ module.exports.getFeatureSupport = function (edidData) {
     const VIDEO_SIGNAL_TYPE_MASK = 0x80;
 
     // Digital case.
-    if (edidData[VIDEO_SIGNAL_TYPE] && VIDEO_SIGNAL_TYPE_MASK) {
+    if (edidData[VIDEO_SIGNAL_TYPE] & VIDEO_SIGNAL_TYPE_MASK) {
         return {
-            type: 'Digial',
+            type: 'Digital',
             displayPowerManagement: getDisplayPowerManagement(edidData),
             supportColorEncodingFormat: getSupportedColorEncodingFormat(edidData),
             otherFeature: getOtherFeature(edidData)
