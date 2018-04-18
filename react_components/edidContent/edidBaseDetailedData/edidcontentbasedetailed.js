@@ -6,8 +6,8 @@ module.exports = React.createClass({
     render: function () {
         return React.DOM.div(
             null,
-            _.map(this.props.edidParsed.getDtds().dtdType, function (detailedType, key) {
-                return React.createElement(DetailedDataBlock, {
+            _.map(this.props.edidParsed.getDtds().dtdType, (detailedType, key) => {
+                React.createElement(DetailedDataBlock, {
                     key: key,
                     title: `Block ${Number(key + 1)}`,
                     string: detailedType.string,

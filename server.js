@@ -33,7 +33,7 @@ server.use(express.static(path.join(__dirname, 'public'), {
     maxAge: cacheMaxAge
 }));
 
-server.use(function (req, res, next) {
+server.use((req, res, next) => {
     var urlObj = url.parse(req.url);
     var regexp = /\/((?:en)|(?:fr))\//;
     var regexpAPI = /\/((?:api))\//;
@@ -51,14 +51,14 @@ server.use(function (req, res, next) {
     }
 });
 
-server.get('*', function (req, res) {
+server.get('*', (req, res) => {
     res.send(indexTemplate({
         lang: req.params.lang
     }));
 });
 
 // Unhandled exception handler.
-server.use(function (err, req, res) {
+server.use((err, req, res) => {
     console.error(err);
     res.sendStatus(500);
 });

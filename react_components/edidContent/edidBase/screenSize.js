@@ -4,6 +4,9 @@ var React = require('react'),
 
 module.exports = React.createClass({
     render: function () {
+        const horizontal = String(this.props.screenSize.screenSize.horizontalSize || 0);
+        const vertical = String(this.props.screenSize.screenSize.verticalSize || 0);
+
         return React.DOM.div(
             {
                 className: 'edid-content-group screen-size'
@@ -16,8 +19,8 @@ module.exports = React.createClass({
                     className: 'edid-content-column width-50'
                 },
                 Func.contentSubGroupRadio(' Dimensions', this.props.screenSize.type === 'ScreenSize'),
-                Func.contentSubGroup('Horizontal size:', String(this.props.screenSize.screenSize.horizontalSize || 0) + ' (cm)'),
-                Func.contentSubGroup('Vertical size:', String(this.props.screenSize.screenSize.verticalSize || 0) + ' (cm)')
+                Func.contentSubGroup('Horizontal size:', `${horizontal} (cm)`),
+                Func.contentSubGroup('Vertical size:', `${vertical} (cm)`)
             ),
             React.DOM.div(
                 {

@@ -1,10 +1,12 @@
 var React = require('react'),
-    Func = require('../edidcontent-func'),
     Title = require('../edidContentTitle'),
     _ = require('lodash');
 
 module.exports = React.createClass({
     render: function () {
+        console.log('jkfd');
+        console.log(this.props.establishedTimingsGroups);
+
         return React.DOM.div(
             {
                 className: 'edid-content-group established-timings'
@@ -12,8 +14,9 @@ module.exports = React.createClass({
             React.createElement(Title, {
                 title: 'Established timings'
             }),
-            _.map(this.props.establishedTimingsGroups, _.bind(function (establishedTimingsGroup, key) {
-                return React.DOM.div(
+            _.map(this.props.establishedTimingsGroups, (establishedTimingsGroup, key) => {
+
+                React.DOM.div(
                     {
                         className: 'edid-content-column width-33',
                         key: key
@@ -34,17 +37,27 @@ module.exports = React.createClass({
                             {
                                 className: 'edid-content-established'
                             },
-                            _.map(establishedTimingsGroup, _.bind(function (data, keygroup) {
-                                return Func.contentSubGroupCheckboxKey(
-                                    `${data.timing.hactive}x${data.timing.vactive} @ ${data.timing.refresh} Hz [${data.timing.description}]`,
-                                    data.checked,
-                                    keygroup
+                            _.map(establishedTimingsGroup, (data, keygroup) => {
+                                React.DOM.div(
+                                    {
+                                        className: 'edid-content-subgroup',
+                                        key: keygroup
+                                    }, React.DOM.div({
+                                        className: 'subgroup-checkbox'
+                                    }, React.DOM.input({
+                                        type: 'checkbox',
+                                        readOnly: 'readOnly',
+                                        checked: data.checked
+                                    })),
+                                    React.DOM.div({
+                                        className: 'subgroup-detail-radio'
+                                    }, `${data.timing.hactive}x${data.timing.vactive} @ ${data.timing.refresh} Hz [${data.timing.description}]`)
                                 );
-                            }, this))
+                            })
                         )
                     )
                 );
-            }, this))
+            })
         );
     }
 });

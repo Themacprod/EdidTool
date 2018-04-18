@@ -33,10 +33,8 @@ module.exports.getManufacturerId = function (edidData) {
  * @param {string} manufacturerId EISA 3-character ID.
  * @returns {string} EISA 3-character ID full string conversion. See manufacturername.json file
  */
-module.exports.getManufacturerName = function (manufacturerId) {
-    var manufacturerNameFound = _.find(manufacturerNames, function (manufacturerName) {
-        return manufacturerName[0] === manufacturerId;
-    });
+module.exports.getManufacturerName = (manufacturerId) => {
+    var manufacturerNameFound = _.find(manufacturerNames, manufacturerName => manufacturerName[0] === manufacturerId);
 
     if (manufacturerNameFound) {
         return manufacturerNameFound[1];

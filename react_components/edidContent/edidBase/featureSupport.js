@@ -40,8 +40,8 @@ module.exports = React.createClass({
                 null,
                 'Color Type'
             ),
-            _.map(colorTypes.list, function (colorType, key) {
-                return React.DOM.div(
+            _.map(colorTypes.list, (colorType, key) => {
+                React.DOM.div(
                     {
                         className: 'edid-content-subgroup',
                         key: key

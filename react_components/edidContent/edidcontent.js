@@ -27,7 +27,7 @@ module.exports = React.createClass({
 
         for (let i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
             const extcount = i + 1;
-            ext.push('CEA #' + extcount);
+            ext.push(`CEA #${extcount}`);
         }
 
         return React.DOM.ul(
@@ -44,7 +44,7 @@ module.exports = React.createClass({
                         onClick: this.handleClick.bind(this, key)
                     },
                     React.DOM.a({
-                        className: 'nav-link' + baseState
+                        className: `nav-link ${baseState}`
                     }, data)
                 );
             }, this))

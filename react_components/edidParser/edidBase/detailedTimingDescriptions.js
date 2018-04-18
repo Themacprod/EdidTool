@@ -4,12 +4,11 @@ var _ = require('lodash'),
 
 
 var getValidDetailedType = function (detailedTypes, edidData, dtdIndex) {
-    return _.find(detailedTypes, function (detailedType) {
-        return ((edidData[dtdIndex] === 0x00) &&
-            (edidData[dtdIndex + 1] === 0x00) &&
-            (edidData[dtdIndex + 2] === 0x00) &&
-            (edidData[dtdIndex + 3] === detailedType.value));
-    });
+    _.find(detailedTypes, detailedType => (
+        (edidData[dtdIndex] === 0x00) &&
+        (edidData[dtdIndex + 1] === 0x00) &&
+        (edidData[dtdIndex + 2] === 0x00) &&
+        (edidData[dtdIndex + 3] === detailedType.value)));
 };
 
 module.exports.getData = function (edidData) {

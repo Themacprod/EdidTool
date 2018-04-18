@@ -25,11 +25,10 @@
         "linebreak-style": ["error", "windows"],
         "max-len": "off",
         "no-console": "off",
-        "no-bitwise": [2, { "allow": [ "<<", ">>" ] }],
+        "no-bitwise": "off",
         "no-param-reassign": "off",
         "no-var": "off",
         "object-shorthand": "off",
-        "one-var": "off",
-        "prefer-arrow-callback": "off"
+        "one-var": "off"
     }
 }

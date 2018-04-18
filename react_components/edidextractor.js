@@ -9,21 +9,16 @@ module.exports.extractEdid = function (rawEdidData) {
     var rawLines = rawEdid.split(/[\r\n]+/g);
 
     // Remove empty line.
-    var rawLinesFilter = _.filter(rawLines, function (line) {
-        return line.length > 3;
-    });
+    var rawLinesFilter = _.filter(rawLines, line => line.length > 3);
 
     // Parse each line
-    var edidContent = _.map(rawLinesFilter, function (line) {
+    var edidContent = _.map(rawLinesFilter, (line) => {
         // Remove line prefix.
         var lineSlice = line.slice(line.indexOf('|') + 3, line.length);
         return lineSlice.trimRight().split('  ');
     });
 
     var edidContentFlat = _.flattenDeep(edidContent);
-    edidContentFlat = _.map(edidContentFlat, function (byte) {
-        return parseInt(byte, 16);
-    });
 
-    return edidContentFlat;
+    return _.map(edidContentFlat, byte => parseInt(byte, 16));
 };
