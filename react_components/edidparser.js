@@ -214,8 +214,6 @@ edidparser.prototype.getChromaticityCoordinates = function () {
 };
 
 edidparser.prototype.getEstablishedModes = function () {
-    console.log('serseerwrse');
-    console.log(establishedTimings.getEstablishedModes(this.edidData));
     return establishedTimings.getEstablishedModes(this.edidData);
 };
 
