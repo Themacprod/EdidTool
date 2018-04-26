@@ -27,7 +27,24 @@ module.exports = React.createClass({
             )
         );
     },
-    colorType: function () {
+    genColorType: function (key, index, colorType) {
+        return React.DOM.div(
+            {
+                className: 'edid-content-subgroup',
+                key: key
+            }, React.DOM.div({
+                className: 'subgroup-radio'
+            }, React.DOM.input({
+                type: 'radio',
+                readOnly: 'readOnly',
+                checked: index === key
+            })),
+            React.DOM.div({
+                className: 'subgroup-data'
+            }, colorType)
+        );
+    },
+    genColorTypes: function () {
         if (this.props.featureSupport.type === 'Digital') {
             return null;
         }
@@ -40,23 +57,7 @@ module.exports = React.createClass({
                 null,
                 'Color Type'
             ),
-            _.map(colorTypes.list, (colorType, key) => {
-                React.DOM.div(
-                    {
-                        className: 'edid-content-subgroup',
-                        key: key
-                    }, React.DOM.div({
-                        className: 'subgroup-radio'
-                    }, React.DOM.input({
-                        type: 'radio',
-                        readOnly: 'readOnly',
-                        checked: (colorTypes.index === key)
-                    })),
-                    React.DOM.div({
-                        className: 'subgroup-data'
-                    }, colorType)
-                );
-            })
+            _.map(colorTypes.list, (colorType, key) => this.genColorType(key, colorTypes.index, colorType))
         );
     },
     render: function () {
@@ -68,7 +69,7 @@ module.exports = React.createClass({
                 title: 'Feature Support'
             }),
             this.powerManagement(),
-            this.props.featureSupport.type === 'Analog' ? this.colorType() : this.colorType()
+            this.genColorTypes()
         );
     }
 });

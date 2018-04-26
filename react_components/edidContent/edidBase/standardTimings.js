@@ -15,6 +15,35 @@ module.exports = React.createClass({
             }, data)
         );
     },
+    generateSections: function (standardTiming, key) {
+        return React.DOM.div(
+            {
+                key: key,
+                className: 'edid-content-standard width-25 inline-block'
+            },
+            React.DOM.div(
+                {
+                    className: 'border margin'
+                },
+                Func.contentSubGroupCheckbox(
+                    ` Timing ${Number(key + 1)}`,
+                    standardTiming.valid
+                ),
+                this.generateSection(
+                    'H. Active pixels',
+                    standardTiming.HActive
+                ),
+                this.generateSection(
+                    'Refresh rate',
+                    standardTiming.RefreshRate
+                ),
+                this.generateSection(
+                    'Ratio',
+                    standardTiming.AspectRatio
+                )
+            )
+        );
+    },
     render: function () {
         return React.DOM.div(
             {
@@ -23,35 +52,7 @@ module.exports = React.createClass({
             React.createElement(Title, {
                 title: 'Standard timings'
             }),
-            _.map(this.props.standardTimings, _.bind(function (standardTiming, key) {
-                return React.DOM.div(
-                    {
-                        key: key,
-                        className: 'edid-content-standard width-25 inline-block'
-                    },
-                    React.DOM.div(
-                        {
-                            className: 'border margin'
-                        },
-                        Func.contentSubGroupCheckbox(
-                            ` Timing ${Number(key + 1)}`,
-                            standardTiming.valid
-                        ),
-                        this.generateSection(
-                            'H. Active pixels',
-                            standardTiming.HActive
-                        ),
-                        this.generateSection(
-                            'Refresh rate',
-                            standardTiming.RefreshRate
-                        ),
-                        this.generateSection(
-                            'Ratio',
-                            standardTiming.AspectRatio
-                        )
-                    )
-                );
-            }, this))
+            _.map(this.props.standardTimings, _.bind((standardTiming, key) => this.generateSections(standardTiming, key)), this)
         );
     }
 });
