@@ -48,8 +48,6 @@ module.exports = React.createClass({
         );
     },
     render: function () {
-        console.log(this.props.establishedTimingsGroups);
-
         return React.DOM.div(
             {
                 className: 'edid-content-group established-timings'
