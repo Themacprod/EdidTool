@@ -258,12 +258,23 @@ edidparser.prototype.getExtTag = function (extIndex) {
     return this.edidData[EXT_TAG];
 };
 
-edidparser.prototype.getExtTagString = function (extIndex) {
+edidparser.prototype.getExtTagType = function (extIndex) {
     const extTag = this.getExtTag(extIndex);
     const extensionTagFound = _.find(extensionTags, extensionTag => extensionTag.number === extTag);
 
     if (extensionTagFound) {
         return extensionTagFound.type;
+    }
+
+    return '-';
+};
+
+edidparser.prototype.getExtTagDesc = function (extIndex) {
+    const extTag = this.getExtTag(extIndex);
+    const extensionTagFound = _.find(extensionTags, extensionTag => extensionTag.number === extTag);
+
+    if (extensionTagFound) {
+        return extensionTagFound.description;
     }
 
     return '-';

@@ -27,8 +27,8 @@ module.exports = React.createClass({
 
         for (let i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
             const extcount = i + 1;
-            const extTagString = this.edidParser.getExtTagString(i);
-            ext.push(`${extTagString} #${extcount}`);
+            const extTagType = this.edidParser.getExtTagType(i);
+            ext.push(`${extTagType} #${extcount}`);
         }
 
         return React.DOM.ul(
@@ -63,7 +63,8 @@ module.exports = React.createClass({
         }
 
         return React.createElement(EdidCea, {
-            edidParsed: this.edidParser
+            edidParsed: this.edidParser,
+            extIndex: 0
         });
     },
     render: function () {
