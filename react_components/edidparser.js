@@ -7,7 +7,9 @@ var header = require('./edidParser/edidBase/header'),
     standardTimings = require('./edidParser/edidBase/standardTimings'),
     screenSize = require('./edidParser/edidBase/basicDisplayParameters/screenSizeAspectRatio'),
     featureSupport = require('./edidParser/edidBase/basicDisplayParameters/featureSupport'),
-    detailedTimingDescriptions = require('./edidParser/edidBase/detailedTimingDescriptions');
+    detailedTimingDescriptions = require('./edidParser/edidBase/detailedTimingDescriptions'),
+    extensionTags = require('./edidParser/extensionTag'),
+    _ = require('lodash');
 
 var edidparser = function () {
     this.EDID_BLOCK_LENGTH = 128;
@@ -254,6 +256,17 @@ edidparser.prototype.getExtTag = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var EXT_TAG = BLOCK_OFFSET + 0;
     return this.edidData[EXT_TAG];
+};
+
+edidparser.prototype.getExtTagString = function (extIndex) {
+    const extTag = this.getExtTag(extIndex);
+    const extensionTagFound = _.find(extensionTags, extensionTag => extensionTag.number === extTag);
+
+    if (extensionTagFound) {
+        return extensionTagFound.type;
+    }
+
+    return '-';
 };
 
 edidparser.prototype.getRevisionNumber = function (extIndex) {

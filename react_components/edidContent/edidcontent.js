@@ -27,7 +27,8 @@ module.exports = React.createClass({
 
         for (let i = 0; i < this.edidParser.getNumberExtensions(); i += 1) {
             const extcount = i + 1;
-            ext.push(`CEA #${extcount}`);
+            const extTagString = this.edidParser.getExtTagString(i);
+            ext.push(`${extTagString} #${extcount}`);
         }
 
         return React.DOM.ul(

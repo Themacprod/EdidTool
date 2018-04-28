@@ -1,0 +1,29 @@
+[{
+    "number": 2,
+    "type": "CEA",
+    "description": "CEA 861 Series Extension"
+} , {
+    "number": 16,
+    "type": "VTB",
+    "description": "Video Timing Block Extension"
+} , {
+    "number": 64,
+    "type": "DI",
+    "description": "Display Information Extension"
+} , {
+    "number": 80,
+    "type": "LS",
+    "description": "Localized String Extension"
+} , {
+    "number": 96,
+    "type": "DPVL",
+    "description": "Digital Packet Video Link Extension"
+} , {
+    "number": 240,
+    "type": "MAP",
+    "description": "EXTENSION Block Map"
+} , {
+    "number": 255,
+    "type": "Manufacturer",
+    "description": "EXTENSIONS defined by the display manufacturer"
+}]
