@@ -327,6 +327,18 @@ edidparser.prototype.getYcBcR422 = function (extIndex) {
     return this.edidData[YCBCR_422] & YCBCR_422_MASK;
 };
 
+edidparser.prototype.getExtMonitorSupport = function (extIndex) {
+    const BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
+    const MOMITOR_SUPPORT_OFFSET = BLOCK_OFFSET + 3;
+
+    return {
+        underscan: this.edidData[MOMITOR_SUPPORT_OFFSET] & 0x80,
+        basicAudio: this.edidData[MOMITOR_SUPPORT_OFFSET] & 0x40,
+        yCbCr444: this.edidData[MOMITOR_SUPPORT_OFFSET] & 0x20,
+        yCbCr422: this.edidData[MOMITOR_SUPPORT_OFFSET] & 0x10
+    };
+};
+
 edidparser.prototype.parseDataBlockCollection = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var START_DATA_BLOCK = 4;

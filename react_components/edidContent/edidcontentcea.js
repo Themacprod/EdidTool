@@ -1,13 +1,19 @@
-var React = require('react');
+var React = require('react'),
+    revision = require('./extCea/revision'),
+    monitorSupport = require('./extCea/monitorSupport');
 
 module.exports = React.createClass({
     render: function () {
-        const revision = this.props.edidParsed.getRevisionNumber(this.props.extIndex);
-        const description = this.props.edidParsed.getExtTagDesc(this.props.extIndex);
-
         return React.DOM.div(
             null,
-            `${description} revision ${revision}`
+            React.createElement(revision, {
+                edidParsed: this.props.edidParsed,
+                extIndex: this.props.extIndex
+            }),
+            React.createElement(monitorSupport, {
+                edidParsed: this.props.edidParsed,
+                extIndex: this.props.extIndex
+            })
         );
     }
 });
