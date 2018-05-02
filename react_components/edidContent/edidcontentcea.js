@@ -1,6 +1,7 @@
 var React = require('react'),
     revision = require('./extCea/revision'),
-    monitorSupport = require('./extCea/monitorSupport');
+    monitorSupport = require('./extCea/monitorSupport'),
+    detailedTimingDesc = require('./extCea/detailedTimingDesc');
 
 module.exports = React.createClass({
     render: function () {
@@ -11,6 +12,10 @@ module.exports = React.createClass({
                 extIndex: this.props.extIndex
             }),
             React.createElement(monitorSupport, {
+                edidParsed: this.props.edidParsed,
+                extIndex: this.props.extIndex
+            }),
+            React.createElement(detailedTimingDesc, {
                 edidParsed: this.props.edidParsed,
                 extIndex: this.props.extIndex
             })
