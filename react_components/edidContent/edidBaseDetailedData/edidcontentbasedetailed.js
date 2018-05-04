@@ -12,9 +12,11 @@ module.exports = React.createClass({
         });
     },
     render: function () {
+        const dtds = this.props.edidParsed.getDtds();
+
         return React.DOM.div(
             null,
-            _.map(this.props.edidParsed.getDtds().dtdType, (detailedType, key) => this.genDataBlock(detailedType, key))
+            _.map(dtds.dtdType, (detailedType, key) => this.genDataBlock(detailedType, key))
         );
     }
 });

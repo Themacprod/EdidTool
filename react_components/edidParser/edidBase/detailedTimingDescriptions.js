@@ -116,3 +116,11 @@ module.exports.getData = function (edidData) {
         preferredTiming: dtdArray
     };
 };
+
+module.exports.getData2 = function (edidData, dtdIndex) {
+    if ((edidData[dtdIndex] !== 0) || (edidData[dtdIndex + 1] !== 0)) {
+        return detailedTiming.getDetailedTiming(edidData, dtdIndex);
+    }
+
+    return null;
+};

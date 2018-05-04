@@ -833,25 +833,19 @@ edidparser.prototype.getExtChecksum = function (extIndex) {
     return this.edidData[BLOCK_OFFSET + CHECKSUM_OFFSET];
 };
 
-edidparser.prototype.getExtDtds = function (extIndex, startAddress) {
-    var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
-    var dtdArray = [];
-    var dtdCounter = 0;
-    var dtdIndex = startAddress + BLOCK_OFFSET;
-    var endAddress = (this.EDID_BLOCK_LENGTH * (extIndex + 2)) - 2;
+edidparser.prototype.getExtDtds = function (extIndex) {
+    const BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
+    const dtdStart = this.getDtdStart(extIndex);
+    const dtdCount = this.getNumberExtDtds(extIndex);
+    var dtd = [];
 
-    while (((this.edidData[dtdIndex] !== 0) || (this.edidData[dtdIndex + 1] !== 0)) &&
-        (dtdIndex < endAddress)) {
-        // DetailedTimingDescriptions.detailedTiming.getDetailedTiming(dtdIndex);
-        const dtd = 0;
-        // Add DTD to the DTD Array
-        dtdArray[dtdCounter] = dtd;
-        // Increment DTD Counter
-        dtdCounter += 1;
-        // Add a DTD length, to go to the next descriptor
-        dtdIndex += this.DTD_LENGTH;
+    for (let dtdIndex = 0; dtdIndex < dtdCount; dtdIndex += 1) {
+        const dtdOffset = (dtdIndex * this.DTD_LENGTH) + BLOCK_OFFSET + dtdStart;
+
+        dtd.push(detailedTimingDescriptions.getData2(this.edidData, dtdOffset));
     }
-    return dtdArray;
+
+    return dtd;
 };
 
 module.exports = edidparser;

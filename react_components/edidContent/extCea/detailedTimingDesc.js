@@ -3,7 +3,7 @@ var React = require('react'),
 
 module.exports = React.createClass({
     render: function () {
-        const numberDtds = this.props.edidParsed.getNumberExtDtds(this.props.extIndex);
+        const dtdCount = this.props.edidParsed.getNumberExtDtds(this.props.extIndex);
 
         return React.DOM.div(
             {
@@ -14,7 +14,7 @@ module.exports = React.createClass({
             }),
             React.DOM.div(
                 null,
-                `DTD count :${numberDtds}`
+                `DTD count :${dtdCount}`
             )
         );
     }
