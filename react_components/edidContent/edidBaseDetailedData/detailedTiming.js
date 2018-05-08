@@ -19,7 +19,9 @@ module.exports = React.createClass({
         const vParams = this.props.data.VerticalParams;
 
         return React.DOM.div(
-            null,
+            {
+                key: this.props.key
+            },
             this.generateTiming('Pix clock:', this.props.data.pixelClock),
             React.DOM.div(
                 {
