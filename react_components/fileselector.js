@@ -39,28 +39,42 @@ module.exports = React.createClass({
     handleChange: function () {
         this.extractEdid(
             document.getElementById('files').files[0],
-            document.getElementById('files').value
-        );
+            document.getElementById('files').value);
     },
     extractEdid: function (file, filename) {
+        const fileExtension = String(this.getFileExtension(filename));
+
+        if (fileExtension.toLowerCase() === 'dat') {
+            this.extractEdidDat(file);
+        } else if (fileExtension.toLowerCase() === 'bin') {
+            this.extractEdidBin(file);
+        } else {
+            console.error('Unknown extension : ', fileExtension);
+        }
+    },
+    extractEdidDat: function (file) {
         fileReader.onloadend = function (evt) {
             // If we use onloadend, we need to check the readyState.
             if (evt.target.readyState === 2) {
                 this.setState({
-                    edidcontent: edidExtractor.extractEdid(evt.target.result)
+                    edidcontent: edidExtractor.extractEdidDat(evt.target.result)
                 });
             }
         }.bind(this);
 
-        const fileExtension = String(this.getFileExtension(filename));
+        fileReader.readAsText(file);
+    },
+    extractEdidBin: function (file) {
+        fileReader.onloadend = function (evt) {
+            // If we use onloadend, we need to check the readyState.
+            if (evt.target.readyState === 2) {
+                this.setState({
+                    edidcontent: edidExtractor.extractEdidBin(evt.target.result)
+                });
+            }
+        }.bind(this);
 
-        if (fileExtension.toLowerCase() === 'dat') {
-            fileReader.readAsText(file);
-        } else if (fileExtension.toLowerCase() === 'bin') {
-            fileReader.readAsBinaryString(file);
-        } else {
-            console.error('Unknown extension : ', fileExtension);
-        }
+        fileReader.readAsBinaryString(file);
     },
     render: function () {
         return React.DOM.div(

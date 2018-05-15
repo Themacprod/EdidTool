@@ -1,24 +1,21 @@
 var _ = require('lodash');
 
-module.exports.extractEdid = function (rawEdidData) {
-    var startIdx = rawEdidData.indexOf('| ');
-    var endIdx = rawEdidData.toLowerCase().indexOf('real buffer size: ');
+module.exports.extractEdidBin = function (rawEdidData) {
+    let hex = [];
+    for (let i = 0; i < rawEdidData.length; i++) {
+        let byteStr = rawEdidData.charCodeAt(i).toString(16).toUpperCase();
+        hex.push(parseInt(byteStr, 16));
+    }
 
-    // Remove header information.
-    var rawEdid = rawEdidData.slice(startIdx, endIdx);
-    var rawLines = rawEdid.split(/[\r\n]+/g);
+    return hex;
+};
 
-    // Remove empty line.
-    var rawLinesFilter = _.filter(rawLines, line => line.length > 3);
+module.exports.extractEdidDat = function (rawEdidData) {
+    let hexStr = rawEdidData.toUpperCase();
+    hexStr = hexStr.match(/(0x)?[0-9A-F][0-9A-F][  ]+(0x)?[0-9A-F][0-9A-F][  ]+((0x)?[0-9A-F][0-9A-F][  ]*)+/g);
+    hexStr = _.map(hexStr, (line) => line.split(/\s+/g));
+    hexStr = _.flattenDeep(hexStr);
+    hexStr = _.filter(hexStr, (line) => line.length);
 
-    // Parse each line
-    var edidContent = _.map(rawLinesFilter, (line) => {
-        // Remove line prefix.
-        var lineSlice = line.slice(line.indexOf('|') + 3, line.length);
-        return lineSlice.trimRight().split('  ');
-    });
-
-    var edidContentFlat = _.flattenDeep(edidContent);
-
-    return _.map(edidContentFlat, byte => parseInt(byte, 16));
+    return _.map(hexStr, byte => parseInt(byte, 16));
 };
