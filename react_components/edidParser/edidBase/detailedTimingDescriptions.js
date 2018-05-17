@@ -2,13 +2,15 @@ var _ = require('lodash'),
     detailedTiming = require('./detailedTimingDescriptions/detailedTiming'),
     monitorName = require('./detailedTimingDescriptions/monitorName');
 
-
-var getValidDetailedType = function (detailedTypes, edidData, dtdIndex) {
-    _.find(detailedTypes, detailedType => (
-        (edidData[dtdIndex] === 0x00) &&
+var isValidType = function (edidData, dtdIndex, value) {
+    return ((edidData[dtdIndex] === 0x00) &&
         (edidData[dtdIndex + 1] === 0x00) &&
         (edidData[dtdIndex + 2] === 0x00) &&
-        (edidData[dtdIndex + 3] === detailedType.value)));
+        (edidData[dtdIndex + 3] === value));
+};
+
+var getValidDetailedType = function (detailedTypes, edidData, dtdIndex) {
+    return _.find(detailedTypes, detailedType => isValidType(edidData, dtdIndex, detailedType.value));
 };
 
 module.exports.getData = function (edidData) {
