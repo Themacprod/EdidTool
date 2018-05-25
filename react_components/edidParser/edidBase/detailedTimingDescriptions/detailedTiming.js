@@ -3,7 +3,6 @@ var getPixelClockInMHz = function (edidData, dtdIndex) {
 };
 
 var getHorizontalParams = function (edidData, dtdIndex) {
-    const HOR_ACTIVE_OFF = 4;
     const HOR_ACTIVE_PIX_MASK = 0x0F;
     const HOR_BLANK_MASK = 0x0F;
     const HOR_SYNC_OFF_OFF = 6;
@@ -14,9 +13,9 @@ var getHorizontalParams = function (edidData, dtdIndex) {
     const HOR_DISPLAY_TOP_MASK = 0x0F;
 
     return {
-        ActivePixels: (((edidData[dtdIndex + 4] / HOR_ACTIVE_OFF) & HOR_ACTIVE_PIX_MASK) << 8) +
+        ActivePixels: (((edidData[dtdIndex + 4] >> 4) & HOR_ACTIVE_PIX_MASK) << 8) +
             edidData[dtdIndex + 2],
-        BlankPixels: (((edidData[dtdIndex + 4]) & HOR_BLANK_MASK) << 8) +
+        BlankPixels: ((edidData[dtdIndex + 4] & HOR_BLANK_MASK) << 8) +
             edidData[dtdIndex + 3],
         SyncOff: (((edidData[dtdIndex + 11] / HOR_SYNC_OFF_OFF) &&
             HOR_SYNC_OFF_MASK) << 8) + edidData[dtdIndex + 8],
