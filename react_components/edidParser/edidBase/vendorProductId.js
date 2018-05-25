@@ -96,5 +96,5 @@ module.exports.getManufactureWeek = function (edidData) {
  */
 module.exports.getManufactureYear = function (edidData) {
     const MANUFACTURE_WEEK = 0x11;
-    return edidData[MANUFACTURE_WEEK];
+    return 1990 + edidData[MANUFACTURE_WEEK];
 };
