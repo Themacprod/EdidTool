@@ -1,6 +1,7 @@
 var React = require('react'),
     Title = require('../edidContentTitle'),
     DetailedTiming = require('./detailedTiming'),
+    MonitorRangeLimits = require('./monitorRangeLimits'),
     MonitorName = require('./monitorName');
 
 module.exports = React.createClass({
@@ -8,6 +9,11 @@ module.exports = React.createClass({
         if (data) {
             if (dtdType === 'Detailed Timing') {
                 return React.createElement(DetailedTiming, {
+                    data: data
+                });
+            }
+            if (dtdType === 'Monitor Range Limits') {
+                return React.createElement(MonitorRangeLimits, {
                     data: data
                 });
             }

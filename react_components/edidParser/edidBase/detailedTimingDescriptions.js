@@ -1,5 +1,6 @@
 var _ = require('lodash'),
     detailedTiming = require('./detailedTimingDescriptions/detailedTiming'),
+    monitorRangeLimits = require('./detailedTimingDescriptions/monitorRangeLimits'),
     monitorName = require('./detailedTimingDescriptions/monitorName');
 
 var isValidType = function (edidData, dtdIndex, value) {
@@ -78,6 +79,9 @@ module.exports.getData = function (edidData) {
         if (found) {
             if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_NAME.value) {
                 data = monitorName.getDetailedMonitorName(edidData, dtdIndex);
+            }
+            if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_RANGE_LIMITS.value) {
+                data = monitorRangeLimits.getMonitorRangeLimits();
             }
             if (edidData[dtdIndex + 3] === detailedTypes.DETAILED_TIMING.value) {
                 data = detailedTiming.getDetailedTiming(edidData, dtdIndex);
