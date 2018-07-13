@@ -81,7 +81,7 @@ module.exports.getData = function (edidData) {
                 data = monitorName.getDetailedMonitorName(edidData, dtdIndex);
             }
             if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_RANGE_LIMITS.value) {
-                data = monitorRangeLimits.getMonitorRangeLimits();
+                data = monitorRangeLimits.getMonitorRangeLimits(edidData, dtdIndex);
             }
             if (edidData[dtdIndex + 3] === detailedTypes.DETAILED_TIMING.value) {
                 data = detailedTiming.getDetailedTiming(edidData, dtdIndex);
