@@ -2,6 +2,7 @@ var React = require('react'),
     Title = require('../edidContentTitle'),
     DetailedTiming = require('./detailedTiming'),
     MonitorRangeLimits = require('./monitorRangeLimits'),
+    DisplayProductSerial = require('./displayProductSerial'),
     MonitorName = require('./monitorName');
 
 module.exports = React.createClass({
@@ -19,6 +20,11 @@ module.exports = React.createClass({
             }
             if (dtdType === 'Monitor Name') {
                 return React.createElement(MonitorName, {
+                    data: data
+                });
+            }
+            if (dtdType === 'Monitor Serial Number') {
+                return React.createElement(DisplayProductSerial, {
                     data: data
                 });
             }

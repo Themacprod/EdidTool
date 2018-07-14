@@ -1,7 +1,8 @@
 var _ = require('lodash'),
     detailedTiming = require('./detailedTimingDescriptions/detailedTiming'),
     monitorRangeLimits = require('./detailedTimingDescriptions/monitorRangeLimits'),
-    monitorName = require('./detailedTimingDescriptions/monitorName');
+    monitorName = require('./detailedTimingDescriptions/monitorName'),
+    displayProductSerial = require('./detailedTimingDescriptions/displayProductSerial');
 
 var isValidType = function (edidData, dtdIndex, value) {
     return ((edidData[dtdIndex] === 0x00) &&
@@ -86,6 +87,10 @@ module.exports.getData = function (edidData) {
             if (edidData[dtdIndex + 3] === detailedTypes.DETAILED_TIMING.value) {
                 data = detailedTiming.getDetailedTiming(edidData, dtdIndex);
             }
+            if (edidData[dtdIndex + 3] === detailedTypes.MONITOR_SERIAL_NUMBER.value) {
+                data = displayProductSerial.getDisplayProductSerial(edidData, dtdIndex);
+            }
+
             dtdType.push({
                 string: found.string,
                 data: data

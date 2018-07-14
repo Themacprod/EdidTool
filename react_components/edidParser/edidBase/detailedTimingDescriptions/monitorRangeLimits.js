@@ -44,7 +44,7 @@ module.exports.getMonitorRangeLimits = function (edidData, dtdIndex) {
         videoTimingSupport = 'CVT';
     }
 
-    // TODO video timing data.
+    // TODO GTF secondary curve and CVT support.
 
     return ({
         minVRate: minVRate + (edidData[dtdIndex + 5]),
