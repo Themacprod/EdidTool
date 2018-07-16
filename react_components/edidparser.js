@@ -292,11 +292,32 @@ edidparser.prototype.getDtdStart = function (extIndex) {
     return this.edidData[DTD_START];
 };
 
+edidparser.prototype.getExtDtdsValid = function (extIndex, dtdIndex) {
+    const BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
+    const DETAILED_DESC_OFF = this.edidData[BLOCK_OFFSET + 2];
+    const MaxIdx = Math.floor((128 - DETAILED_DESC_OFF - 1) / 18);
+
+    if (dtdIndex >= MaxIdx) {
+        return false;
+    }
+
+    const TMP_OFFSET = DETAILED_DESC_OFF + (dtdIndex * 18);
+    return ((this.edidData[TMP_OFFSET] !== 0) || (this.edidData[TMP_OFFSET + 1] !== 0));
+};
+
 edidparser.prototype.getNumberExtDtds = function (extIndex) {
-    var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
-    var NUM_DTDS = BLOCK_OFFSET + 3;
-    var NUM_DTDS_MASK = 0x0F;
-    return (this.edidData[NUM_DTDS] & NUM_DTDS_MASK);
+    let dtdIndex = 0;
+    let dtdValid = true;
+
+    while (dtdValid) {
+        if (this.getExtDtdsValid(extIndex, dtdIndex)) {
+            dtdIndex += 1;
+        } else {
+            dtdValid = false;
+        }
+    }
+
+    return dtdIndex - 1;
 };
 
 edidparser.prototype.getUnderscan = function (extIndex) {
@@ -337,6 +358,10 @@ edidparser.prototype.getExtMonitorSupport = function (extIndex) {
         yCbCr444: this.edidData[MOMITOR_SUPPORT_OFFSET] & 0x20,
         yCbCr422: this.edidData[MOMITOR_SUPPORT_OFFSET] & 0x10
     };
+};
+
+edidparser.prototype.getExtData = function () {
+    return this.exts;
 };
 
 edidparser.prototype.parseDataBlockCollection = function (extIndex) {
@@ -837,7 +862,11 @@ edidparser.prototype.getExtDtds = function (extIndex) {
     const BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     const dtdStart = this.getDtdStart(extIndex);
     const dtdCount = this.getNumberExtDtds(extIndex);
+
     var dtd = [];
+
+    console.log(`dtdStart = ${dtdStart}`);
+    console.log(`dtdCount = ${dtdCount}`);
 
     for (let dtdIndex = 0; dtdIndex < dtdCount; dtdIndex += 1) {
         const dtdOffset = (dtdIndex * this.DTD_LENGTH) + BLOCK_OFFSET + dtdStart;
