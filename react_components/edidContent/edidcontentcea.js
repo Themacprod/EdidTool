@@ -5,6 +5,26 @@ var React = require('react'),
     dropDown = require('../dropdown');
 
 module.exports = React.createClass({
+    getInitialState: function () {
+        return {
+            blockType: 'Detailed timing'
+        };
+    },
+    selectedBlockCallback: function (value) {
+        this.setState({
+            blockType: value
+        });
+    },
+    genBlockType: function () {
+        if (this.state.blockType === 'Detailed timing') {
+            return React.createElement(detailedTimingDesc, {
+                edidParsed: this.props.edidParsed,
+                extIndex: this.props.extIndex
+            });
+        }
+
+        return null;
+    },
     render: function () {
         return React.DOM.div(
             null,
@@ -18,12 +38,10 @@ module.exports = React.createClass({
             }),
             React.createElement(dropDown, {
                 id: 'offsetDropdown',
-                values: this.props.edidParsed.getExtBlockType(this.props.extIndex)
+                values: this.props.edidParsed.getExtBlockType(this.props.extIndex),
+                callback: this.selectedBlockCallback
             }),
-            React.createElement(detailedTimingDesc, {
-                edidParsed: this.props.edidParsed,
-                extIndex: this.props.extIndex
-            })
+            this.genBlockType()
         );
     }
 });

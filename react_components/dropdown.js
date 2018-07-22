@@ -7,11 +7,15 @@ module.exports = React.createClass({
             showDropdown: !this.state.showDropdown
         });
     },
-    handleItemClick: function (index) {
+    handleItemClick: function (index, value) {
         this.setState({
             showDropdown: false,
             selectedIdx: index
         });
+
+        if (this.props.callback) {
+            this.props.callback(value);
+        }
     },
     getInitialState: function () {
         return {
