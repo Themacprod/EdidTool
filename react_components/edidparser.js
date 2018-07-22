@@ -22,23 +22,23 @@ var edidparser = function () {
             value: 0
         },
         AUDIO: {
-            string: 'AUDIO',
+            string: 'Audio',
             value: 1
         },
         VIDEO: {
-            string: 'VIDEO',
+            string: 'Video',
             value: 2
         },
         VENDOR_SPECIFIC: {
-            string: 'VENDOR SPECIFIC',
+            string: 'Vendor specific',
             value: 3
         },
         SPEAKER_ALLOCATION: {
-            string: 'SPEAKER ALLOCATION',
+            string: 'Speaker allocation',
             value: 4
         },
         EXTENDED_TAG: {
-            string: 'EXTENDED TAG',
+            string: 'Extended tag',
             value: 7
         }
     };
@@ -362,6 +362,50 @@ edidparser.prototype.getExtMonitorSupport = function (extIndex) {
 
 edidparser.prototype.getExtData = function () {
     return this.exts;
+};
+
+edidparser.prototype.getExtBlockType = function (extIndex) {
+    const BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
+    const START_DATA_BLOCK = 4;
+    const startAddress = BLOCK_OFFSET + START_DATA_BLOCK;
+    const dataBlockLength = this.exts[extIndex].dtdStart - START_DATA_BLOCK;
+    const endAddress = startAddress + dataBlockLength;
+
+    const TAG_CODE_MASK = 0x07;
+    const TAG_CODE_OFFSET = 5;
+    const DATA_BLOCK_LENGTH_MASK = 0x1F;
+    let index = startAddress;
+
+    const extBlockType = [];
+
+    if (this.getNumberExtDtds(extIndex) !== 0) {
+        extBlockType.push('Detailed timing');
+    }
+
+    while (index < endAddress) {
+        // Parse tag code
+        const blockTagCode = (this.edidData[index] / TAG_CODE_OFFSET) & TAG_CODE_MASK;
+        // Parse Length
+        const blockLength = (this.edidData[index] & DATA_BLOCK_LENGTH_MASK);
+
+        // Parse the data block by the tag code
+        if (blockTagCode === this.dataBlockType.AUDIO.value) {
+            extBlockType.push(this.dataBlockType.AUDIO.string);
+        } else if (blockTagCode === this.dataBlockType.VIDEO.value) {
+            extBlockType.push(this.dataBlockType.VIDEO.string);
+        } else if (blockTagCode === this.dataBlockType.VENDOR_SPECIFIC.value) {
+            extBlockType.push(this.dataBlockType.VENDOR_SPECIFIC.string);
+        } else if (blockTagCode === this.dataBlockType.SPEAKER_ALLOCATION.value) {
+            extBlockType.push(this.dataBlockType.SPEAKER_ALLOCATION.string);
+        } else if (blockTagCode === this.dataBlockType.EXTENDED_TAG.value) {
+            extBlockType.push(this.dataBlockType.EXTENDED_TAG.string);
+        }
+
+        // Increment the Index, to the location of the next block
+        index += (blockLength + 1);
+    }
+
+    return extBlockType;
 };
 
 edidparser.prototype.parseDataBlockCollection = function (extIndex) {

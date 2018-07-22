@@ -5,6 +5,7 @@ module.exports = React.createClass({
     componentDidMount: function () {
         global.jQuery = require('jquery');
         require('../node_modules/react-bootstrap/lib');
+        require('../node_modules/bootstrap/dist/js/bootstrap');
     },
     render: function () {
         return React.DOM.div(
