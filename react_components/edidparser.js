@@ -865,9 +865,6 @@ edidparser.prototype.getExtDtds = function (extIndex) {
 
     var dtd = [];
 
-    console.log(`dtdStart = ${dtdStart}`);
-    console.log(`dtdCount = ${dtdCount}`);
-
     for (let dtdIndex = 0; dtdIndex < dtdCount; dtdIndex += 1) {
         const dtdOffset = (dtdIndex * this.DTD_LENGTH) + BLOCK_OFFSET + dtdStart;
 
