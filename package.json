@@ -27,7 +27,7 @@
   "license": "Proprietary",
   "dependencies": {
     "body-parser": "^1.15.0",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.1.2",
     "browserify": "^14.4.0",
     "clean-css": "^3.4.19",
     "cookie-parser": "^1.4.1",
