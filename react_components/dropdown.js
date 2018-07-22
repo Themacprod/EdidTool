@@ -2,14 +2,8 @@ var React = require('react'),
     _ = require('lodash');
 
 module.exports = React.createClass({
-    handleButtonClick: function () {
-        this.setState({
-            showDropdown: !this.state.showDropdown
-        });
-    },
     handleItemClick: function (index, value) {
         this.setState({
-            showDropdown: false,
             selectedIdx: index
         });
 
@@ -19,16 +13,13 @@ module.exports = React.createClass({
     },
     getInitialState: function () {
         return {
-            showDropdown: false,
             selectedIdx: 0
         };
     },
     render: function () {
-        var showDropdown = this.state.showDropdown ? ' show' : '';
-
         return React.DOM.div(
             {
-                className: `dropdown ${showDropdown}`
+                className: 'dropdown'
             },
             React.DOM.button(
                 {
@@ -44,7 +35,7 @@ module.exports = React.createClass({
             ),
             React.DOM.div(
                 {
-                    className: `dropdown-menu ${showDropdown}`,
+                    className: 'dropdown-menu',
                     'aria-labelledby': this.props.id
                 },
                 _.map(this.props.values, _.bind(function (value, index) {
