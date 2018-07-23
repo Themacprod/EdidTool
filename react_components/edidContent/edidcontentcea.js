@@ -2,6 +2,7 @@ var React = require('react'),
     revision = require('./extCea/revision'),
     monitorSupport = require('./extCea/monitorSupport'),
     detailedTimingDesc = require('./extCea/detailedTimingDesc'),
+    video = require('./extCea/video'),
     dropDown = require('../dropdown');
 
 module.exports = React.createClass({
@@ -18,6 +19,11 @@ module.exports = React.createClass({
     genBlockType: function () {
         if (this.state.blockType === 'Detailed timing') {
             return React.createElement(detailedTimingDesc, {
+                edidParsed: this.props.edidParsed,
+                extIndex: this.props.extIndex
+            });
+        } else if (this.state.blockType === 'Video') {
+            return React.createElement(video, {
                 edidParsed: this.props.edidParsed,
                 extIndex: this.props.extIndex
             });

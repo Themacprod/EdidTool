@@ -408,6 +408,37 @@ edidparser.prototype.getExtBlockType = function (extIndex) {
     return extBlockType;
 };
 
+edidparser.prototype.getExtVideoBlock = function (extIndex) {
+    const BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
+    const START_DATA_BLOCK = 4;
+    const startAddress = BLOCK_OFFSET + START_DATA_BLOCK;
+    const dataBlockLength = this.exts[extIndex].dtdStart - START_DATA_BLOCK;
+    const endAddress = startAddress + dataBlockLength;
+
+    const TAG_CODE_MASK = 0x07;
+    const TAG_CODE_OFFSET = 5;
+    const DATA_BLOCK_LENGTH_MASK = 0x1F;
+    let index = startAddress;
+
+    const videoBlock = [];
+
+    while (index < endAddress) {
+        // Parse tag code
+        const blockTagCode = (this.edidData[index] / TAG_CODE_OFFSET) & TAG_CODE_MASK;
+        // Parse Length
+        const blockLength = (this.edidData[index] & DATA_BLOCK_LENGTH_MASK);
+
+        if (blockTagCode === this.dataBlockType.VIDEO.value) {
+            videoBlock.push(this.parseVideoDataBlock(index + 1, blockLength));
+        }
+
+        // Increment the Index, to the location of the next block
+        index += (blockLength + 1);
+    }
+
+    return videoBlock;
+};
+
 edidparser.prototype.parseDataBlockCollection = function (extIndex) {
     var BLOCK_OFFSET = this.EDID_BLOCK_LENGTH * (extIndex + 1);
     var START_DATA_BLOCK = 4;
