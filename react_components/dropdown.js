@@ -28,7 +28,6 @@ module.exports = React.createClass({
                     id: this.props.id,
                     'data-toggle': 'dropdown',
                     'aria-haspopup': 'true',
-                    'aria-expanded': this.state.showDropdown,
                     onClick: this.handleButtonClick
                 },
                 this.props.values[this.state.selectedIdx]
